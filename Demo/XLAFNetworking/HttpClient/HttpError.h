@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface HttpError : NSObject
+
+/**
+ *  响应名字
+ */
+@property (nonatomic,strong)NSString *responseName;
+
 /**
  *  错误的URL
  */

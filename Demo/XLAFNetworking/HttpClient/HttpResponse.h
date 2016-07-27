@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class HttpError;
+
 //错误提示
 #define DATA_FORMAT_ERROR   @"数据格式错误"
 #define NETWORK_UNABLE      @"网络状况异常"
@@ -51,6 +53,11 @@
  *  可以存放处理后的模型数据
  */
 @property (nonatomic,assign)id sourceModel;
+
+/**
+ *  错误
+ */
+@property (nonatomic,strong)HttpError *httpError;
 
 /**
  *  响应返回数据处理

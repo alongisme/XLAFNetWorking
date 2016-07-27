@@ -1,9 +1,9 @@
 //
 //  UploadModel.h
-//  AFNWorking3_0Demo
+//  XLAFNetworking
 //
 //  Created by admin on 16/7/14.
-//  Copyright © 2016年 3ti. All rights reserved.
+//  Copyright © 2016年 along. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

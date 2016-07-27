@@ -1,16 +1,16 @@
 //
 //  HttpClient.m
-//  AFNWorking3_0Demo
+//  XLAFNetworking
 //
 //  Created by admin on 16/5/12.
-//  Copyright © 2016年 3ti. All rights reserved.
+//  Copyright © 2016年 along. All rights reserved.
 //
 
 #import "HttpClient.h"
 #import "NSMutableDictionary+Category.h"
 
-#define HTTPURL @"http://test.3tichina.com:8023/aiya"
-#define HTTPIMAGEURL @"http://show.3tichina.com:8002"
+#define HTTPURL @""
+#define HTTPIMAGEURL @""
 
 @implementation HttpClient
 
@@ -64,7 +64,7 @@ static HttpClient *httpClient = nil;
     
     HttpRequest *request = [[HttpRequest alloc]init];
     
-    [request requestWithrequestName:@"测试接口" URLString:[HTTPURL DoMainNameWithString:@"/m/doctor/findDoctorList"] parameters:parameters isPOST:YES];
+    [request requestWithrequestName:@"测试接口" URLString:[HTTPURL DoMainNameWithString:@""] parameters:parameters isPOST:YES];
     
     [request startRequsetWithSuccessBlock:^(HttpRequest *request, HttpResponse *response) {
         //可以在这里转模型数据传出去 付给response.sourceModel
@@ -86,7 +86,7 @@ static HttpClient *httpClient = nil;
     
     HttpRequest *uploadRequset = [[HttpRequest alloc]init];
     
-    [uploadRequset uploadRequestWithrequestName:@"上传测试" URLString:[HTTPURL DoMainNameWithString:@"/m/userExtend/photoUpload"] parameters:parameters PhotoFile:PhotoFile isPOST:YES];
+    [uploadRequset uploadRequestWithrequestName:@"上传测试" URLString:[HTTPURL DoMainNameWithString:@""] parameters:parameters PhotoFile:PhotoFile isPOST:YES];
     
     [uploadRequset uploadStartRequsetWithUnitSize:UntiSizeIsKByte Progress:progress SuccessBlock:^(HttpRequest *request, HttpResponse *response) {
         //可以在这里转模型数据传出去 付给response.sourceModel
@@ -106,7 +106,7 @@ static HttpClient *httpClient = nil;
     
     HttpRequest *uploadRequset = [[HttpRequest alloc]init];
     
-    [uploadRequset downloadRequestWithrequestName:@"下载测试" URLString:[HTTPIMAGEURL DoMainNameWithString:@"/aiyamis/original/upload/pics/2044/1/79/0_20160719110554.jpg"]];
+    [uploadRequset downloadRequestWithrequestName:@"下载测试" URLString:[HTTPIMAGEURL DoMainNameWithString:@""]];
     
     [uploadRequset downloadStartRequsetWithUnitSize:UntiSizeIsByte Progress:progress destination:destination SuccessBlock:^(HttpRequest *request, HttpResponse *response) {
         //可以在这里转模型数据传出去 付给response.sourceModel

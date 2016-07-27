@@ -1,14 +1,20 @@
 //
 //  HttpError.h
-//  AFNWorking3_0Demo
+//  XLAFNetworking
 //
 //  Created by admin on 16/7/13.
-//  Copyright © 2016年 3ti. All rights reserved.
+//  Copyright © 2016年 along. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 @interface HttpError : NSObject
+
+/**
+ *  响应名字
+ */
+@property (nonatomic,strong)NSString *responseName;
+
 /**
  *  错误的URL
  */

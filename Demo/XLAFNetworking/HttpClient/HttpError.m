@@ -91,6 +91,7 @@
 -(NSString *)description {
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Response Info===========================\n"];
+    [descripString appendFormat:@"Response Name:%@\n",self.responseName];
     [descripString appendFormat:@"error URL:%@\n",self.failingURLString];
     [descripString appendFormat:@"error Content:\n%@\n",self.localizedDescription];
     [descripString appendFormat:@"error Code:\n%@\n",self.errorCode];

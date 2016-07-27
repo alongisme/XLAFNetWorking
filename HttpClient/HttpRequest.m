@@ -1,9 +1,9 @@
 //
 //  HttpRequest.m
-//  AFNWorking3_0Demo
+//  XLAFNetworking
 //
 //  Created by admin on 16/7/12.
-//  Copyright © 2016年 3ti. All rights reserved.
+//  Copyright © 2016年 along. All rights reserved.
 //
 
 #import "HttpRequest.h"
@@ -45,19 +45,27 @@
                 
             case AFNetworkReachabilityStatusNotReachable:
                 //网络不通
-                block(1);
+                if(block) {
+                    block(1);
+                }
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 //WiFi
-                block(2);
+                if(block) {
+                    block(2);
+                }
                 break;
             case AFNetworkReachabilityStatusReachableViaWWAN:
                 //无线连接
-                block(3);
+                if(block) {
+                    block(3);
+                }
                 break;
             case AFNetworkReachabilityStatusUnknown:
                 //未知
-                block(4);
+                if(block) {
+                    block(4);
+                }
                 break;
             default:
                 break;
@@ -110,10 +118,14 @@
     startTime = CFAbsoluteTimeGetCurrent();
     
     //请求开始
-    requestStart();
+    if(requestStart) {
+        requestStart();
+    }
     
     //结束回调
-    self.endBlock = responseEnd;
+    if(responseEnd) {
+        self.endBlock = responseEnd;
+    }
     
     __block HttpRequest *BlockSelf = self;
     
@@ -126,7 +138,7 @@
         
         if(error) {
             //有错误
-            [BlockSelf handleRequestErrorWitherror:error SuccessBlock:nil FailedBlock:failedBlock];
+            [BlockSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
             //无错误
             [BlockSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
@@ -194,10 +206,14 @@
     startTime = CFAbsoluteTimeGetCurrent();
     
     //请求开始
-    requestStart();
+    if(requestStart) {
+        requestStart();
+    }
     
     //结束回调
-    self.endBlock = responseEnd;
+    if(responseEnd) {
+        self.endBlock = responseEnd;
+    }
     
     //创建管理者
     AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:self.configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -210,17 +226,21 @@
     __block HttpFileLoadProgress *BlockProgressInfo = httpFileLoadProgress;
     
     self.uploadTask = [mamager uploadTaskWithStreamedRequest:self.urlRequest progress:^(NSProgress * _Nonnull uploadProgress) {
-        //进度
         
-        BlockProgressInfo.loadProgress = uploadProgress.completedUnitCount;
+        if(Progress) {
+            //进度
+            BlockProgressInfo.loadProgress = uploadProgress.completedUnitCount;
+            
+            BlockProgressInfo.maxSize = uploadProgress.totalUnitCount;
+            
+            BlockProgressInfo.loadFractionCompleted = uploadProgress.fractionCompleted;
+            
+            Progress(httpFileLoadProgress);
+            
+            DLOG(@"%@",httpFileLoadProgress);
+        }
         
-        BlockProgressInfo.maxSize = uploadProgress.totalUnitCount;
-        
-        BlockProgressInfo.loadFractionCompleted = uploadProgress.fractionCompleted;
-        
-        Progress(httpFileLoadProgress);
 
-        DLOG(@"%@",httpFileLoadProgress);
         
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
@@ -230,7 +250,7 @@
         }
         
         if(error) {
-            [BlockSelf handleRequestErrorWitherror:error SuccessBlock:nil FailedBlock:failedBlock];
+            [BlockSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
             [BlockSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
         }
@@ -281,11 +301,15 @@
     startTime = CFAbsoluteTimeGetCurrent();
     
     //请求开始
-    requestStart();
+    if(requestStart) {
+        requestStart();
+    }
     
     //结束回调
-    self.endBlock = responseEnd;
-    
+    if(responseEnd) {
+        self.endBlock = responseEnd;
+    }
+        
     //创建管理者
     AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:self.configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
@@ -298,26 +322,36 @@
     
     self.downloadTask = [mamager downloadTaskWithRequest:self.urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
         
-        BlockProgressInfo.loadProgress = downloadProgress.completedUnitCount;
+        if(Progress) {
+            BlockProgressInfo.loadProgress = downloadProgress.completedUnitCount;
+            
+            BlockProgressInfo.maxSize = downloadProgress.totalUnitCount;
+            
+            BlockProgressInfo.loadFractionCompleted = downloadProgress.fractionCompleted;
+            
+            Progress(httpFileLoadProgress);
+            
+            DLOG(@"%@",httpFileLoadProgress);
+        }
         
-        BlockProgressInfo.maxSize = downloadProgress.totalUnitCount;
-        
-        BlockProgressInfo.loadFractionCompleted = downloadProgress.fractionCompleted;
-        
-        Progress(httpFileLoadProgress);
-        
-        DLOG(@"%@",httpFileLoadProgress);
-        
+
         
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
         //- block的返回值, 要求返回一个URL, 返回的这个URL就是文件的位置的路径
         
-        NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    
+        if(destination) {
+            return destination(targetPath,response);
+        }else {
+    
+            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+            
+            NSURL *UrlPath = [NSURL fileURLWithPath:[cachesPath stringByAppendingPathComponent:response.suggestedFilename]];
+            
+            return UrlPath;
+        }
         
-        NSURL *UrlPath = [NSURL fileURLWithPath:[cachesPath stringByAppendingPathComponent:response.suggestedFilename]];
-        
-        return (destination(targetPath,response))?(destination(targetPath,response)):UrlPath;
                 
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         
@@ -331,7 +365,7 @@
         // filePath就是你下载文件的位置，你可以解压，也可以直接拿来使用
         
         if(error) {
-            [BlockSelf handleRequestErrorWitherror:error SuccessBlock:nil FailedBlock:failedBlock];
+            [BlockSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
             [BlockSelf handleDownloadSuccessBlockDataWithdownloadResponse:response filePath:filePath SuccessBlock:successBlock FailedBlock:failedBlock];
         }
@@ -409,9 +443,13 @@
     
     //判断服务器是否返回成功
     if(response.isSuccess) {
-        successBlock(self,response);
+        if(successBlock) {
+            successBlock(self,response);
+        }
     }else {
-        failedBlock(self,response);
+        if(failedBlock) {
+            failedBlock(self,response);
+        }
     }
 }
 
@@ -439,8 +477,9 @@
     DLOG(@"%@",response);
     DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
     
-    successBlock(self,response);
-
+    if(successBlock) {
+        successBlock(self,response);
+    }
 }
 
 /**
@@ -451,11 +490,19 @@
  *  @param failedBlock  失败回调
  */
 - (void)handleRequestErrorWitherror:(NSError  * _Nullable )error
-                       SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
                         FailedBlock:(CompletionHandlerFailureBlock)failedBlock {
     
     HttpError *httpError = [[HttpError alloc]init];
+    httpError.responseName = [NSString stringWithFormat:@"%@响应",self.requestName];
     [httpError handleHttpError:error];
+
+    HttpResponse *response = [[HttpResponse alloc]init];
+    response.ObjectData = [error userInfo];
+    response.httpError = httpError;
+    
+    if(failedBlock) {
+        failedBlock(self,response);
+    }
     
     DLOG(@"%@",httpError);
     DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
