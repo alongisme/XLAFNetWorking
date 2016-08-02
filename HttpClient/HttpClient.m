@@ -61,17 +61,10 @@ static HttpClient *httpClient = nil;
     [parameters addUnEmptyString:status forKey:@"status"];
     [parameters addUnEmptyString:sortData forKey:@"sortData"];
     [parameters addUnEmptyString:jsonFilter forKey:@"jsonFilter"];
-    
-    HttpRequest *request = [[HttpRequest alloc]init];
-    
-    [request requestWithrequestName:@"测试接口" URLString:[HTTPURL DoMainNameWithString:@""] parameters:parameters isPOST:YES];
-    
-    [request startRequsetWithSuccessBlock:^(HttpRequest *request, HttpResponse *response) {
-        //可以在这里转模型数据传出去 付给response.sourceModel
+        
+    return [self requestBaseWithName:@"测试接口" url:[HTTPURL DoMainNameWithString:@""] parameters:parameters isPost:YES success:^(HttpRequest *request, HttpResponse *response) {
         success(request,response);
-    } FailedBlock:failure requsetStart:requestStart responseEnd:responseEnd];
-    
-    return request;
+    } failure:failure requsetStart:requestStart responseEnd:responseEnd];;
 }
 
 //上传请求接口测试
@@ -115,6 +108,23 @@ static HttpClient *httpClient = nil;
     
     return uploadRequset;
 
+}
+
+
+//普通请求基类
+- (HttpRequest *)requestBaseWithName:(NSString *)name url:(NSString *)url parameters:(NSMutableDictionary *)parameters isPost:(BOOL)isPost success:(CompletionHandlerSuccessBlock)success
+                             failure:(CompletionHandlerFailureBlock)failure
+                        requsetStart:(RequstStartBlock)requestStart
+                         responseEnd:(ResponseEndBlock)responseEnd {
+    
+    HttpRequest *request = [[HttpRequest alloc]init];
+    
+    [request requestWithrequestName:name URLString:url parameters:parameters isPOST:isPost];
+    
+    [request startRequsetWithSuccessBlock:success FailedBlock:failure requsetStart:requestStart responseEnd:responseEnd];
+    
+    return request;
+    
 }
 
 @end
