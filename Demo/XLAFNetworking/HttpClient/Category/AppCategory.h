@@ -10,3 +10,4 @@
 
 #import "NSMutableDictionary+Category.h"
 #import "NSString+Category.h"
+#import "NSObject+ALFormat.h"

@@ -35,11 +35,11 @@
 
 #pragma mark ----------------------Add New Requst----------------------
 //测试数据
-- (HttpRequest *)testApiWithnextPage:(NSString *)nextPage
-                   pageSize:(NSString *)pageSize
-                     status:(NSString *)status
-                   sortData:(NSString *)sortData
-                 jsonFilter:(NSString *)jsonFilter
+- (HttpRequest *)testApiWithnextPage:(id)nextPage
+                   pageSize:(id)pageSize
+                     status:(id)status
+                   sortData:(id)sortData
+                 jsonFilter:(id)jsonFilter
                     success:(CompletionHandlerSuccessBlock)success
                              failure:(CompletionHandlerFailureBlock)failure
                         requsetStart:(RequstStartBlock)requestStart

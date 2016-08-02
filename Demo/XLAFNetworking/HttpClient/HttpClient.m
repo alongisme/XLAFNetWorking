@@ -7,7 +7,7 @@
 //
 
 #import "HttpClient.h"
-#import "NSMutableDictionary+Category.h"
+#import "AppCategory.h"
 
 #define HTTPURL @""
 #define HTTPIMAGEURL @""
@@ -45,23 +45,24 @@ static HttpClient *httpClient = nil;
 }
 
 //普通请求接口测试
-- (HttpRequest *)testApiWithnextPage:(NSString *)nextPage
-                   pageSize:(NSString *)pageSize
-                     status:(NSString *)status
-                   sortData:(NSString *)sortData
-                 jsonFilter:(NSString *)jsonFilter
+- (HttpRequest *)testApiWithnextPage:(id)nextPage
+                   pageSize:(id)pageSize
+                     status:(id)status
+                   sortData:(id)sortData
+                 jsonFilter:(id)jsonFilter
                     success:(CompletionHandlerSuccessBlock)success
                              failure:(CompletionHandlerFailureBlock)failure
                         requsetStart:(RequstStartBlock)requestStart
                          responseEnd:(ResponseEndBlock)responseEnd{
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters addUnEmptyString:nextPage forKey:@"nextPage"];
-    [parameters addUnEmptyString:pageSize forKey:@"pageSize"];
-    [parameters addUnEmptyString:status forKey:@"status"];
-    [parameters addUnEmptyString:sortData forKey:@"sortData"];
-    [parameters addUnEmptyString:jsonFilter forKey:@"jsonFilter"];
-        
+    [parameters addUnEmptyString:[nextPage FormatObject] forKey:@"nextPage"];
+    [parameters addUnEmptyString:[pageSize FormatObject] forKey:@"pageSize"];
+    [parameters addUnEmptyString:[status FormatObject] forKey:@"status"];
+    [parameters addUnEmptyString:[sortData FormatObject] forKey:@"sortData"];
+    [parameters addUnEmptyString:[jsonFilter FormatObject] forKey:@"jsonFilter"];
+    
+
     return [self requestBaseWithName:@"测试接口" url:[HTTPURL DoMainNameWithString:@""] parameters:parameters isPost:YES success:^(HttpRequest *request, HttpResponse *response) {
         success(request,response);
     } failure:failure requsetStart:requestStart responseEnd:responseEnd];;

@@ -36,5 +36,4 @@
  *  @return 返回拼接后的字符串
  */
 - (NSString *)DoMainNameWithString:(NSString *)string;
-
 @end
