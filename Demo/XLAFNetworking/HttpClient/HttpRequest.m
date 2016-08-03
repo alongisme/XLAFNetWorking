@@ -498,6 +498,7 @@
 
     HttpResponse *response = [[HttpResponse alloc]init];
     response.ObjectData = [error userInfo];
+    response.errorMsg = httpError.localizedDescription;
     response.httpError = httpError;
     
     if(failedBlock) {
