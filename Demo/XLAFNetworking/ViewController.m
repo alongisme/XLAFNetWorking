@@ -10,9 +10,7 @@
 #import "HttpClient.h"
 
 
-@interface ViewController () {
-    HttpRequest *request;
-}
+@interface ViewController () 
 
 @end
 
@@ -26,7 +24,7 @@
 
 - (void)normalTaskTest {
     //POST/GET请求 传参
-    request = [[HttpClient sharedInstance]testApiWithnextPage:@"0" pageSize:@"10" status:@"1" sortData:@"[{property:'createTime',direction:'DESC'}]" jsonFilter:@"{}" success:^(HttpRequest *request, HttpResponse *response) {
+    [[HttpClient sharedInstance]testApiWithnextPage:@"0" pageSize:@"10" status:@"1" sortData:@"[{property:'createTime',direction:'DESC'}]" jsonFilter:@"{}" success:^(HttpRequest *request, HttpResponse *response) {
         
     } failure:^(HttpRequest *request, HttpResponse *response) {
         
@@ -41,7 +39,7 @@
     //上传请求 文件模型
     UploadModel *upload = [[UploadModel alloc]initWithUploadModelfileData:[[NSBundle mainBundle]pathForResource:@"test" ofType:@".jpg"] name:@"photoFile" fileName:@"filename.jpg" mimeType:@"image/jpeg"];
     
-    request = [[HttpClient sharedInstance]uploadPhotoWithPhotoFile:@[upload] progress:^(HttpFileLoadProgress *uploadProgress) {
+    [[HttpClient sharedInstance]uploadPhotoWithPhotoFile:@[upload] progress:^(HttpFileLoadProgress *uploadProgress) {
         
     } success:^(HttpRequest *request, HttpResponse *response) {
         
@@ -57,7 +55,7 @@
 - (void)downloadTaskTest {
     
     //下载请求
-    request = [[HttpClient sharedInstance] downloadPhotoWithprogress:^(HttpFileLoadProgress *uploadProgress) {
+    [[HttpClient sharedInstance] downloadPhotoWithprogress:^(HttpFileLoadProgress *uploadProgress) {
         
     } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         //- block的返回值, 要求返回一个URL, 返回的这个URL就是文件的位置的路径 nil则默认给一个路径

@@ -34,7 +34,7 @@
 }
 
 #pragma mark set方法
-- (void)setMaxSize:(NSUInteger)maxSize {
+- (void)setMaxSize:(int64_t)maxSize {
     _maxSize = maxSize;
     
     _maxSizeKb = maxSize / 1024.0;
@@ -59,7 +59,7 @@
     
     switch (_unitSize) {
         case 0: {
-            return [NSString stringWithFormat:@"正在传输%.0lf B 总大小：%.0ld B 进度：%.2lf%%",_loadProgress,_maxSize,_loadFractionCompleted];
+            return [NSString stringWithFormat:@"正在传输%.0lf B 总大小：%.0lld B 进度：%.2lf%%",_loadProgress,_maxSize,_loadFractionCompleted];
         }
             break;
         case 1: {

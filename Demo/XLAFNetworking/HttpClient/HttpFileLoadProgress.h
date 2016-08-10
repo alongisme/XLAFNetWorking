@@ -41,7 +41,7 @@ typedef enum {
 /**
  *  //总大小 默认单位b
  */
-@property (nonatomic,assign)NSUInteger maxSize;
+@property (nonatomic,assign)int64_t maxSize;
 
 /**
  *  加载大小 单位kb
