@@ -127,8 +127,6 @@
         self.endBlock = responseEnd;
     }
     
-    __weak typeof(self) WeakSelf = self;
-    
     self.dataTask = [[AFHTTPSessionManager manager]dataTaskWithRequest:self.urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
         //响应结束
@@ -138,10 +136,10 @@
         
         if(error) {
             //有错误
-            [WeakSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
+            [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
             //无错误
-            [WeakSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
+            [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
         }
     }];
         
@@ -221,8 +219,6 @@
     //进度条数据
     __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
     
-    __weak typeof(self) WeakSelf = self;
-    
     self.uploadTask = [mamager uploadTaskWithStreamedRequest:self.urlRequest progress:^(NSProgress * _Nonnull uploadProgress) {
         
         if(Progress) {
@@ -248,9 +244,9 @@
         }
         
         if(error) {
-            [WeakSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
+            [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
-            [WeakSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
+            [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
         }
         
     }];
@@ -314,8 +310,6 @@
     //进度条数据
     __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
     
-    __weak typeof(self) WeakSelf = self;
-    
     self.downloadTask = [mamager downloadTaskWithRequest:self.urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
         
         if(Progress) {
@@ -361,9 +355,9 @@
         // filePath就是你下载文件的位置，你可以解压，也可以直接拿来使用
         
         if(error) {
-            [WeakSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
+            [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
-            [WeakSelf handleDownloadSuccessBlockDataWithdownloadResponse:response filePath:filePath SuccessBlock:successBlock FailedBlock:failedBlock];
+            [self handleDownloadSuccessBlockDataWithdownloadResponse:response filePath:filePath SuccessBlock:successBlock FailedBlock:failedBlock];
         }
         
         
@@ -468,7 +462,7 @@
     
     response.responseName = [NSString stringWithFormat:@"%@响应",self.requestName];
     
-    response.result = @{@"file path is":filePath};
+    response.result = @{@"file path is":filePath?filePath:@"nil"};
     
     DLOG(@"%@",response);
     DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);

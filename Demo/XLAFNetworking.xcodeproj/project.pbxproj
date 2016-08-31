@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		008A1FC71D50A76F00940BAA /* NSObject+ALFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 008A1FC61D50A76F00940BAA /* NSObject+ALFormat.m */; };
+		844150251D767DE700A208DC /* HttpRequestMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 844150241D767DE700A208DC /* HttpRequestMode.m */; };
 		84D14C351D473B4900266602 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C341D473B4900266602 /* main.m */; };
 		84D14C381D473B4900266602 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C371D473B4900266602 /* AppDelegate.m */; };
 		84D14C3B1D473B4A00266602 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C3A1D473B4A00266602 /* ViewController.m */; };
@@ -52,6 +53,8 @@
 /* Begin PBXFileReference section */
 		008A1FC51D50A76F00940BAA /* NSObject+ALFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ALFormat.h"; sourceTree = "<group>"; };
 		008A1FC61D50A76F00940BAA /* NSObject+ALFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ALFormat.m"; sourceTree = "<group>"; };
+		844150231D767DE700A208DC /* HttpRequestMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestMode.h; sourceTree = "<group>"; };
+		844150241D767DE700A208DC /* HttpRequestMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestMode.m; sourceTree = "<group>"; };
 		84D14C301D473B4900266602 /* XLAFNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLAFNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D14C341D473B4900266602 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84D14C361D473B4900266602 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 				84D14C821D473BFA00266602 /* HttpRequest.m */,
 				84D14C831D473BFA00266602 /* HttpResponse.h */,
 				84D14C841D473BFA00266602 /* HttpResponse.m */,
+				844150231D767DE700A208DC /* HttpRequestMode.h */,
+				844150241D767DE700A208DC /* HttpRequestMode.m */,
 				84D14C851D473BFA00266602 /* UploadModel.h */,
 				84D14C861D473BFA00266602 /* UploadModel.m */,
 			);
@@ -380,6 +385,7 @@
 				84D14C911D473BFA00266602 /* HttpFileLoadProgress.m in Sources */,
 				84D14C8D1D473BFA00266602 /* NSMutableDictionary+Category.m in Sources */,
 				84D14C881D473BFA00266602 /* AFNetworkReachabilityManager.m in Sources */,
+				844150251D767DE700A208DC /* HttpRequestMode.m in Sources */,
 				84D14C351D473B4900266602 /* main.m in Sources */,
 				84D14C931D473BFA00266602 /* HttpResponse.m in Sources */,
 				84D14C8F1D473BFA00266602 /* HttpClient.m in Sources */,

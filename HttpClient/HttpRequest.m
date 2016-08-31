@@ -127,8 +127,6 @@
         self.endBlock = responseEnd;
     }
     
-    __block HttpRequest *BlockSelf = self;
-    
     self.dataTask = [[AFHTTPSessionManager manager]dataTaskWithRequest:self.urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
         //响应结束
@@ -138,10 +136,10 @@
         
         if(error) {
             //有错误
-            [BlockSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
+            [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
             //无错误
-            [BlockSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
+            [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
         }
     }];
         
@@ -219,21 +217,17 @@
     AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:self.configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     //进度条数据
-    HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
-    
-    __block HttpRequest *BlockSelf = self;
-    
-    __block HttpFileLoadProgress *BlockProgressInfo = httpFileLoadProgress;
+    __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
     
     self.uploadTask = [mamager uploadTaskWithStreamedRequest:self.urlRequest progress:^(NSProgress * _Nonnull uploadProgress) {
         
         if(Progress) {
             //进度
-            BlockProgressInfo.loadProgress = uploadProgress.completedUnitCount;
+            httpFileLoadProgress.loadProgress = uploadProgress.completedUnitCount;
             
-            BlockProgressInfo.maxSize = uploadProgress.totalUnitCount;
+            httpFileLoadProgress.maxSize = uploadProgress.totalUnitCount;
             
-            BlockProgressInfo.loadFractionCompleted = uploadProgress.fractionCompleted;
+            httpFileLoadProgress.loadFractionCompleted = uploadProgress.fractionCompleted;
             
             Progress(httpFileLoadProgress);
             
@@ -250,9 +244,9 @@
         }
         
         if(error) {
-            [BlockSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
+            [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
-            [BlockSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
+            [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
         }
         
     }];
@@ -314,20 +308,16 @@
     AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:self.configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     //进度条数据
-    HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
-    
-    __block HttpRequest *BlockSelf = self;
-    
-    __block HttpFileLoadProgress *BlockProgressInfo = httpFileLoadProgress;
+    __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
     
     self.downloadTask = [mamager downloadTaskWithRequest:self.urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
         
         if(Progress) {
-            BlockProgressInfo.loadProgress = downloadProgress.completedUnitCount;
+            httpFileLoadProgress.loadProgress = downloadProgress.completedUnitCount;
             
-            BlockProgressInfo.maxSize = downloadProgress.totalUnitCount;
+            httpFileLoadProgress.maxSize = downloadProgress.totalUnitCount;
             
-            BlockProgressInfo.loadFractionCompleted = downloadProgress.fractionCompleted;
+            httpFileLoadProgress.loadFractionCompleted = downloadProgress.fractionCompleted;
             
             Progress(httpFileLoadProgress);
             
@@ -365,9 +355,9 @@
         // filePath就是你下载文件的位置，你可以解压，也可以直接拿来使用
         
         if(error) {
-            [BlockSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
+            [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
-            [BlockSelf handleDownloadSuccessBlockDataWithdownloadResponse:response filePath:filePath SuccessBlock:successBlock FailedBlock:failedBlock];
+            [self handleDownloadSuccessBlockDataWithdownloadResponse:response filePath:filePath SuccessBlock:successBlock FailedBlock:failedBlock];
         }
         
         
@@ -472,7 +462,7 @@
     
     response.responseName = [NSString stringWithFormat:@"%@响应",self.requestName];
     
-    response.result = @{@"file path is":filePath};
+    response.result = @{@"file path is":filePath?filePath:@"nil"};
     
     DLOG(@"%@",response);
     DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);

@@ -44,43 +44,27 @@ static HttpClient *httpClient = nil;
     [requst checkNetworkingStatus:block];
 }
 
-//普通请求接口测试
-- (HttpRequest *)testApiWithnextPage:(id)nextPage
-                   pageSize:(id)pageSize
-                     status:(id)status
-                   sortData:(id)sortData
-                 jsonFilter:(id)jsonFilter
-                    success:(CompletionHandlerSuccessBlock)success
-                             failure:(CompletionHandlerFailureBlock)failure
-                        requsetStart:(RequstStartBlock)requestStart
-                         responseEnd:(ResponseEndBlock)responseEnd{
+- (HttpRequest *)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
+                           success:(CompletionHandlerSuccessBlock)success
+                           failure:(CompletionHandlerFailureBlock)failure
+                      requsetStart:(RequstStartBlock)requestStart
+                       responseEnd:(ResponseEndBlock)responseEnd {
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters addUnEmptyString:[nextPage FormatObject] forKey:@"nextPage"];
-    [parameters addUnEmptyString:[pageSize FormatObject] forKey:@"pageSize"];
-    [parameters addUnEmptyString:[status FormatObject] forKey:@"status"];
-    [parameters addUnEmptyString:[sortData FormatObject] forKey:@"sortData"];
-    [parameters addUnEmptyString:[jsonFilter FormatObject] forKey:@"jsonFilter"];
-    
-
-    return [self requestBaseWithName:@"测试接口" url:[HTTPURL DoMainNameWithString:@""] parameters:parameters isPost:YES success:^(HttpRequest *request, HttpResponse *response) {
+    return [self requestBaseWithName:requestMode.name url:requestMode.url parameters:requestMode.parameters isPost:requestMode.isPost success:^(HttpRequest *request, HttpResponse *response) {
         success(request,response);
     } failure:failure requsetStart:requestStart responseEnd:responseEnd];;
 }
 
-//上传请求接口测试
-- (HttpRequest *)uploadPhotoWithPhotoFile:(NSArray *)PhotoFile
+- (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
                                  progress:(UploadProgressBlock)progress
                          success:(CompletionHandlerSuccessBlock)success
                                   failure:(CompletionHandlerFailureBlock)failure
                              requsetStart:(RequstStartBlock)requestStart
                               responseEnd:(ResponseEndBlock)responseEnd {
   
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
     HttpRequest *uploadRequset = [[HttpRequest alloc]init];
     
-    [uploadRequset uploadRequestWithrequestName:@"上传测试" URLString:[HTTPURL DoMainNameWithString:@""] parameters:parameters PhotoFile:PhotoFile isPOST:YES];
+    [uploadRequset uploadRequestWithrequestName:requestMode.name URLString:requestMode.url parameters:requestMode.parameters PhotoFile:requestMode.uploadModels isPOST:requestMode.isPost];
     
     [uploadRequset uploadStartRequsetWithUnitSize:UntiSizeIsKByte Progress:progress SuccessBlock:^(HttpRequest *request, HttpResponse *response) {
         //可以在这里转模型数据传出去 付给response.sourceModel
@@ -90,8 +74,8 @@ static HttpClient *httpClient = nil;
     return uploadRequset;
 }
 
-//图片下载测试
-- (HttpRequest *)downloadPhotoWithprogress:(UploadProgressBlock)progress
+- (HttpRequest *)downloadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
+                                         progress:(UploadProgressBlock)progress
                                destination:(downloadDestinationBlock)destination
                                    success:(CompletionHandlerSuccessBlock)success
                                    failure:(CompletionHandlerFailureBlock)failure
@@ -100,7 +84,7 @@ static HttpClient *httpClient = nil;
     
     HttpRequest *uploadRequset = [[HttpRequest alloc]init];
     
-    [uploadRequset downloadRequestWithrequestName:@"下载测试" URLString:[HTTPIMAGEURL DoMainNameWithString:@""]];
+    [uploadRequset downloadRequestWithrequestName:requestMode.name URLString:requestMode.url];
     
     [uploadRequset downloadStartRequsetWithUnitSize:UntiSizeIsByte Progress:progress destination:destination SuccessBlock:^(HttpRequest *request, HttpResponse *response) {
         //可以在这里转模型数据传出去 付给response.sourceModel
@@ -113,7 +97,7 @@ static HttpClient *httpClient = nil;
 
 
 //普通请求基类
-- (HttpRequest *)requestBaseWithName:(NSString *)name url:(NSString *)url parameters:(NSMutableDictionary *)parameters isPost:(BOOL)isPost success:(CompletionHandlerSuccessBlock)success
+- (HttpRequest *)requestBaseWithName:(NSString *)name url:(NSString *)url parameters:(NSDictionary *)parameters isPost:(BOOL)isPost success:(CompletionHandlerSuccessBlock)success
                              failure:(CompletionHandlerFailureBlock)failure
                         requsetStart:(RequstStartBlock)requestStart
                          responseEnd:(ResponseEndBlock)responseEnd {

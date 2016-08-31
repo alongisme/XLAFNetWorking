@@ -10,7 +10,7 @@
 #import "HttpRequest.h"
 #import "UploadModel.h"
 #import "HttpFileLoadProgress.h"
-
+#import "HttpRequestMode.h"
 
 #define HTTPCLIENTSTART [HttpClient sharedInstance]
 
@@ -34,31 +34,26 @@
 - (void)checkNetworkingStatus:(NetworingStautBlock)block;
 
 #pragma mark ----------------------Add New Requst----------------------
-//测试数据
-- (HttpRequest *)testApiWithnextPage:(id)nextPage
-                   pageSize:(id)pageSize
-                     status:(id)status
-                   sortData:(id)sortData
-                 jsonFilter:(id)jsonFilter
-                    success:(CompletionHandlerSuccessBlock)success
-                             failure:(CompletionHandlerFailureBlock)failure
-                        requsetStart:(RequstStartBlock)requestStart
-                         responseEnd:(ResponseEndBlock)responseEnd;
 
-//图片上传测试
-- (HttpRequest *)uploadPhotoWithPhotoFile:(NSArray *)PhotoFile
-                                 progress:(UploadProgressBlock)progress
-                         success:(CompletionHandlerSuccessBlock)success
-                                  failure:(CompletionHandlerFailureBlock)failure
-                             requsetStart:(RequstStartBlock)requestStart
-                              responseEnd:(ResponseEndBlock)responseEnd;
+- (HttpRequest *)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
+                                       success:(CompletionHandlerSuccessBlock)success
+                                       failure:(CompletionHandlerFailureBlock)failure
+                                  requsetStart:(RequstStartBlock)requestStart
+                                   responseEnd:(ResponseEndBlock)responseEnd;
 
-//图片下载测试
-- (HttpRequest *)downloadPhotoWithprogress:(UploadProgressBlock)progress
-                               destination:(downloadDestinationBlock)destination
-                                   success:(CompletionHandlerSuccessBlock)success
-                                   failure:(CompletionHandlerFailureBlock)failure
-                              requsetStart:(RequstStartBlock)requestStart
-                               responseEnd:(ResponseEndBlock)responseEnd;
+- (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
+                                       progress:(UploadProgressBlock)progress
+                                        success:(CompletionHandlerSuccessBlock)success
+                                        failure:(CompletionHandlerFailureBlock)failure
+                                   requsetStart:(RequstStartBlock)requestStart
+                                    responseEnd:(ResponseEndBlock)responseEnd;
+
+- (HttpRequest *)downloadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
+                                         progress:(UploadProgressBlock)progress
+                                      destination:(downloadDestinationBlock)destination
+                                          success:(CompletionHandlerSuccessBlock)success
+                                          failure:(CompletionHandlerFailureBlock)failure
+                                     requsetStart:(RequstStartBlock)requestStart
+                                      responseEnd:(ResponseEndBlock)responseEnd;
 
 @end
