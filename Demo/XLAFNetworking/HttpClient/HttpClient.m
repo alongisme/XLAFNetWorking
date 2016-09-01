@@ -7,7 +7,6 @@
 //
 
 #import "HttpClient.h"
-#import "AppCategory.h"
 
 #define HTTPURL @""
 #define HTTPIMAGEURL @""
