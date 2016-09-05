@@ -33,14 +33,37 @@
  */
 - (void)checkNetworkingStatus:(NetworingStautBlock)block;
 
-#pragma mark ----------------------Add New Requst----------------------
+#pragma mark ----------------------Create Request----------------------
 
+/**
+ *  创建普通接口请求
+ *
+ *  @param requestMode  请求模型
+ *  @param success      成功回调
+ *  @param failure      失败回调
+ *  @param requestStart 请求开始回调
+ *  @param responseEnd  请求结束回调
+ *
+ *  @return 返回请求对象
+ */
 - (HttpRequest *)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
                                        success:(CompletionHandlerSuccessBlock)success
                                        failure:(CompletionHandlerFailureBlock)failure
                                   requsetStart:(RequstStartBlock)requestStart
                                    responseEnd:(ResponseEndBlock)responseEnd;
 
+/**
+ *  上传文件接口请求
+ *
+ *  @param requestMode  请求模型
+ *  @param progress     进度条回调
+ *  @param success      成功回调
+ *  @param failure      失败回调
+ *  @param requestStart 请求开始回调
+ *  @param responseEnd  请求结束回调
+ *
+ *  @return 返回请求对象
+ */
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
                                        progress:(UploadProgressBlock)progress
                                         success:(CompletionHandlerSuccessBlock)success
@@ -48,6 +71,19 @@
                                    requsetStart:(RequstStartBlock)requestStart
                                     responseEnd:(ResponseEndBlock)responseEnd;
 
+/**
+ *  下载文件接口请求
+ *
+ *  @param requestMode  请求模型
+ *  @param progress     进度条回调
+ *  @param destination  文件保存路径回调
+ *  @param success      成功回调
+ *  @param failure      失败回调
+ *  @param requestStart 请求开始回调
+ *  @param responseEnd  请求结束回调
+ *
+ *  @return 返回请求对象
+ */
 - (HttpRequest *)downloadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
                                          progress:(UploadProgressBlock)progress
                                       destination:(downloadDestinationBlock)destination

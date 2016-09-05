@@ -17,6 +17,7 @@
  *  @param error 错误对象
  */
 - (void)handleHttpError:(NSError *)error {
+    
     if(!error){
         return;
     }
@@ -24,9 +25,10 @@
     NSDictionary *errorInfo = [error userInfo];
     
     self.localizedDescription = [errorInfo objectForKey:@"NSLocalizedDescription"];
+
     self.failingURLString = [errorInfo objectForKey:@"NSErrorFailingURLStringKey"];
-    
-    NSError *err= [errorInfo objectForKey:@"NSUnderlyingError"];
+
+    NSError *err = [errorInfo objectForKey:@"NSUnderlyingError"];
   
 
 //    NSDictionary *dicCode = @{
@@ -87,17 +89,57 @@
     self.errorMsg = errorMsg;
 }
 
+#pragma mark setProperty
+- (void)setResponseName:(NSString *)responseName {
+    if(![responseName isEqualToString:@""] && responseName) {
+        _responseName = responseName;
+    }else {
+        _responseName = @"无";
+    }
+}
+
+- (void)setFailingURLString:(NSString *)failingURLString {
+    if(![failingURLString isEqualToString:@""] && failingURLString) {
+        _failingURLString = failingURLString;
+    }else {
+        _failingURLString = @"无";
+    }
+}
+
+- (void)setLocalizedDescription:(NSString *)localizedDescription {
+    if(![localizedDescription isEqualToString:@""] && localizedDescription) {
+        _localizedDescription = localizedDescription;
+    }else {
+        _localizedDescription = @"无";
+    }
+}
+
+- (void)setErrorCode:(NSString *)errorCode {
+    if(![errorCode isEqualToString:@""] && errorCode) {
+        _errorCode = errorCode;
+    }else {
+        _errorCode = @"无";
+    }
+}
+
+- (void)setErrorMsg:(NSString *)errorMsg {
+    if(![errorMsg isEqualToString:@""] && errorMsg) {
+        _errorMsg = errorMsg;
+    }else {
+        _errorMsg = @"无";
+    }
+}
+
 #pragma description
 -(NSString *)description {
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Response Info===========================\n"];
-    [descripString appendFormat:@"Response Name:%@\n",self.responseName];
-    [descripString appendFormat:@"error URL:%@\n",self.failingURLString];
-    [descripString appendFormat:@"error Content:\n%@\n",self.localizedDescription];
-    [descripString appendFormat:@"error Code:\n%@\n",self.errorCode];
-    [descripString appendFormat:@"error message:\n%@\n",self.errorMsg];
+    [descripString appendFormat:@"Response Name:  %@\n",self.responseName];
+    [descripString appendFormat:@"error URL:  %@\n",self.failingURLString];
+    [descripString appendFormat:@"error Content:  %@\n",self.localizedDescription];
+    [descripString appendFormat:@"error Code:  %@\n",self.errorCode];
+    [descripString appendFormat:@"error message:  %@\n",self.errorMsg];
     [descripString appendString:@"===============================================================\n"];
     return descripString;
 }
-
 @end

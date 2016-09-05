@@ -89,9 +89,9 @@
 - (HttpRequest *)requestWithrequestName:(NSString *)requestName
                      URLString:(NSString *)URLString
                     parameters:(id)parameters
-                        isPOST:(BOOL)isPOST {
+                        isGET:(BOOL)isGET {
     
-    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:isPOST?@"POST":@"GET" URLString:URLString parameters:parameters error:nil];
+    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:isGET?@"GET":@"POST" URLString:URLString parameters:parameters error:nil];
     
     //设置请求的显示信息
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:NormalTask] requestName:requestName requestPath:URLString parameters:parameters urlRequest:request];
@@ -159,9 +159,9 @@
  *
  *  @return HttpRequest
  */
-- (HttpRequest *)uploadRequestWithrequestName:(NSString *)requestName URLString:(NSString *)URLString parameters:(id)parameters PhotoFile:(NSArray *)PhotoFile isPOST:(BOOL)isPOST {
+- (HttpRequest *)uploadRequestWithrequestName:(NSString *)requestName URLString:(NSString *)URLString parameters:(id)parameters PhotoFile:(NSArray *)PhotoFile isGET:(BOOL)isGET {
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:isPOST?@"POST":@"GET" URLString:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:isGET?@"GET":@"POST" URLString:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (id imageModel in PhotoFile) {
             if([imageModel isKindOfClass:[UploadModel class]]) {
@@ -553,6 +553,23 @@
     
 }
 
+#pragma mark setProperty
+- (void)setRequestName:(NSString *)requestName {
+    if(![requestName isEqualToString:@""] && requestName) {
+        _requestName = requestName;
+    }else {
+        _requestName = @"无";
+    }
+}
+
+- (void)setRequestPath:(NSString *)requestPath {
+    if(![requestPath isEqualToString:@""] && requestPath) {
+        _requestPath = requestPath;
+    }else {
+        _requestPath = @"无";
+    }
+}
+
 #pragma mark description
 
 -(NSString *)description{
@@ -563,8 +580,8 @@
     [descripString appendFormat:@"Request Name:%@\n",self.requestName];
     [descripString appendFormat:@"Request Url:%@\n",self.requestPath];
     [descripString appendFormat:@"Request Methods:%@\n",[self.urlRequest HTTPMethod]];
-    [descripString appendFormat:@"Request params:\n%@\n",self.params];
-    [descripString appendFormat:@"Request header:\n%@\n",[self.urlRequest allHTTPHeaderFields]];
+    [descripString appendFormat:@"Request params:\n%@\n",self.params?self.params:@"无"];
+    [descripString appendFormat:@"Request header:\n%@\n",[self.urlRequest allHTTPHeaderFields]?[self.urlRequest allHTTPHeaderFields]:@"无"];
     [descripString appendString:@"===============================================================\n"];
     return descripString;
 }

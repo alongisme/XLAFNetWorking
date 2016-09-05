@@ -72,6 +72,31 @@
     
 }
 
+#pragma mark setProperty
+- (void)setResponseName:(NSString *)responseName {
+    if(![responseName isEqualToString:@""] && responseName) {
+        _responseName = responseName;
+    }else {
+        _responseName = @"";
+    }
+}
+
+- (void)setErrorCode:(NSString *)errorCode {
+    if(![errorCode isEqualToString:@""] && errorCode) {
+        _errorCode = errorCode;
+    }else {
+        _errorCode = @"无";
+    }
+}
+
+- (void)setErrorMsg:(NSString *)errorMsg {
+    if(![errorMsg isEqualToString:@""] && errorMsg) {
+        _errorMsg = errorMsg;
+    }else {
+        _errorMsg = @"无";
+    }
+}
+
 #pragma mark description
 -(NSString *)description{
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];

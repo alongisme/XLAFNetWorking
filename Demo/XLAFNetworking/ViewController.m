@@ -19,17 +19,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    
+    [self normalTaskTest];
 }
 
 - (void)normalTaskTest {
-    HttpRequestMode *requsetMode = [[HttpRequestMode alloc]init];
-    requsetMode.name = @"测试";
-    requsetMode.url = @"";
-    requsetMode.parameters = @{};
-    requsetMode.isPost = YES;
+    HttpRequestMode *requestMode = [[HttpRequestMode alloc]init];
+//    requestMode.SetName(@"普通").SetUrl(@"asd").SetIsGET(@(0)).SetParameters(@{@"a":@"b"});
     
-    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requsetMode success:^(HttpRequest *request, HttpResponse *response) {
+    
+    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode success:^(HttpRequest *request, HttpResponse *response) {
         
     } failure:^(HttpRequest *request, HttpResponse *response) {
         
@@ -45,7 +43,6 @@
     HttpRequestMode *requestMode = [HttpRequestMode new];
     requestMode.name = @"上传";
     requestMode.url = @"";
-//    requestMode.isPost = YES;
     UploadModel *model = [[UploadModel alloc]initWithUploadModelfileData:[[NSBundle mainBundle]pathForResource:@"" ofType:@""] name:@"" fileName:@"" mimeType:@""];
 
     requestMode.uploadModels = @[model];
@@ -64,10 +61,12 @@
 }
 
 - (void)downloadTaskTest {
-    HttpRequestMode *requestMode = [HttpRequestMode new];
-    requestMode.name = @"下载";
-    requestMode.url = @"";
     
+    
+    
+    HttpRequestMode *requestMode = [HttpRequestMode new];
+  
+    requestMode.SetName(@"下载").SetUrl(@"asd").SetParameters(@{@"a":@"b"});
     
     [[HttpClient sharedInstance]downloadPhotoWithHttpRequestMode:requestMode progress:^(HttpFileLoadProgress *uploadProgress) {
         

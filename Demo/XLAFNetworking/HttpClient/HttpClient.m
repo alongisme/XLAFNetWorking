@@ -49,7 +49,7 @@ static HttpClient *httpClient = nil;
                       requsetStart:(RequstStartBlock)requestStart
                        responseEnd:(ResponseEndBlock)responseEnd {
     
-    return [self requestBaseWithName:requestMode.name url:requestMode.url parameters:requestMode.parameters isPost:requestMode.isPost success:^(HttpRequest *request, HttpResponse *response) {
+    return [self requestBaseWithName:requestMode.name url:requestMode.url parameters:requestMode.parameters isGET:requestMode.isGET success:^(HttpRequest *request, HttpResponse *response) {
         success(request,response);
     } failure:failure requsetStart:requestStart responseEnd:responseEnd];;
 }
@@ -63,7 +63,7 @@ static HttpClient *httpClient = nil;
   
     HttpRequest *uploadRequset = [[HttpRequest alloc]init];
     
-    [uploadRequset uploadRequestWithrequestName:requestMode.name URLString:requestMode.url parameters:requestMode.parameters PhotoFile:requestMode.uploadModels isPOST:requestMode.isPost];
+    [uploadRequset uploadRequestWithrequestName:requestMode.name URLString:requestMode.url parameters:requestMode.parameters PhotoFile:requestMode.uploadModels isGET:requestMode.isGET];
     
     [uploadRequset uploadStartRequsetWithUnitSize:UntiSizeIsKByte Progress:progress SuccessBlock:^(HttpRequest *request, HttpResponse *response) {
         //可以在这里转模型数据传出去 付给response.sourceModel
@@ -96,14 +96,14 @@ static HttpClient *httpClient = nil;
 
 
 //普通请求基类
-- (HttpRequest *)requestBaseWithName:(NSString *)name url:(NSString *)url parameters:(NSDictionary *)parameters isPost:(BOOL)isPost success:(CompletionHandlerSuccessBlock)success
+- (HttpRequest *)requestBaseWithName:(NSString *)name url:(NSString *)url parameters:(NSDictionary *)parameters isGET:(BOOL)isGET success:(CompletionHandlerSuccessBlock)success
                              failure:(CompletionHandlerFailureBlock)failure
                         requsetStart:(RequstStartBlock)requestStart
                          responseEnd:(ResponseEndBlock)responseEnd {
     
     HttpRequest *request = [[HttpRequest alloc]init];
     
-    [request requestWithrequestName:name URLString:url parameters:parameters isPOST:isPost];
+    [request requestWithrequestName:name URLString:url parameters:parameters isGET:isGET];
     
     [request startRequsetWithSuccessBlock:success FailedBlock:failure requsetStart:requestStart responseEnd:responseEnd];
     

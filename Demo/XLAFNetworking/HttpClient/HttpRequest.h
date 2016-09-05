@@ -153,7 +153,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 - (HttpRequest *)requestWithrequestName:(NSString *)requestName
                               URLString:(NSString *)URLString
                              parameters:(id)parameters
-                                 isPOST:(BOOL)isPOST;
+                                 isGET:(BOOL)isGET;
 
 /**
  *  开始请求
@@ -180,7 +180,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *
  *  @return HttpRequest
  */
-- (HttpRequest *)uploadRequestWithrequestName:(NSString *)requestName URLString:(NSString *)URLString parameters:(id)parameters PhotoFile:(NSArray *)PhotoFile isPOST:(BOOL)isPOST;
+- (HttpRequest *)uploadRequestWithrequestName:(NSString *)requestName URLString:(NSString *)URLString parameters:(id)parameters PhotoFile:(NSArray *)PhotoFile isGET:(BOOL)isGET;
 
 /**
  *  上传任务开始请求

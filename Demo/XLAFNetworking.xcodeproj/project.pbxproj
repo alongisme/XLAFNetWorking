@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		008A1FC71D50A76F00940BAA /* NSObject+ALFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 008A1FC61D50A76F00940BAA /* NSObject+ALFormat.m */; };
 		844150251D767DE700A208DC /* HttpRequestMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 844150241D767DE700A208DC /* HttpRequestMode.m */; };
 		84D14C351D473B4900266602 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C341D473B4900266602 /* main.m */; };
 		84D14C381D473B4900266602 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C371D473B4900266602 /* AppDelegate.m */; };
@@ -23,8 +22,6 @@
 		84D14C8A1D473BFA00266602 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C701D473BFA00266602 /* AFURLRequestSerialization.m */; };
 		84D14C8B1D473BFA00266602 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C721D473BFA00266602 /* AFURLResponseSerialization.m */; };
 		84D14C8C1D473BFA00266602 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C741D473BFA00266602 /* AFURLSessionManager.m */; };
-		84D14C8D1D473BFA00266602 /* NSMutableDictionary+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C781D473BFA00266602 /* NSMutableDictionary+Category.m */; };
-		84D14C8E1D473BFA00266602 /* NSString+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C7A1D473BFA00266602 /* NSString+Category.m */; };
 		84D14C8F1D473BFA00266602 /* HttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C7C1D473BFA00266602 /* HttpClient.m */; };
 		84D14C901D473BFA00266602 /* HttpError.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C7E1D473BFA00266602 /* HttpError.m */; };
 		84D14C911D473BFA00266602 /* HttpFileLoadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C801D473BFA00266602 /* HttpFileLoadProgress.m */; };
@@ -51,8 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008A1FC51D50A76F00940BAA /* NSObject+ALFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ALFormat.h"; sourceTree = "<group>"; };
-		008A1FC61D50A76F00940BAA /* NSObject+ALFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ALFormat.m"; sourceTree = "<group>"; };
 		844150231D767DE700A208DC /* HttpRequestMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestMode.h; sourceTree = "<group>"; };
 		844150241D767DE700A208DC /* HttpRequestMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestMode.m; sourceTree = "<group>"; };
 		84D14C301D473B4900266602 /* XLAFNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLAFNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,11 +79,6 @@
 		84D14C721D473BFA00266602 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		84D14C731D473BFA00266602 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		84D14C741D473BFA00266602 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		84D14C761D473BFA00266602 /* AppCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCategory.h; sourceTree = "<group>"; };
-		84D14C771D473BFA00266602 /* NSMutableDictionary+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Category.h"; sourceTree = "<group>"; };
-		84D14C781D473BFA00266602 /* NSMutableDictionary+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Category.m"; sourceTree = "<group>"; };
-		84D14C791D473BFA00266602 /* NSString+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Category.h"; sourceTree = "<group>"; };
-		84D14C7A1D473BFA00266602 /* NSString+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Category.m"; sourceTree = "<group>"; };
 		84D14C7B1D473BFA00266602 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
 		84D14C7C1D473BFA00266602 /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
 		84D14C7D1D473BFA00266602 /* HttpError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpError.h; sourceTree = "<group>"; };
@@ -195,7 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				84D14C671D473BFA00266602 /* AFNetworking */,
-				84D14C751D473BFA00266602 /* Category */,
 				84D14C7B1D473BFA00266602 /* HttpClient.h */,
 				84D14C7C1D473BFA00266602 /* HttpClient.m */,
 				84D14C7D1D473BFA00266602 /* HttpError.h */,
@@ -232,20 +221,6 @@
 				84D14C741D473BFA00266602 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		84D14C751D473BFA00266602 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				84D14C761D473BFA00266602 /* AppCategory.h */,
-				84D14C771D473BFA00266602 /* NSMutableDictionary+Category.h */,
-				84D14C781D473BFA00266602 /* NSMutableDictionary+Category.m */,
-				84D14C791D473BFA00266602 /* NSString+Category.h */,
-				84D14C7A1D473BFA00266602 /* NSString+Category.m */,
-				008A1FC51D50A76F00940BAA /* NSObject+ALFormat.h */,
-				008A1FC61D50A76F00940BAA /* NSObject+ALFormat.m */,
-			);
-			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,7 +358,6 @@
 				84D14C901D473BFA00266602 /* HttpError.m in Sources */,
 				84D14C381D473B4900266602 /* AppDelegate.m in Sources */,
 				84D14C911D473BFA00266602 /* HttpFileLoadProgress.m in Sources */,
-				84D14C8D1D473BFA00266602 /* NSMutableDictionary+Category.m in Sources */,
 				84D14C881D473BFA00266602 /* AFNetworkReachabilityManager.m in Sources */,
 				844150251D767DE700A208DC /* HttpRequestMode.m in Sources */,
 				84D14C351D473B4900266602 /* main.m in Sources */,
@@ -391,10 +365,8 @@
 				84D14C8F1D473BFA00266602 /* HttpClient.m in Sources */,
 				84D14C891D473BFA00266602 /* AFSecurityPolicy.m in Sources */,
 				84D14C8A1D473BFA00266602 /* AFURLRequestSerialization.m in Sources */,
-				84D14C8E1D473BFA00266602 /* NSString+Category.m in Sources */,
 				84D14C941D473BFA00266602 /* UploadModel.m in Sources */,
 				84D14C8B1D473BFA00266602 /* AFURLResponseSerialization.m in Sources */,
-				008A1FC71D50A76F00940BAA /* NSObject+ALFormat.m in Sources */,
 				84D14C921D473BFA00266602 /* HttpRequest.m in Sources */,
 				84D14C871D473BFA00266602 /* AFHTTPSessionManager.m in Sources */,
 			);
