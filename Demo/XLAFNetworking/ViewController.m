@@ -18,14 +18,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-    [self normalTaskTest];
 }
 
 - (void)normalTaskTest {
     HttpRequestMode *requestMode = [[HttpRequestMode alloc]init];
 //    requestMode.SetName(@"普通").SetUrl(@"asd").SetIsGET(@(0)).SetParameters(@{@"a":@"b"});
-    
     
     [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode success:^(HttpRequest *request, HttpResponse *response) {
         
@@ -36,6 +33,8 @@
     } responseEnd:^{
         
     }];
+    
+
 }
 
 - (void)uploadTaskTest {
@@ -61,8 +60,6 @@
 }
 
 - (void)downloadTaskTest {
-    
-    
     
     HttpRequestMode *requestMode = [HttpRequestMode new];
   

@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "FBAssociationManager.h"
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
+        [FBAssociationManager hook];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

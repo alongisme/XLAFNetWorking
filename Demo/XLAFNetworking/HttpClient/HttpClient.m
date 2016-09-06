@@ -103,7 +103,7 @@ static HttpClient *httpClient = nil;
     
     HttpRequest *request = [[HttpRequest alloc]init];
     
-    [request requestWithrequestName:name URLString:url parameters:parameters isGET:isGET];
+    [request requestWithrequestName:name URLString:url?url:@"" parameters:parameters isGET:isGET];
     
     [request startRequsetWithSuccessBlock:success FailedBlock:failure requsetStart:requestStart responseEnd:responseEnd];
     
