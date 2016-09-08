@@ -24,9 +24,9 @@
     
     NSDictionary *errorInfo = [error userInfo];
     
-    self.localizedDescription = [errorInfo objectForKey:@"NSLocalizedDescription"];
+    _localizedDescription = [errorInfo objectForKey:@"NSLocalizedDescription"];
 
-    self.failingURLString = [errorInfo objectForKey:@"NSErrorFailingURLStringKey"];
+    _failingURLString = [errorInfo objectForKey:@"NSErrorFailingURLStringKey"];
 
     NSError *err = [errorInfo objectForKey:@"NSUnderlyingError"];
   
@@ -85,8 +85,8 @@
         errorMsg = @"网络连接已中断";
     }
     
-    self.errorCode = [NSString stringWithFormat:@"%ld",err.code];
-    self.errorMsg = errorMsg;
+    _errorCode = [NSString stringWithFormat:@"%ld",err.code];
+    _errorMsg = errorMsg;
 }
 
 #pragma mark setProperty
@@ -134,11 +134,11 @@
 -(NSString *)description {
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Response Info===========================\n"];
-    [descripString appendFormat:@"Response Name:  %@\n",self.responseName];
-    [descripString appendFormat:@"error URL:  %@\n",self.failingURLString];
-    [descripString appendFormat:@"error Content:  %@\n",self.localizedDescription];
-    [descripString appendFormat:@"error Code:  %@\n",self.errorCode];
-    [descripString appendFormat:@"error message:  %@\n",self.errorMsg];
+    [descripString appendFormat:@"Response Name:  %@\n",_responseName];
+    [descripString appendFormat:@"error URL:  %@\n",_failingURLString];
+    [descripString appendFormat:@"error Content:  %@\n",_localizedDescription];
+    [descripString appendFormat:@"error Code:  %@\n",_errorCode];
+    [descripString appendFormat:@"error message:  %@\n",_errorMsg];
     [descripString appendString:@"===============================================================\n"];
     return descripString;
 }

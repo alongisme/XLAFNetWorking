@@ -8,22 +8,25 @@
 
 #import "HttpRequest.h"
 #import "UploadModel.h"
+#import "OffLineCache.h"
 
 @interface HttpRequest () {
     CFAbsoluteTime startTime;//记录请求开始的时候
 }
-@property (nonatomic,strong)NSURLSessionDataTask *dataTask;//数据任务
-@property (nonatomic,strong)NSURLSessionUploadTask *uploadTask;//上传任务
-@property (nonatomic,strong)NSURLSessionDownloadTask *downloadTask;//下载任务
+@property (nonatomic,strong) NSURLSessionDataTask *dataTask;//数据任务
+@property (nonatomic,strong) NSURLSessionUploadTask *uploadTask;//上传任务
+@property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;//下载任务
 @end
 
 @implementation HttpRequest
-
+- (void)dealloc {
+    NSLog(@"*******************");
+}
 #pragma mark init 初始化
 -(instancetype)init {
     if(self == [super init]) {
         //请求格式 //统一只使用二进制
-        self.requestSerializer = [AFHTTPRequestSerializer serializer];
+        _requestSerializer = [AFHTTPRequestSerializer serializer];
        }
     return self;
 }
@@ -38,9 +41,10 @@
  *  4 未知
  *  @param block 回调
  */
-- (void)checkNetworkingStatus:(NetworingStautBlock)block {
+- (void)checkNetworkingStatus:(NetwokingStatusBlcok)block {
+    
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        
+
         switch (status) {
                 
             case AFNetworkReachabilityStatusNotReachable:
@@ -48,6 +52,7 @@
                 if(block) {
                     block(1);
                 }
+                
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
                 //WiFi
@@ -91,7 +96,7 @@
                     parameters:(id)parameters
                         isGET:(BOOL)isGET {
     
-    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:isGET?@"GET":@"POST" URLString:URLString parameters:parameters error:nil];
+    NSMutableURLRequest *request = [_requestSerializer requestWithMethod:isGET?@"GET":@"POST" URLString:URLString parameters:parameters error:nil];
     
     //设置请求的显示信息
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:NormalTask] requestName:requestName requestPath:URLString parameters:parameters urlRequest:request];
@@ -124,26 +129,29 @@
     
     //结束回调
     if(responseEnd) {
-        self.endBlock = responseEnd;
+        _endBlock = responseEnd;
     }
     
-    self.dataTask = [[AFHTTPSessionManager manager]dataTaskWithRequest:self.urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    __weak typeof(self) weakSelf = self;
+    
+    _dataTask = [[AFHTTPSessionManager manager]dataTaskWithRequest:_urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if(error) {
+            //有错误
+            [weakSelf handleRequestErrorWitherror:error FailedBlock:failedBlock];
+        }else {
+            //无错误
+            [weakSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
+        }
         
         //响应结束
         if(responseEnd) {
             responseEnd();
         }
         
-        if(error) {
-            //有错误
-            [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
-        }else {
-            //无错误
-            [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
-        }
     }];
         
-    [self.dataTask resume];
+    [_dataTask resume];
     
 }
 
@@ -210,16 +218,16 @@
     
     //结束回调
     if(responseEnd) {
-        self.endBlock = responseEnd;
+        _endBlock = responseEnd;
     }
     
     //创建管理者
-    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:self.configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:_configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     //进度条数据
     __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
     
-    self.uploadTask = [mamager uploadTaskWithStreamedRequest:self.urlRequest progress:^(NSProgress * _Nonnull uploadProgress) {
+    _uploadTask = [mamager uploadTaskWithStreamedRequest:_urlRequest progress:^(NSProgress * _Nonnull uploadProgress) {
         
         if(Progress) {
             //进度
@@ -237,21 +245,19 @@
 
         
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-        
-        //响应结束
-        if(responseEnd) {
-            responseEnd();
-        }
-        
         if(error) {
             [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
         }else {
             [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
         }
         
+        //响应结束
+        if(responseEnd) {
+            responseEnd();
+        }
     }];
     
-    [self.uploadTask resume];
+    [_uploadTask resume];
 }
 
 #pragma mark 下载任务
@@ -301,16 +307,16 @@
     
     //结束回调
     if(responseEnd) {
-        self.endBlock = responseEnd;
+        _endBlock = responseEnd;
     }
         
     //创建管理者
-    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:self.configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:_configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     //进度条数据
     __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
     
-    self.downloadTask = [mamager downloadTaskWithRequest:self.urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
+    _downloadTask = [mamager downloadTaskWithRequest:_urlRequest progress:^(NSProgress * _Nonnull downloadProgress) {
         
         if(Progress) {
             httpFileLoadProgress.loadProgress = downloadProgress.completedUnitCount;
@@ -347,11 +353,6 @@
         
         //设置下载完成操作
         
-        //响应结束
-        if(responseEnd) {
-            responseEnd();
-        }
-        
         // filePath就是你下载文件的位置，你可以解压，也可以直接拿来使用
         
         if(error) {
@@ -360,10 +361,14 @@
             [self handleDownloadSuccessBlockDataWithdownloadResponse:response filePath:filePath SuccessBlock:successBlock FailedBlock:failedBlock];
         }
         
+        //响应结束
+        if(responseEnd) {
+            responseEnd();
+        }
         
     }];
 
-    [self.downloadTask resume];
+    [_downloadTask resume];
     
 }
 
@@ -379,17 +384,19 @@
  */
 - (void)setRequsetDisplayInfoWithrequestType:(NSString *)requestType requestName:(NSString *)requestName requestPath:(NSString *)requestPath parameters:(NSMutableDictionary *)parameters urlRequest:(NSMutableURLRequest *)urlRequest {
     
-    self.requestType = requestType;
+    _requestType = requestType;
     
-    self.requestName = requestName;
+    _requestName = requestName;
     
-    self.requestPath = requestPath;
+    _requestPath = requestPath;
     
-    self.params = parameters;
+    _params = parameters;
     
-    self.urlRequest = urlRequest;
+    _urlRequest = urlRequest;
     
-    (_timeoutInterval != 0 )?([urlRequest setTimeoutInterval:_timeoutInterval]):([urlRequest setTimeoutInterval:TIMEOUTINTERVAL]);
+    if(_timeoutInterval == 0) {
+        _timeoutInterval = TIMEOUTINTERVAL;
+    }
     
 }
 
@@ -425,15 +432,17 @@
     
     //响应数据处理
     HttpResponse *response = [[HttpResponse alloc]init];
-    response.responseName = [NSString stringWithFormat:@"%@响应",self.requestName];
+    response.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
     [response loadResopnseWithObjectData:responseData];
     
     DLOG(@"%@",response);
     DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
-    
+
     //判断服务器是否返回成功
     if(response.isSuccess) {
         if(successBlock) {
+            //创建离线缓存
+            [[OffLineCache new] createOffLineDataWithRequest:self Response:response];
             successBlock(self,response);
         }
     }else {
@@ -460,7 +469,7 @@
     //响应数据处理
     HttpResponse *response = [[HttpResponse alloc]init];
     
-    response.responseName = [NSString stringWithFormat:@"%@响应",self.requestName];
+    response.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
     
     response.result = @{@"file path is":filePath?filePath:@"nil"};
     
@@ -483,11 +492,11 @@
                         FailedBlock:(CompletionHandlerFailureBlock)failedBlock {
     
     HttpError *httpError = [[HttpError alloc]init];
-    httpError.responseName = [NSString stringWithFormat:@"%@响应",self.requestName];
+    httpError.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
     [httpError handleHttpError:error];
 
     HttpResponse *response = [[HttpResponse alloc]init];
-    response.ObjectData = [error userInfo];
+    response.objectData = [error userInfo];
     response.errorMsg = httpError.localizedDescription;
     response.httpError = httpError;
     
@@ -526,6 +535,18 @@
     }
 }
 
+#pragma mark 缓存
+/**
+ *  获取缓存数据
+ */
+- (void)getCacheDataWithRequestPath:(NSString *)requestPath Success:(CompletionHandlerSuccessBlock)success {
+    if(success) {
+        OffLineCache *offLineCache = [[OffLineCache alloc]init];
+        success([offLineCache getRequestCacheWithRequestPath:requestPath],[offLineCache getResponseCacheWithRequestPath:requestPath]);
+    }
+}
+
+
 #pragma mark 取消任务
 /**
  *  取消请求
@@ -547,8 +568,8 @@
         _downloadTask = nil;
     }
     
-    if(self.endBlock) {
-        self.endBlock();
+    if(_endBlock) {
+        _endBlock();
     }
     
 }
@@ -576,12 +597,12 @@
     
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Request Info==========================\n"];
-    [descripString appendFormat:@"Request Type:%@\n",self.requestType];
-    [descripString appendFormat:@"Request Name:%@\n",self.requestName];
-    [descripString appendFormat:@"Request Url:%@\n",self.requestPath];
-    [descripString appendFormat:@"Request Methods:%@\n",[self.urlRequest HTTPMethod]];
-    [descripString appendFormat:@"Request params:\n%@\n",self.params?self.params:@"无"];
-    [descripString appendFormat:@"Request header:\n%@\n",[self.urlRequest allHTTPHeaderFields]?[self.urlRequest allHTTPHeaderFields]:@"无"];
+    [descripString appendFormat:@"Request Type:%@\n",_requestType];
+    [descripString appendFormat:@"Request Name:%@\n",_requestName];
+    [descripString appendFormat:@"Request Url:%@\n",_requestPath];
+    [descripString appendFormat:@"Request Methods:%@\n",[_urlRequest HTTPMethod]];
+    [descripString appendFormat:@"Request params:\n%@\n",_params?_params:@"无"];
+    [descripString appendFormat:@"Request header:\n%@\n",[_urlRequest allHTTPHeaderFields]?[_urlRequest allHTTPHeaderFields]:@"无"];
     [descripString appendString:@"===============================================================\n"];
     return descripString;
 }

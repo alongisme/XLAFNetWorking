@@ -13,26 +13,26 @@
 /**
  *  响应名字
  */
-@property (nonatomic,strong)NSString *responseName;
+@property (nonatomic,strong) NSString *responseName;
 
 /**
  *  错误的URL
  */
-@property (nonatomic,strong)NSString *failingURLString;
+@property (nonatomic,strong) NSString *failingURLString;
 
 /**
  *  错误信息
  */
-@property (nonatomic,strong)NSString *localizedDescription;
+@property (nonatomic,strong) NSString *localizedDescription;
 /**
  *  错误代码
  */
-@property (nonatomic,strong)NSString *errorCode;
+@property (nonatomic,strong) NSString *errorCode;
 
 /**
  *  错误信息
  */
-@property (nonatomic,strong)NSString *errorMsg;
+@property (nonatomic,strong) NSString *errorMsg;
 
 /**
  *  处理错误

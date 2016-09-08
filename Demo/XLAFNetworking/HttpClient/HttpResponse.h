@@ -22,42 +22,47 @@
 /**
  *  是否成功
  */
-@property (nonatomic,assign)BOOL isSuccess;
+@property (nonatomic,assign) BOOL isSuccess;
 
 /**
  *  响应名字
  */
-@property (nonatomic,strong)NSString *responseName;
+@property (nonatomic,strong) NSString *responseName;
 
 /**
  *  错误代码
  */
-@property (nonatomic,strong)NSString *errorCode;
+@property (nonatomic,strong) NSString *errorCode;
 
 /**
  *  错误信息
  */
-@property (nonatomic,strong)NSString *errorMsg;
+@property (nonatomic,strong) NSString *errorMsg;
 
 /**
  *  未处理之前的数据
  */
-@property (nonatomic,assign)NSDictionary *ObjectData;
+@property (nonatomic,assign) NSDictionary *objectData;
+
+/**
+ *  data数据
+ */
+@property (nonatomic,strong) NSData *responseObject;
 
 /**
  *  结果数据
  */
-@property (nonatomic,strong)NSDictionary *result;
+@property (nonatomic,strong) NSDictionary *result;
 
 /**
  *  可以存放处理后的模型数据
  */
-@property (nonatomic,assign)id sourceModel;
+@property (nonatomic,assign) id sourceModel;
 
 /**
  *  错误
  */
-@property (nonatomic,strong)HttpError *httpError;
+@property (nonatomic,strong) HttpError *httpError;
 
 /**
  *  响应返回数据处理

@@ -31,7 +31,7 @@
  *  4 未知
  *  @param block 回调
  */
-- (void)checkNetworkingStatus:(NetworingStautBlock)block;
+- (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
 
 #pragma mark ----------------------Create Request----------------------
 
@@ -46,7 +46,7 @@
  *
  *  @return 返回请求对象
  */
-- (HttpRequest *)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
+- (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
                                        success:(CompletionHandlerSuccessBlock)success
                                        failure:(CompletionHandlerFailureBlock)failure
                                   requsetStart:(RequstStartBlock)requestStart

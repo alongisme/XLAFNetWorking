@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "CacheCleanerPlugin.h"
+#import "RetainCycleLoggerPlugin.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+    FBMemoryProfiler *memoryProfiler;
+}
 
 @end
 
@@ -16,7 +20,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    memoryProfiler = [[FBMemoryProfiler alloc]initWithPlugins:@[[CacheCleanerPlugin new],[RetainCycleLoggerPlugin new]] retainCycleDetectorConfiguration:nil];
+    [memoryProfiler enable];
     return YES;
 }
 

@@ -24,11 +24,11 @@
 @class HttpResponse;
 @class HttpFileLoadProgress;
 
-typedef enum {
+typedef NS_ENUM(NSInteger,RequstType) {
     NormalTask = 0,//普通任务
     UploadTask,//上传任务
     DownloadTask //下载任务
-}RequstType;
+};
 
 /**
  *  网络状态
@@ -38,7 +38,7 @@ typedef enum {
  *  4 未知
  *  @param int 状态值
  */
-typedef void(^NetworingStautBlock)(int status);
+typedef void(^NetwokingStatusBlcok)(AFNetworkReachabilityStatus status);
 
 /**
  *  请求开始回调
@@ -86,7 +86,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  超时时间
  */
-@property (nonatomic,assign)NSUInteger timeoutInterval;
+@property (nonatomic,assign) NSUInteger timeoutInterval;
 
 /**
  *  请求类型
@@ -110,22 +110,22 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  请求
  */
-@property (nonatomic,strong)NSMutableURLRequest *urlRequest;
+@property (nonatomic,strong) NSMutableURLRequest *urlRequest;
 
 /**
  *  方便设置其他属性例如请求头
  */
-@property (nonatomic,strong)AFHTTPRequestSerializer *requestSerializer;
+@property (nonatomic,strong) AFHTTPRequestSerializer *requestSerializer;
 
 /**
  *  配置选项 配置session模式
  */
-@property (nonatomic,strong)NSURLSessionConfiguration *configuration;
+@property (nonatomic,strong) NSURLSessionConfiguration *configuration;
 
 /**
  *  响应失败回调
  */
-@property (nonatomic,copy)ResponseEndBlock endBlock;
+@property (nonatomic,copy) ResponseEndBlock endBlock;
 
 #pragma mark 判断网络状态
 /**
@@ -137,9 +137,10 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *  4 未知
  *  @param block 回调
  */
-- (void)checkNetworkingStatus:(NetworingStautBlock)block;
+- (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
 
 #pragma mark POST-GET请求
+
 /**
  *  创建请求
  *
@@ -229,10 +230,15 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
                             requsetStart:(RequstStartBlock)requestStart
                              responseEnd:(ResponseEndBlock)responseEnd;
 
+/**
+ *  获取缓存数据
+ */
+- (void)getCacheDataWithRequestPath:(NSString *)requestPath Success:(CompletionHandlerSuccessBlock)success;
 
 #pragma mark 取消任务
 /**
  *  取消请求
  */
 - (void)cannel;
+
 @end

@@ -10,21 +10,29 @@
 #import "HttpClient.h"
 
 
-@interface ViewController () 
+@interface ViewController () {
+    UITextView *textView;
+}
 
 @end
 
 @implementation ViewController
-
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self normalTaskTest];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    textView = [[UITextView alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:textView];
+    [self normalTaskTest];
 }
 
 - (void)normalTaskTest {
     HttpRequestMode *requestMode = [[HttpRequestMode alloc]init];
-//    requestMode.SetName(@"普通").SetUrl(@"asd").SetIsGET(@(0)).SetParameters(@{@"a":@"b"});
+    requestMode.SetName(@"普通").SetUrl(@"http://test.3tichina.com:8023/aiya/m/patient/findPatientList").SetIsGET(@(0)).SetParameters(@{@"nextPage":@"0",@"pageSize":@"10",@"status":@"1",@"sortData":@"",@"jsonFilter":@"{}"});
     
     [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode success:^(HttpRequest *request, HttpResponse *response) {
+        
         
     } failure:^(HttpRequest *request, HttpResponse *response) {
         
@@ -79,9 +87,6 @@
   
 }
 
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [[HttpClient sharedInstance]checkNetworkingStatus:nil];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

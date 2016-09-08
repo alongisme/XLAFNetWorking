@@ -11,54 +11,54 @@
 /**
  单位
  */
-typedef enum {
+typedef NS_ENUM(NSInteger,UnitSize) {
     UntiSizeIsByte = 0,
     UntiSizeIsKByte,
     UntiSizeIsMByte,
     UntiSizeIsGByte
-}UnitSize;
+};
 
 @interface HttpFileLoadProgress : NSObject
 
 /**
  *  //加载值 默认单位b
  */
-@property (nonatomic,assign)float loadProgress;
+@property (nonatomic,assign) float loadProgress;
 
 /**
  *  加载大小 单位kb
  */
-@property (nonatomic,assign)float loadProgressKb;
+@property (nonatomic,assign) float loadProgressKb;
 /**
  *  加载大小 单位Mb
  */
-@property (nonatomic,assign)float loadProgressMb;
+@property (nonatomic,assign) float loadProgressMb;
 /**
  *  加载大小 单位Gb
  */
-@property (nonatomic,assign)float loadProgressGb;
+@property (nonatomic,assign) float loadProgressGb;
 
 /**
  *  //总大小 默认单位b
  */
-@property (nonatomic,assign)int64_t maxSize;
+@property (nonatomic,assign) int64_t maxSize;
 
 /**
  *  加载大小 单位kb
  */
-@property (nonatomic,assign)double maxSizeKb;
+@property (nonatomic,assign) double maxSizeKb;
 /**
  *  加载大小 单位Mb
  */
-@property (nonatomic,assign)double maxSizeMb;
+@property (nonatomic,assign) double maxSizeMb;
 /**
  *  加载大小 单位Gb
  */
-@property (nonatomic,assign)double maxSizeGb;
+@property (nonatomic,assign) double maxSizeGb;
 /**
  *  //加载百分比
  */
-@property (nonatomic,assign)double loadFractionCompleted;
+@property (nonatomic,assign) double loadFractionCompleted;
 
 /**
  *  初始化
