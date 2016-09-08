@@ -15,12 +15,18 @@
 #define HTTPCLIENTSTART [HttpClient sharedInstance]
 
 @interface HttpClient : NSObject
+
+/**
+ *  是否debug模式 默认debug打印数据
+ */
+@property (nonatomic,assign,readwrite) BOOL debugMode;
+
 /**
  *  单例
  *
  *  @return 返回实例
  */
-+ (id)sharedInstance;
++ (HttpClient *)sharedInstance;
 
 /**
  *  校验网络状态

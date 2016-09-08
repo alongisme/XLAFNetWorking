@@ -7,6 +7,7 @@
 //
 
 #import "HttpRequest.h"
+#import "HttpClient.h"
 #import "UploadModel.h"
 #import "OffLineCache.h"
 
@@ -99,7 +100,8 @@
     //设置请求的显示信息
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:NormalTask] requestName:requestName requestPath:URLString parameters:parameters urlRequest:request];
     
-    DLOG(@"%@",self);
+    [self Log:self];
+//    DLOG(@"%@",self);
 
     return self;
 }
@@ -184,7 +186,8 @@
     //设置请求的显示信息
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:UploadTask] requestName:requestName requestPath:URLString parameters:parameters urlRequest:request];
     
-    DLOG(@"%@",self);
+    [self Log:self];
+//    DLOG(@"%@",self);
     
     return self;
 }
@@ -237,7 +240,8 @@
             
             Progress(httpFileLoadProgress);
             
-            DLOG(@"%@",httpFileLoadProgress);
+            [self Log:httpFileLoadProgress];
+//            DLOG(@"%@",httpFileLoadProgress);
         }
         
 
@@ -272,7 +276,8 @@
     //设置请求的显示信息
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:DownloadTask] requestName:requestName requestPath:URLString parameters:nil urlRequest:[[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:URLString]]];
     
-    DLOG(@"%@",self);
+    [self Log:self];
+//    DLOG(@"%@",self);
     
     return self;
 }
@@ -325,7 +330,9 @@
             
             Progress(httpFileLoadProgress);
             
-            DLOG(@"%@",httpFileLoadProgress);
+            [self Log:httpFileLoadProgress];
+            
+//            DLOG(@"%@",httpFileLoadProgress);
         }
         
 
@@ -421,7 +428,8 @@
             responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         }
         @catch (NSException *exception) {
-            DLOG(@"%@",exception);//数据有问题
+            [self Log:exception];
+//            DLOG(@"%@",exception);//数据有问题
         }
         @finally {
             
@@ -433,8 +441,11 @@
     response.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
     [response loadResopnseWithObjectData:responseData];
     
-    DLOG(@"%@",response);
-    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
+    [self Log:response];
+    [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
+    
+//    DLOG(@"%@",response);
+//    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
 
     //判断服务器是否返回成功
     if(response.isSuccess) {
@@ -471,8 +482,11 @@
     
     response.result = @{@"file path is":filePath?filePath:@"nil"};
     
-    DLOG(@"%@",response);
-    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
+    [self Log:response];
+    [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
+    
+//    DLOG(@"%@",response);
+//    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
     
     if(successBlock) {
         successBlock(self,response);
@@ -502,8 +516,10 @@
         failedBlock(self,response);
     }
     
-    DLOG(@"%@",httpError);
-    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
+    [self Log:httpError];
+    [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
+//    DLOG(@"%@",httpError);
+//    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
 }
 
 /**
@@ -591,7 +607,15 @@
 
 #pragma mark description
 
--(NSString *)description{
+- (void)Log:(id)str {
+#ifdef DEBUG
+    if([HttpClient sharedInstance].debugMode) {
+        DLOG(@"%@",str);
+    }
+#endif
+}
+
+- (NSString *)description{
     
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Request Info==========================\n"];

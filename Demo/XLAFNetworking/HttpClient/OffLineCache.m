@@ -15,7 +15,11 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
 @implementation OffLineCache
 
 + (void)initialize {
+    //注册
     [[JRDBMgr shareInstance] registerClazz:[self class]];
+    
+    //不显示sql语句
+    [[JRDBMgr shareInstance] setDebugMode:NO];
 }
 
 /**
@@ -90,6 +94,7 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
     offLineCache.requestName = request.requestName;
     offLineCache.requestPath = request.requestPath;
     offLineCache.requestParaters = [self returnDataWithRequsetDic:request.params key:ALKeyedArchiverWithParaDic];
+    offLineCache.responseName = [NSString stringWithFormat:@"%@缓存数据",request.requestName];
     offLineCache.responseData = [self returnDataWithRequsetDic:response.result key:ALKeyedArchiverWithResultDic];
 }
 

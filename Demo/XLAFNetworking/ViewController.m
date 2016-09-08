@@ -22,8 +22,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    textView = [[UITextView alloc]initWithFrame:self.view.bounds];
-    [self.view addSubview:textView];
+    
     [self normalTaskTest];
 }
 

@@ -21,13 +21,18 @@
 
 #pragma mark 单例
 static HttpClient *httpClient = nil;
-+ (id)sharedInstance {
++ (HttpClient *)sharedInstance {
     
     static dispatch_once_t predicate = 0;
     
     dispatch_once(&predicate, ^{
         if(httpClient == nil) {
             httpClient = [[HttpClient alloc]init];
+            
+#ifdef DEBUG
+            [httpClient setDebugMode:YES];
+#endif
+            
         }
     });
     

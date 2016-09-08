@@ -28,6 +28,10 @@
  */
 @property (nonatomic,strong) NSData *requestParaters;
 /**
+ *  响应名称
+ */
+@property (nonatomic,strong) NSString *responseName;
+/**
  *  请求结果数据
  */
 @property (nonatomic,strong) NSData *responseData;
