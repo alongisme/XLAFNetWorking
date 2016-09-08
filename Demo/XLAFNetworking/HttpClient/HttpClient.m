@@ -112,13 +112,16 @@ static HttpClient *httpClient = nil;
     
     httpRequest = [[HttpRequest alloc]init];
     
+    //校验网络状态
     [httpRequest checkNetworkingStatus:^(AFNetworkReachabilityStatus status) {
         
+        //如果是wifi和wan网就请求数据
         if(status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN) {
             
             [httpRequest requestWithrequestName:name URLString:url?url:@"" parameters:parameters isGET:isGET];
             [httpRequest startRequsetWithSuccessBlock:success FailedBlock:failure requsetStart:requestStart responseEnd:^{
                 
+                //请求结束后 清除request对象 
                 httpRequest = nil;
                 
                 if(responseEnd) {
@@ -127,9 +130,13 @@ static HttpClient *httpClient = nil;
             }];
         }else {
             
+            //其他网络状态就 获取缓存
             [httpRequest getCacheDataWithRequestPath:url Success:success];
             
         }
+        
+        //判断一次就停止
+        [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
         
     }];
     
