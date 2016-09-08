@@ -21,7 +21,7 @@
  *  @return obj
  */
 - (instancetype)initWithUploadModelfileData:(id)fileData name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType {
-    if(self == [super init]) {
+    if(self = [super init]) {
         
         self.fileData = [self checkData:fileData];
         

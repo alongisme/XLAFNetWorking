@@ -23,7 +23,7 @@
 static HttpClient *httpClient = nil;
 + (id)sharedInstance {
     
-    dispatch_once_t predicate = 0;
+    static dispatch_once_t predicate = 0;
     
     dispatch_once(&predicate, ^{
         if(httpClient == nil) {
