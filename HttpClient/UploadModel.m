@@ -20,8 +20,8 @@
  *
  *  @return obj
  */
-- (instancetype)initWithUploadModelfileData:(id)fileData name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType {
-    if(self == [super init]) {
+- (instancetype)initWithUploadModelFileData:(id)fileData Name:(NSString *)name FileName:(NSString *)fileName MimeType:(NSString *)mimeType {
+    if(self = [super init]) {
         
         self.fileData = [self checkData:fileData];
         
@@ -44,8 +44,8 @@
  *
  *  @return obj
  */
-+ (instancetype)UploadModelWithfileData:(id)fileData name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType {
-    return [[self alloc]initWithUploadModelfileData:fileData name:name fileName:fileName mimeType:mimeType];
++ (instancetype)UploadModelWithFileData:(id)fileData Name:(NSString *)name FileName:(NSString *)fileName MimeType:(NSString *)mimeType {
+    return [[self alloc]initWithUploadModelFileData:fileData Name:name FileName:fileName MimeType:mimeType];
 }
 
 /**

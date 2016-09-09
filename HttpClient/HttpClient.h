@@ -15,12 +15,23 @@
 #define HTTPCLIENTSTART [HttpClient sharedInstance]
 
 @interface HttpClient : NSObject
+
+/**
+ *  是否debug模式 默认debug打印数据
+ */
+@property (nonatomic,assign,readwrite) BOOL debugMode;
+
+/**
+ *  是否缓存
+ */
+@property (nonatomic,assign,readwrite) BOOL isCache;
+
 /**
  *  单例
  *
  *  @return 返回实例
  */
-+ (id)sharedInstance;
++ (HttpClient *)sharedInstance;
 
 /**
  *  校验网络状态
@@ -31,7 +42,7 @@
  *  4 未知
  *  @param block 回调
  */
-- (void)checkNetworkingStatus:(NetworingStautBlock)block;
+- (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
 
 #pragma mark ----------------------Create Request----------------------
 
@@ -46,11 +57,28 @@
  *
  *  @return 返回请求对象
  */
-- (HttpRequest *)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                       success:(CompletionHandlerSuccessBlock)success
-                                       failure:(CompletionHandlerFailureBlock)failure
-                                  requsetStart:(RequstStartBlock)requestStart
-                                   responseEnd:(ResponseEndBlock)responseEnd;
+- (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
+                                       Success:(CompletionHandlerSuccessBlock)success
+                                       Failure:(CompletionHandlerFailureBlock)failure
+                                  RequsetStart:(RequstStartBlock)requestStart
+                                   ResponseEnd:(ResponseEndBlock)responseEnd;
+
+/**
+ *  创建普通接口请求（带缓存）
+ *
+ *  @param requestMode  请求模型
+ *  @param success      成功回调
+ *  @param failure      失败回调
+ *  @param requestStart 请求开始回调
+ *  @param responseEnd  请求结束回调
+ *
+ *  @return 返回请求对象
+ */
+- (void)requestApiCacheWithHttpRequestMode:(HttpRequestMode *)requestMode
+                                   Success:(CompletionHandlerSuccessBlock)success
+                                   Failure:(CompletionHandlerFailureBlock)failure
+                              RequsetStart:(RequstStartBlock)requestStart
+                               ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  上传文件接口请求
@@ -65,11 +93,11 @@
  *  @return 返回请求对象
  */
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                       progress:(UploadProgressBlock)progress
-                                        success:(CompletionHandlerSuccessBlock)success
-                                        failure:(CompletionHandlerFailureBlock)failure
-                                   requsetStart:(RequstStartBlock)requestStart
-                                    responseEnd:(ResponseEndBlock)responseEnd;
+                                       Progress:(UploadProgressBlock)progress
+                                        Success:(CompletionHandlerSuccessBlock)success
+                                        Failure:(CompletionHandlerFailureBlock)failure
+                                   RequsetStart:(RequstStartBlock)requestStart
+                                    ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  下载文件接口请求
@@ -85,11 +113,11 @@
  *  @return 返回请求对象
  */
 - (HttpRequest *)downloadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                         progress:(UploadProgressBlock)progress
-                                      destination:(downloadDestinationBlock)destination
-                                          success:(CompletionHandlerSuccessBlock)success
-                                          failure:(CompletionHandlerFailureBlock)failure
-                                     requsetStart:(RequstStartBlock)requestStart
-                                      responseEnd:(ResponseEndBlock)responseEnd;
+                                         Progress:(UploadProgressBlock)progress
+                                      Destination:(downloadDestinationBlock)destination
+                                          Success:(CompletionHandlerSuccessBlock)success
+                                          Failure:(CompletionHandlerFailureBlock)failure
+                                     RequsetStart:(RequstStartBlock)requestStart
+                                      ResponseEnd:(ResponseEndBlock)responseEnd;
 
 @end

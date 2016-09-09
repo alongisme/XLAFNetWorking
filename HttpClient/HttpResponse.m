@@ -17,56 +17,56 @@
  *
  *  @param ObjectData 解析数据
  */
-- (void)loadResopnseWithObjectData:(NSDictionary *)ObjectData {
-    
-    self.ObjectData = ObjectData;
+- (void)loadResopnseWithObjectData:(NSDictionary *)objectData {
+        
+    _objectData = objectData;
     
     //数据解析
     
-    self.isSuccess = NO;
+    _isSuccess = NO;
     
-    if(ObjectData == nil) {
-        self.errorMsg = DATA_FORMAT_ERROR;
+    if(objectData == nil) {
+        _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if ([[[ObjectData objectForKey:@"code"] stringValue] isEqualToString:@"1"]) {
+    if ([[[objectData objectForKey:@"code"] stringValue] isEqualToString:@"1"]) {
         _isSuccess = YES;
     }else{
-        self.errorCode = [ObjectData objectForKey:@"code"];
+        _errorCode = [[objectData objectForKey:@"code"] stringValue];
         _isSuccess = NO;
     }
     
-    if (_isSuccess == NO && [ObjectData objectForKey:@"message"] == nil ) {
-        self.errorMsg = DATA_FORMAT_ERROR;
+    if (_isSuccess == NO && [objectData objectForKey:@"message"] == nil ) {
+        _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if (_isSuccess == YES && [ObjectData objectForKey:@"object"] == nil) {
-        self.errorMsg = DATA_FORMAT_ERROR;
+    if (_isSuccess == YES && [objectData objectForKey:@"object"] == nil) {
+        _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if(_isSuccess == NO && [ObjectData objectForKey:@"message"]) {
-        self.errorMsg = [ObjectData objectForKey:@"message"];
+    if(_isSuccess == NO && [objectData objectForKey:@"message"]) {
+        _errorMsg = [objectData objectForKey:@"message"];
         return;
     }
     
-    NSDictionary *result = [ObjectData objectForKey:@"object"];
+    NSDictionary *result = [objectData objectForKey:@"object"];
     
     if ([result isKindOfClass:[NSDictionary class]]) {
         _isSuccess = YES;
-        self.result = result;
+        _result = result;
     }
     else if ([result isKindOfClass:[NSArray class]]){
         _isSuccess = YES;
-        self.result = [NSDictionary dictionaryWithObject:result forKey:@"object"];
+        _result = [NSDictionary dictionaryWithObject:result forKey:@"object"];
     }else if(result != nil){
-        self.result = [NSDictionary dictionaryWithObject:result forKey:@"object"];
+        _result = [NSDictionary dictionaryWithObject:result forKey:@"object"];
     }
     else{
         _isSuccess = NO;
-        self.errorMsg = DATA_FORMAT_ERROR;
+        _errorMsg = DATA_FORMAT_ERROR;
     }
 
     
@@ -101,10 +101,10 @@
 -(NSString *)description{
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Response Info===========================\n"];
-    [descripString appendFormat:@"Response Name:%@\n",self.responseName];
-    [descripString appendFormat:@"Response Content:\n%@\n",self.result];
-    if(self.result == nil && self.isSuccess == NO) {
-        [descripString appendFormat:@"Response Error:\n%@\n",self.errorMsg];
+    [descripString appendFormat:@"Response Name:%@\n",_responseName];
+    [descripString appendFormat:@"Response Content:\n%@\n",_result];
+    if(_result == nil && _isSuccess == NO) {
+        [descripString appendFormat:@"Response Error:\n%@\n",_errorMsg];
     }
     [descripString appendString:@"===============================================================\n"];
     return descripString;

@@ -12,19 +12,19 @@
 /**
  *  文件数据
  */
-@property (nonatomic,strong)id fileData;
+@property (nonatomic,strong,readwrite) id fileData;
 /**
  *  参数名称
  */
-@property (nonatomic,strong)NSString *name;
+@property (nonatomic,strong,readwrite) NSString *name;
 /**
  *  文件名字
  */
-@property (nonatomic,strong)NSString *fileName;
+@property (nonatomic,strong,readwrite) NSString *fileName;
 /**
  *  文件类型
  */
-@property (nonatomic,strong)NSString *mimeType;
+@property (nonatomic,strong,readwrite) NSString *mimeType;
 
 /**
  *  初始化一个上传文件模型并复制(对象方法)
@@ -36,7 +36,7 @@
  *
  *  @return obj
  */
-- (instancetype)initWithUploadModelfileData:(id)fileData name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType;
+- (instancetype)initWithUploadModelFileData:(id)fileData Name:(NSString *)name FileName:(NSString *)fileName MimeType:(NSString *)mimeType;
 
 /**
  *  初始化一个上传文件模型并复制(实例方法)
@@ -48,5 +48,5 @@
  *
  *  @return obj
  */
-+ (instancetype)UploadModelWithfileData:(id)fileData name:(NSString *)name fileName:(NSString *)fileName mimeType:(NSString *)mimeType;
++ (instancetype)UploadModelWithFileData:(id)fileData Name:(NSString *)name FileName:(NSString *)fileName MimeType:(NSString *)mimeType;
 @end

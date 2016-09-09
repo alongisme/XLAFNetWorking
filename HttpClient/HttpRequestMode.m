@@ -9,7 +9,6 @@
 #import "HttpRequestMode.h"
 
 @implementation HttpRequestMode
-
 - (CreateHttpRequestMode)SetName {
     return ^id(NSString *name) {
         if([name isKindOfClass:[NSString class]]) {

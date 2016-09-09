@@ -9,7 +9,7 @@
 #import "HttpFileLoadProgress.h"
 
 @interface HttpFileLoadProgress ()
-@property (nonatomic,assign)UnitSize unitSize;
+@property (nonatomic,assign,readwrite) UnitSize unitSize;
 @end
 
 @implementation HttpFileLoadProgress
