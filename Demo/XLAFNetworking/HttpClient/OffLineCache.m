@@ -61,10 +61,7 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
     request.requestName = [result lastObject].requestName;
     request.requestPath = [result lastObject].requestPath;
     
-    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:[result lastObject].requestParaters];
-    NSDictionary *myDictionary = [unarchiver decodeObjectForKey:ALKeyedArchiverWithParaDic];
-    
-    request.params = [myDictionary mutableCopy];
+    request.params = [[self returnDictionaryWithLocaData:[result lastObject].requestParaters key:ALKeyedArchiverWithParaDic] mutableCopy];
     
     return request;
 }
@@ -79,11 +76,8 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
 - (HttpResponse *)getResponseCacheWithRequestPath:(NSString *)requestPath {
     NSArray<OffLineCache *> *result = J_Select(OffLineCache).Where([NSString stringWithFormat:@"_requestPath = '%@'",requestPath]).list;
     
-    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:[result lastObject].responseData];
-    NSDictionary *myDictionary = [unarchiver decodeObjectForKey:ALKeyedArchiverWithResultDic];
-    
     HttpResponse *response = [[HttpResponse alloc]init];
-    response.result = myDictionary;
+    response.result = [self returnDictionaryWithLocaData:[result lastObject].responseData key:ALKeyedArchiverWithResultDic];
     
     return response;
 }
@@ -96,6 +90,11 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
     offLineCache.requestParaters = [self returnDataWithRequsetDic:request.params key:ALKeyedArchiverWithParaDic];
     offLineCache.responseName = [NSString stringWithFormat:@"%@缓存数据",request.requestName];
     offLineCache.responseData = [self returnDataWithRequsetDic:response.result key:ALKeyedArchiverWithResultDic];
+}
+
+- (NSDictionary *)returnDictionaryWithLocaData:(NSData *)localData key:(NSString *)key{
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:localData];
+    return [unarchiver decodeObjectForKey:key];
 }
 
 //字典转data

@@ -24,7 +24,7 @@
 /**
  *  是否缓存
  */
-@property (nonatomic,assign,readwrite) BOOL  isCache;
+@property (nonatomic,assign,readwrite) BOOL isCache;
 
 /**
  *  单例
@@ -58,10 +58,10 @@
  *  @return 返回请求对象
  */
 - (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                       success:(CompletionHandlerSuccessBlock)success
-                                       failure:(CompletionHandlerFailureBlock)failure
-                                  requsetStart:(RequstStartBlock)requestStart
-                                   responseEnd:(ResponseEndBlock)responseEnd;
+                                       Success:(CompletionHandlerSuccessBlock)success
+                                       Failure:(CompletionHandlerFailureBlock)failure
+                                  RequsetStart:(RequstStartBlock)requestStart
+                                   ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  创建普通接口请求（带缓存）
@@ -75,10 +75,10 @@
  *  @return 返回请求对象
  */
 - (void)requestApiCacheWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                   success:(CompletionHandlerSuccessBlock)success
-                                   failure:(CompletionHandlerFailureBlock)failure
-                              requsetStart:(RequstStartBlock)requestStart
-                               responseEnd:(ResponseEndBlock)responseEnd;
+                                   Success:(CompletionHandlerSuccessBlock)success
+                                   Failure:(CompletionHandlerFailureBlock)failure
+                              RequsetStart:(RequstStartBlock)requestStart
+                               ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  上传文件接口请求
@@ -93,11 +93,11 @@
  *  @return 返回请求对象
  */
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                       progress:(UploadProgressBlock)progress
-                                        success:(CompletionHandlerSuccessBlock)success
-                                        failure:(CompletionHandlerFailureBlock)failure
-                                   requsetStart:(RequstStartBlock)requestStart
-                                    responseEnd:(ResponseEndBlock)responseEnd;
+                                       Progress:(UploadProgressBlock)progress
+                                        Success:(CompletionHandlerSuccessBlock)success
+                                        Failure:(CompletionHandlerFailureBlock)failure
+                                   RequsetStart:(RequstStartBlock)requestStart
+                                    ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  下载文件接口请求
@@ -113,11 +113,11 @@
  *  @return 返回请求对象
  */
 - (HttpRequest *)downloadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                         progress:(UploadProgressBlock)progress
-                                      destination:(downloadDestinationBlock)destination
-                                          success:(CompletionHandlerSuccessBlock)success
-                                          failure:(CompletionHandlerFailureBlock)failure
-                                     requsetStart:(RequstStartBlock)requestStart
-                                      responseEnd:(ResponseEndBlock)responseEnd;
+                                         Progress:(UploadProgressBlock)progress
+                                      Destination:(downloadDestinationBlock)destination
+                                          Success:(CompletionHandlerSuccessBlock)success
+                                          Failure:(CompletionHandlerFailureBlock)failure
+                                     RequsetStart:(RequstStartBlock)requestStart
+                                      ResponseEnd:(ResponseEndBlock)responseEnd;
 
 @end

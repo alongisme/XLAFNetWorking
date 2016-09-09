@@ -17,42 +17,42 @@
  *
  *  @param ObjectData 解析数据
  */
-- (void)loadResopnseWithObjectData:(NSDictionary *)ObjectData {
+- (void)loadResopnseWithObjectData:(NSDictionary *)objectData {
         
-    _objectData = ObjectData;
+    _objectData = objectData;
     
     //数据解析
     
     _isSuccess = NO;
     
-    if(ObjectData == nil) {
+    if(objectData == nil) {
         _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if ([[[ObjectData objectForKey:@"code"] stringValue] isEqualToString:@"1"]) {
+    if ([[[objectData objectForKey:@"code"] stringValue] isEqualToString:@"1"]) {
         _isSuccess = YES;
     }else{
-        _errorCode = [[ObjectData objectForKey:@"code"] stringValue];
+        _errorCode = [[objectData objectForKey:@"code"] stringValue];
         _isSuccess = NO;
     }
     
-    if (_isSuccess == NO && [ObjectData objectForKey:@"message"] == nil ) {
+    if (_isSuccess == NO && [objectData objectForKey:@"message"] == nil ) {
         _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if (_isSuccess == YES && [ObjectData objectForKey:@"object"] == nil) {
+    if (_isSuccess == YES && [objectData objectForKey:@"object"] == nil) {
         _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if(_isSuccess == NO && [ObjectData objectForKey:@"message"]) {
-        _errorMsg = [ObjectData objectForKey:@"message"];
+    if(_isSuccess == NO && [objectData objectForKey:@"message"]) {
+        _errorMsg = [objectData objectForKey:@"message"];
         return;
     }
     
-    NSDictionary *result = [ObjectData objectForKey:@"object"];
+    NSDictionary *result = [objectData objectForKey:@"object"];
     
     if ([result isKindOfClass:[NSDictionary class]]) {
         _isSuccess = YES;

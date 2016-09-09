@@ -86,46 +86,41 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  超时时间
  */
-@property (nonatomic,assign) NSUInteger timeoutInterval;
+@property (nonatomic,assign,readwrite) NSUInteger timeoutInterval;
 
 /**
  *  请求类型
  */
-@property (nonatomic, strong) NSString *requestType;
+@property (nonatomic, strong,readwrite) NSString *requestType;
 
 /**
  *  请求名字
  */
-@property (nonatomic, strong) NSString *requestName;
+@property (nonatomic, strong,readwrite) NSString *requestName;
 
 /**
  *  请求路径
  */
-@property (nonatomic, strong) NSString *requestPath;
+@property (nonatomic, strong,readwrite) NSString *requestPath;
 
 /**
  *  请求参数
  */
-@property (nonatomic, strong) NSMutableDictionary *params;
+@property (nonatomic, strong,readwrite) NSMutableDictionary *params;
 /**
  *  请求
  */
-@property (nonatomic,strong) NSMutableURLRequest *urlRequest;
+@property (nonatomic,strong,readwrite) NSMutableURLRequest *urlRequest;
 
 /**
  *  方便设置其他属性例如请求头
  */
-@property (nonatomic,strong) AFHTTPRequestSerializer *requestSerializer;
+@property (nonatomic,strong,readwrite) AFHTTPRequestSerializer *requestSerializer;
 
 /**
  *  配置选项 配置session模式
  */
-@property (nonatomic,strong) NSURLSessionConfiguration *configuration;
-
-/**
- *  响应失败回调
- */
-@property (nonatomic,copy) ResponseEndBlock endBlock;
+@property (nonatomic,strong,readwrite) NSURLSessionConfiguration *configuration;
 
 #pragma mark 判断网络状态
 /**
@@ -151,10 +146,10 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *
  *  @return HttpRequest
  */
-- (HttpRequest *)requestWithrequestName:(NSString *)requestName
-                              URLString:(NSString *)URLString
-                             parameters:(id)parameters
-                                 isGET:(BOOL)isGET;
+- (HttpRequest *)requestWithRequestName:(NSString *)requestName
+                              UrlString:(NSString *)urlString
+                             Parameters:(id)parameters
+                                 IsGET:(BOOL)isGET;
 
 /**
  *  开始请求
@@ -166,8 +161,8 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  */
 - (void)startRequsetWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
                          FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                        requsetStart:(RequstStartBlock)requestStart
-                         responseEnd:(ResponseEndBlock)responseEnd;
+                        RequsetStart:(RequstStartBlock)requestStart
+                         ResponseEnd:(ResponseEndBlock)responseEnd;
 
 #pragma mark 上传任务
 /**
@@ -181,7 +176,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *
  *  @return HttpRequest
  */
-- (HttpRequest *)uploadRequestWithrequestName:(NSString *)requestName URLString:(NSString *)URLString parameters:(id)parameters PhotoFile:(NSArray *)PhotoFile isGET:(BOOL)isGET;
+- (HttpRequest *)uploadRequestWithRequestName:(NSString *)requestName UrlString:(NSString *)urlString Parameters:(id)parameters PhotoFile:(NSArray *)photoFile IsGET:(BOOL)isGET;
 
 /**
  *  上传任务开始请求
@@ -194,11 +189,11 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *  @param responseEnd  响应结束回调
  */
 - (void)uploadStartRequsetWithUnitSize:(UnitSize)unitSize
-                              Progress:(UploadProgressBlock)Progress
+                              Progress:(UploadProgressBlock)progress
                           SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
                            FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                          requsetStart:(RequstStartBlock)requestStart
-                           responseEnd:(ResponseEndBlock)responseEnd;
+                          RequsetStart:(RequstStartBlock)requestStart
+                           ResponseEnd:(ResponseEndBlock)responseEnd;
 
 #pragma mark 下载任务
 
@@ -210,7 +205,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *
  *  @return HttpRequest
  */
-- (HttpRequest *)downloadRequestWithrequestName:(NSString *)requestName URLString:(NSString *)URLString;
+- (HttpRequest *)downloadRequestWithrequestName:(NSString *)requestName UrlString:(NSString *)urlString;
 
 /**
  *  下载任务
@@ -223,12 +218,12 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *  @param responseEnd  响应结束回调
  */
 - (void)downloadStartRequsetWithUnitSize:(UnitSize)unitSize
-                                Progress:(UploadProgressBlock)Progress
-                             destination:(downloadDestinationBlock)destination
+                                Progress:(UploadProgressBlock)progress
+                             Destination:(downloadDestinationBlock)destination
                             SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
                              FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                            requsetStart:(RequstStartBlock)requestStart
-                             responseEnd:(ResponseEndBlock)responseEnd;
+                            RequsetStart:(RequstStartBlock)requestStart
+                             ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  获取缓存数据

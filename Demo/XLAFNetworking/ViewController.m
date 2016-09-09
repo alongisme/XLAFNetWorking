@@ -23,7 +23,7 @@
         _photoArr = [NSMutableArray array];
         
         for (unsigned int i = 0; i < 50; i++) {
-            UploadModel *model = [[UploadModel alloc]initWithUploadModelfileData:[[NSBundle mainBundle]pathForResource:@"test.jpg" ofType:@""] name:@"photoFile" fileName:@"filename.jpg" mimeType:@"image/jpeg"];
+            UploadModel *model = [[UploadModel alloc]initWithUploadModelFileData:[[NSBundle mainBundle]pathForResource:@"test.jpg" ofType:@""] Name:@"photoFile" FileName:@"filename.jpg" MimeType:@"image/jpeg"];
             [_photoArr addObject:model];
         }
         
@@ -47,7 +47,7 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    [self uploadTaskTest];
+    [self uploadTaskTest];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,14 +58,14 @@
     HttpRequestMode *requestMode = [[HttpRequestMode alloc]init];
     requestMode.SetName(@"普通").SetUrl(@"http://test.3tichina.com:8023/aiya/m/patient/findPatientList").SetIsGET(@(0)).SetParameters(@{@"nextPage":@"0",@"pageSize":@"10",@"status":@"1",@"sortData":@"",@"jsonFilter":@"{}"});
     
-    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode success:^(HttpRequest *request, HttpResponse *response) {
+    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode Success:^(HttpRequest *request, HttpResponse *response) {
         
         
-    } failure:^(HttpRequest *request, HttpResponse *response) {
+    } Failure:^(HttpRequest *request, HttpResponse *response) {
         
-    } requsetStart:^{
+    } RequsetStart:^{
         
-    } responseEnd:^{
+    } ResponseEnd:^{
         
     }];
     
@@ -77,28 +77,25 @@
     HttpRequestMode *requestMode1= [[HttpRequestMode alloc]init];
     requestMode1.SetName(@"普通").SetUrl(@"http://test.3tichina.com:8023/aiya/m/picPath/findFirstLevelPicPathByUserId").SetIsGET(@(0)).SetParameters(@{@"userId":@"459"});
     
-    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode1 success:^(HttpRequest *request, HttpResponse *response) {
-        
-        NSArray *arr = [response.result objectForKey:@"object"];
+    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode1 Success:^(HttpRequest *request, HttpResponse *response) {
         
         HttpRequestMode *requestMode2= [[HttpRequestMode alloc]init];
         requestMode2.SetName(@"上传获取目录").SetUrl(@"http://test.3tichina.com:8023/aiya/m/pics/getPicGroupForUpload").SetIsGET(@(0)).SetParameters(@{@"parentPicPathId":@"601",@"userId":@"459",@"patientId":@"1220",@"picCategory":@"0",@"groupName":@"aasdasd"});
         
-        
-        [[HttpClient sharedInstance]requestApiCacheWithHttpRequestMode:requestMode2 success:^(HttpRequest *request, HttpResponse *response) {
+        [[HttpClient sharedInstance]requestApiCacheWithHttpRequestMode:requestMode2 Success:^(HttpRequest *request, HttpResponse *response) {
             
             
             HttpRequestMode *requestMode3= [[HttpRequestMode alloc]init];
             requestMode3.SetName(@"上传文件").SetUrl(@"http://test.3tichina.com:8023/aiya//m/pics/photosUpload").SetIsGET(@(0)).SetParameters(@{@"userId":@"459",@"relativeFilePaths":self.paraString,@"groupId":@"683"});
             requestMode3.uploadModels = self.photoArr;
             
-            [[HttpClient sharedInstance] uploadPhotoWithHttpRequestMode:requestMode3 progress:^(HttpFileLoadProgress *uploadProgress) {
+            [[HttpClient sharedInstance] uploadPhotoWithHttpRequestMode:requestMode3 Progress:^(HttpFileLoadProgress *uploadProgress) {
                 
-            } success:^(HttpRequest *request, HttpResponse *response) {
+            } Success:^(HttpRequest *request, HttpResponse *response) {
                 
-            } failure:^(HttpRequest *request, HttpResponse *response) {
+            } Failure:^(HttpRequest *request, HttpResponse *response) {
                 
-            } requsetStart:nil responseEnd:^{
+            } RequsetStart:nil ResponseEnd:^{
                 
                 [self.photoArr removeAllObjects];
                 self.photoArr = nil;
@@ -106,19 +103,19 @@
             
             
 
-        } failure:^(HttpRequest *request, HttpResponse *response) {
+        } Failure:^(HttpRequest *request, HttpResponse *response) {
             
-        } requsetStart:nil responseEnd:nil];
+        } RequsetStart:nil ResponseEnd:nil];
         
         
         
         
         
-    } failure:^(HttpRequest *request, HttpResponse *response) {
+    } Failure:^(HttpRequest *request, HttpResponse *response) {
         
-    } requsetStart:^{
+    } RequsetStart:^{
         
-    } responseEnd:^{
+    } ResponseEnd:^{
         
     }];
 
@@ -149,15 +146,15 @@
   
     requestMode.SetName(@"下载").SetUrl(@"asd").SetParameters(@{@"a":@"b"});
     
-    [[HttpClient sharedInstance]downloadPhotoWithHttpRequestMode:requestMode progress:^(HttpFileLoadProgress *uploadProgress) {
+    [[HttpClient sharedInstance]downloadPhotoWithHttpRequestMode:requestMode Progress:^(HttpFileLoadProgress *uploadProgress) {
         
-    } destination:nil success:^(HttpRequest *request, HttpResponse *response) {
+    } Destination:nil Success:^(HttpRequest *request, HttpResponse *response) {
         
-    } failure:^(HttpRequest *request, HttpResponse *response) {
+    } Failure:^(HttpRequest *request, HttpResponse *response) {
         
-    } requsetStart:^{
+    } RequsetStart:^{
         
-    } responseEnd:^{
+    } ResponseEnd:^{
         
     }];
   
