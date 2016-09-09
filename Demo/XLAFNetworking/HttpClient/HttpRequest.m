@@ -101,7 +101,6 @@
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:NormalTask] requestName:requestName requestPath:URLString parameters:parameters urlRequest:request];
     
     [self Log:self];
-//    DLOG(@"%@",self);
 
     return self;
 }
@@ -187,8 +186,7 @@
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:UploadTask] requestName:requestName requestPath:URLString parameters:parameters urlRequest:request];
     
     [self Log:self];
-//    DLOG(@"%@",self);
-    
+ 
     return self;
 }
 
@@ -241,11 +239,8 @@
             Progress(httpFileLoadProgress);
             
             [self Log:httpFileLoadProgress];
-//            DLOG(@"%@",httpFileLoadProgress);
         }
-        
-
-        
+    
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if(error) {
             [self handleRequestErrorWitherror:error FailedBlock:failedBlock];
@@ -277,8 +272,7 @@
     [self setRequsetDisplayInfoWithrequestType:[self getRequestTypeWithrequestType:DownloadTask] requestName:requestName requestPath:URLString parameters:nil urlRequest:[[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:URLString]]];
     
     [self Log:self];
-//    DLOG(@"%@",self);
-    
+  
     return self;
 }
 
@@ -332,11 +326,8 @@
             
             [self Log:httpFileLoadProgress];
             
-//            DLOG(@"%@",httpFileLoadProgress);
         }
-        
-
-        
+    
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
         //- block的返回值, 要求返回一个URL, 返回的这个URL就是文件的位置的路径
@@ -428,8 +419,7 @@
             responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         }
         @catch (NSException *exception) {
-            [self Log:exception];
-//            DLOG(@"%@",exception);//数据有问题
+            [self Log:exception];//数据有问题
         }
         @finally {
             
@@ -444,14 +434,13 @@
     [self Log:response];
     [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
     
-//    DLOG(@"%@",response);
-//    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
-
     //判断服务器是否返回成功
     if(response.isSuccess) {
         if(successBlock) {
             //创建离线缓存
-            [[OffLineCache new] createOffLineDataWithRequest:self Response:response];
+            if([HTTPCLIENTSTART isCache]) {
+                [[OffLineCache new] createOffLineDataWithRequest:self Response:response];
+            }
             successBlock(self,response);
         }
     }else {
@@ -474,19 +463,13 @@
                                     SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
                                      FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
     
-    
     //响应数据处理
     HttpResponse *response = [[HttpResponse alloc]init];
-    
     response.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
-    
     response.result = @{@"file path is":filePath?filePath:@"nil"};
     
     [self Log:response];
     [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
-    
-//    DLOG(@"%@",response);
-//    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
     
     if(successBlock) {
         successBlock(self,response);
@@ -512,14 +495,12 @@
     response.errorMsg = httpError.localizedDescription;
     response.httpError = httpError;
     
+    [self Log:httpError];
+    [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
+    
     if(failedBlock) {
         failedBlock(self,response);
     }
-    
-    [self Log:httpError];
-    [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
-//    DLOG(@"%@",httpError);
-//    DLOG(@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime);
 }
 
 /**
@@ -606,7 +587,7 @@
 }
 
 #pragma mark description
-
+//打印消息
 - (void)Log:(id)str {
 #ifdef DEBUG
     if([HttpClient sharedInstance].debugMode) {
@@ -616,7 +597,6 @@
 }
 
 - (NSString *)description{
-    
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Request Info==========================\n"];
     [descripString appendFormat:@"Request Type:%@\n",_requestType];

@@ -85,7 +85,7 @@
         errorMsg = @"网络连接已中断";
     }
     
-    _errorCode = [NSString stringWithFormat:@"%ld",err.code];
+    _errorCode = [NSString stringWithFormat:@"%ld",(long)err.code];
     _errorMsg = errorMsg;
 }
 

@@ -22,6 +22,11 @@
 @property (nonatomic,assign,readwrite) BOOL debugMode;
 
 /**
+ *  是否缓存
+ */
+@property (nonatomic,assign,readwrite) BOOL  isCache;
+
+/**
  *  单例
  *
  *  @return 返回实例
@@ -57,6 +62,23 @@
                                        failure:(CompletionHandlerFailureBlock)failure
                                   requsetStart:(RequstStartBlock)requestStart
                                    responseEnd:(ResponseEndBlock)responseEnd;
+
+/**
+ *  创建普通接口请求（带缓存）
+ *
+ *  @param requestMode  请求模型
+ *  @param success      成功回调
+ *  @param failure      失败回调
+ *  @param requestStart 请求开始回调
+ *  @param responseEnd  请求结束回调
+ *
+ *  @return 返回请求对象
+ */
+- (void)requestApiCacheWithHttpRequestMode:(HttpRequestMode *)requestMode
+                                   success:(CompletionHandlerSuccessBlock)success
+                                   failure:(CompletionHandlerFailureBlock)failure
+                              requsetStart:(RequstStartBlock)requestStart
+                               responseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  上传文件接口请求

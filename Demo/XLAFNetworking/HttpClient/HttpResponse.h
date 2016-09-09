@@ -45,19 +45,9 @@
 @property (nonatomic,assign) NSDictionary *objectData;
 
 /**
- *  data数据
- */
-@property (nonatomic,strong) NSData *responseObject;
-
-/**
  *  结果数据
  */
 @property (nonatomic,strong) NSDictionary *result;
-
-/**
- *  可以存放处理后的模型数据
- */
-@property (nonatomic,assign) id sourceModel;
 
 /**
  *  错误

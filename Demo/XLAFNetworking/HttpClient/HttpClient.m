@@ -11,9 +11,7 @@
 #define HTTPURL @""
 #define HTTPIMAGEURL @""
 
-@interface HttpClient () {
-    HttpRequest *httpRequest;
-}
+@interface HttpClient ()
 
 @end
 
@@ -32,7 +30,7 @@ static HttpClient *httpClient = nil;
 #ifdef DEBUG
             [httpClient setDebugMode:YES];
 #endif
-            
+                        
         }
     });
     
@@ -58,10 +56,21 @@ static HttpClient *httpClient = nil;
                            failure:(CompletionHandlerFailureBlock)failure
                       requsetStart:(RequstStartBlock)requestStart
                        responseEnd:(ResponseEndBlock)responseEnd {
+
+    [self setIsCache:NO];
     
-    [self requestBaseWithName:requestMode.name url:requestMode.url parameters:requestMode.parameters isGET:requestMode.isGET success:^(HttpRequest *request, HttpResponse *response) {
-        success(request,response);
-    } failure:failure requsetStart:requestStart responseEnd:responseEnd];;
+    [self requestBaseWithName:requestMode.name url:requestMode.url parameters:requestMode.parameters isGET:requestMode.isGET success:success failure:failure requsetStart:requestStart responseEnd:responseEnd];;
+}
+
+- (void)requestApiCacheWithHttpRequestMode:(HttpRequestMode *)requestMode
+                              success:(CompletionHandlerSuccessBlock)success
+                              failure:(CompletionHandlerFailureBlock)failure
+                         requsetStart:(RequstStartBlock)requestStart
+                          responseEnd:(ResponseEndBlock)responseEnd {
+  
+    [self setIsCache:YES];
+    
+    [self requestBaseWithName:requestMode.name url:requestMode.url parameters:requestMode.parameters isGET:requestMode.isGET success:success failure:failure requsetStart:requestStart responseEnd:responseEnd];;
 }
 
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
@@ -71,7 +80,7 @@ static HttpClient *httpClient = nil;
                              requsetStart:(RequstStartBlock)requestStart
                               responseEnd:(ResponseEndBlock)responseEnd {
   
-    httpRequest = [[HttpRequest alloc]init];
+    HttpRequest *httpRequest = [[HttpRequest alloc]init];
     
     [httpRequest uploadRequestWithrequestName:requestMode.name URLString:requestMode.url parameters:requestMode.parameters PhotoFile:requestMode.uploadModels isGET:requestMode.isGET];
     
@@ -91,7 +100,7 @@ static HttpClient *httpClient = nil;
                               requsetStart:(RequstStartBlock)requestStart
                                responseEnd:(ResponseEndBlock)responseEnd {
     
-    httpRequest = [[HttpRequest alloc]init];
+    HttpRequest *httpRequest = [[HttpRequest alloc]init];
     
     [httpRequest downloadRequestWithrequestName:requestMode.name URLString:requestMode.url];
     
@@ -115,7 +124,7 @@ static HttpClient *httpClient = nil;
                         requsetStart:(RequstStartBlock)requestStart
                          responseEnd:(ResponseEndBlock)responseEnd {
     
-    httpRequest = [[HttpRequest alloc]init];
+    HttpRequest *httpRequest = [[HttpRequest alloc]init];
     
     //校验网络状态
     [httpRequest checkNetworkingStatus:^(AFNetworkReachabilityStatus status) {
@@ -127,7 +136,7 @@ static HttpClient *httpClient = nil;
             [httpRequest startRequsetWithSuccessBlock:success FailedBlock:failure requsetStart:requestStart responseEnd:^{
                 
                 //请求结束后 清除request对象 
-                httpRequest = nil;
+//                httpRequest = nil;
                 
                 if(responseEnd) {
                     responseEnd();
