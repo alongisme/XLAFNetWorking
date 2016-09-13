@@ -47,7 +47,7 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self uploadTaskTest];
+    [self normalTaskTest];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

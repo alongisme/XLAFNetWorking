@@ -8,6 +8,10 @@
 
 #import "HttpResponse.h"
 
+@interface HttpResponse ()
+@property (nonatomic,assign,readwrite) NSUInteger resultNumber;
+@end
+
 @implementation HttpResponse
 
 #pragma mark 响应返回数据处理
@@ -68,8 +72,8 @@
         _isSuccess = NO;
         _errorMsg = DATA_FORMAT_ERROR;
     }
-
     
+    _resultNumber = [result count];
 }
 
 #pragma mark setProperty
@@ -102,7 +106,7 @@
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Response Info===========================\n"];
     [descripString appendFormat:@"Response Name:%@\n",_responseName];
-    [descripString appendFormat:@"Response Content:\n%@\n",_result];
+    [descripString appendFormat:@"Response Content(%lu 条数据):\n%@\n",_resultNumber,_result];
     if(_result == nil && _isSuccess == NO) {
         [descripString appendFormat:@"Response Error:\n%@\n",_errorMsg];
     }

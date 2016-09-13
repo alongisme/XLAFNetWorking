@@ -585,7 +585,7 @@
     [descripString appendFormat:@"Request Name:%@\n",_requestName];
     [descripString appendFormat:@"Request Url:%@\n",_requestPath];
     [descripString appendFormat:@"Request Methods:%@\n",[_urlRequest HTTPMethod]];
-    [descripString appendFormat:@"Request params:\n%@\n",_params?_params:@"无"];
+    [descripString appendFormat:@"Request params(%lu 个参数):\n%@\n",[_params count],_params?_params:@"无"];
     [descripString appendFormat:@"Request header:\n%@\n",[_urlRequest allHTTPHeaderFields]?[_urlRequest allHTTPHeaderFields]:@"无"];
     [descripString appendString:@"===============================================================\n"];
     return descripString;

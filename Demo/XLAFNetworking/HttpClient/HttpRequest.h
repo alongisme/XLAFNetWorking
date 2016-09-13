@@ -15,8 +15,9 @@
 /**
  *  在Debug模式下，输出内容
  */
+#ifdef DEBUG
 #define DLOG(...)   NSLog(__VA_ARGS__)
-
+#endif
 //缺省超时时间
 #define TIMEOUTINTERVAL 30
 

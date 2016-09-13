@@ -12,7 +12,9 @@
 
 - (void)memoryProfilerDidFindRetainCycles:(NSSet *)retainCycles
 {
-  NSLog(@"%@", retainCycles);
+    if([retainCycles count] > 0){
+        NSLog(@"%@", retainCycles);
+    }
 }
 
 @end
