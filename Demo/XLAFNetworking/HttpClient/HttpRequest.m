@@ -79,76 +79,6 @@
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
-#pragma mark POST-GET请求
-/**
- *  创建请求
- *
- *  @param requestName 请求名字
- *  @param URLString   请求路径
- *  @param parameters  请求参数
- *  @param isPOST      是否POST
- *
- *  @return HttpRequest
- */
-- (HttpRequest *)requestWithRequestName:(NSString *)requestName
-                     UrlString:(NSString *)urlString
-                    Parameters:(id)parameters
-                        IsGET:(BOOL)isGET {
-    
-    NSMutableURLRequest *request = [_requestSerializer requestWithMethod:isGET?@"GET":@"POST" URLString:urlString parameters:parameters error:nil];
-    
-    //设置请求的显示信息
-    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] RequestName:requestName RequestPath:urlString Parameters:parameters UrlRequest:request];
-    
-    [self Log:self];
-
-    return self;
-}
-
-/**
- *  开始请求
- *
- *  @param successBlock 成功回调
- *  @param failedBlock  失败回调
- *  @param requestStart 请求开始回调
- *  @param responseEnd  响应结束回调
- */
-- (void)startRequsetWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                         FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                        RequsetStart:(RequstStartBlock)requestStart
-                         ResponseEnd:(ResponseEndBlock)responseEnd {
-    
-    //记录请求开始时间
-    startTime = CFAbsoluteTimeGetCurrent();
-    
-    //请求开始
-    if(requestStart) {
-        requestStart();
-    }
-        
-    __weak typeof(self) weakSelf = self;
-    
-    _dataTask = [[AFHTTPSessionManager manager]dataTaskWithRequest:_urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-        
-        if(error) {
-            //有错误
-            [weakSelf handleRequestErrorWithError:error FailedBlock:failedBlock];
-        }else {
-            //无错误
-            [weakSelf handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
-        }
-        
-        //响应结束
-        if(responseEnd) {
-            responseEnd();
-        }
-        
-    }];
-        
-    [_dataTask resume];
-    
-}
-
 #pragma mark 上传任务
 /**
  *  上传文件任务请求
@@ -520,10 +450,10 @@
 /**
  *  获取缓存数据
  */
-- (void)getCacheDataWithRequestPath:(NSString *)requestPath Success:(CompletionHandlerSuccessBlock)success {
+- (void)getCacheDataWithSuccess:(CompletionHandlerSuccessBlock)success {
     if(success) {
         OffLineCache *offLineCache = [[OffLineCache alloc]init];
-        success([offLineCache getRequestCacheWithRequestPath:requestPath],[offLineCache getResponseCacheWithRequestPath:requestPath]);
+        success([offLineCache getRequestCacheWithHttpRequest:self],[offLineCache getResponseCacheWithHttpRequest:self]);
     }
 }
 

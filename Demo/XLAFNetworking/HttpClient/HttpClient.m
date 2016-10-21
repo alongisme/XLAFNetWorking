@@ -7,6 +7,7 @@
 //
 
 #import "HttpClient.h"
+#import "OffLineCache.h"
 
 #define HTTPURL @""
 #define HTTPIMAGEURL @""
@@ -58,8 +59,7 @@ static HttpClient *httpClient = nil;
                        ResponseEnd:(ResponseEndBlock)responseEnd {
 
     [self setIsCache:NO];
-    
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGET:requestMode.isGET Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:NO Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 
 }
 
@@ -71,7 +71,7 @@ static HttpClient *httpClient = nil;
   
     [self setIsCache:YES];
     
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGET:requestMode.isGET Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:YES Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 }
 
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
@@ -119,41 +119,114 @@ static HttpClient *httpClient = nil;
 - (void)requestBaseWithName:(NSString *)name
                         Url:(NSString *)url
                  Parameters:(NSDictionary *)parameters
-                      IsGET:(BOOL)isGET
+                    IsCache:(BOOL)isCache
                     Success:(CompletionHandlerSuccessBlock)success
-                             Failure:(CompletionHandlerFailureBlock)failure
-                        RequsetStart:(RequstStartBlock)requestStart
-                         ResponseEnd:(ResponseEndBlock)responseEnd {
+                    Failure:(CompletionHandlerFailureBlock)failure
+               RequsetStart:(RequstStartBlock)requestStart
+                ResponseEnd:(ResponseEndBlock)responseEnd {
     
-    HttpRequest *httpRequest = [[HttpRequest alloc]init];
+    typeof(self) weakself = self;
     
-    //校验网络状态
-    [httpRequest checkNetworkingStatus:^(AFNetworkReachabilityStatus status) {
+    if(requestStart) {
+        requestStart();
+    }
+    
+    HttpRequest *request = [HttpRequest new];
+    
+    [request setRequestName:name];
+    [request setRequestPath:url];
+    [request setRequestType:@"普通请求"];
+    [request setParams:parameters];
+    
+    [self Log:request];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         
-        //如果是wifi和wan网就请求数据
-        if(status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN) {
-            
-            [httpRequest requestWithRequestName:name UrlString:url?url:@"" Parameters:parameters IsGET:isGET];
-            [httpRequest startRequsetWithSuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:^{
-                
-                if(responseEnd) {
-                    responseEnd();
-                }
-            }];
+        NSMutableDictionary *responseData = [NSMutableDictionary dictionary];
+        
+        //判断是否是json数据
+        if([NSJSONSerialization isValidJSONObject:responseObject]) {
+            responseData = responseObject;
         }else {
-            
-            //其他网络状态就 获取缓存
-            [httpRequest getCacheDataWithRequestPath:url Success:success];
-            
+            //转json
+            @try {
+                responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            }
+            @catch (NSException *exception) {
+                [weakself Log:exception];//数据有问题
+            }
+            @finally {
+                
+            }
         }
         
-        //判断一次就停止
-        [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+        HttpResponse *response = [[HttpResponse alloc]init];
+        response.responseName = name;
+        [response loadResopnseWithObjectData:responseData];
+        
+        [weakself Log:response];
+        
+        if(response.isSuccess) {
+            if(success) {
+                //创建离线缓存
+                if(isCache) {
+                    [[OffLineCache new] createOffLineDataWithRequest:request Response:response];
+                }
+                success(request,response);
+            }
+        }else {
+            if(failure) {
+                failure(request,response);
+            }
+        }
+        
+        if(responseEnd) {
+            responseEnd();
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        HttpError *httpError = [[HttpError alloc]init];
+        [httpError handleHttpError:error];
+        
+        HttpResponse *response = [[HttpResponse alloc]init];
+        response.responseName = request.requestName;
+        response.objectData = [error userInfo];
+        if([httpError.localizedDescription isEqualToString:@"似乎已断开与互联网的连接。"]) {
+            response.errorMsg = NETCONNECT_FAILE;
+        }else {
+            response.errorMsg = httpError.localizedDescription;
+        }
+        
+        response.httpError = httpError;
+        
+        [weakself Log:response];
+        [weakself Log:httpError];
+        
+        if(success && isCache) {
+            //获取缓存数据
+            [request getCacheDataWithSuccess:success];
+        }
+        
+        if(failure) {
+            failure(request,response);
+        }
+        
+        if(responseEnd) {
+            responseEnd();
+        }
         
     }];
     
-
-    
 }
 
+//打印消息
+- (void)Log:(id)str {
+#ifdef DEBUG
+    if([HttpClient sharedInstance].debugMode) {
+        DLOG(@"%@",str);
+    }
+#endif
+}
 @end

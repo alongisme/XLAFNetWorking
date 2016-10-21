@@ -107,7 +107,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  请求参数
  */
-@property (nonatomic, strong,readwrite) NSMutableDictionary *params;
+@property (nonatomic, strong,readwrite) NSDictionary *params;
 /**
  *  请求
  */
@@ -134,36 +134,6 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *  @param block 回调
  */
 - (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
-
-#pragma mark POST-GET请求
-
-/**
- *  创建请求
- *
- *  @param requestName 请求名字
- *  @param URLString   请求路径
- *  @param parameters  请求参数
- *  @param isPOST      是否POST
- *
- *  @return HttpRequest
- */
-- (HttpRequest *)requestWithRequestName:(NSString *)requestName
-                              UrlString:(NSString *)urlString
-                             Parameters:(id)parameters
-                                 IsGET:(BOOL)isGET;
-
-/**
- *  开始请求
- *
- *  @param successBlock 成功回调
- *  @param failedBlock  失败回调
- *  @param requestStart 请求开始回调
- *  @param responseEnd  响应结束回调
- */
-- (void)startRequsetWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                         FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                        RequsetStart:(RequstStartBlock)requestStart
-                         ResponseEnd:(ResponseEndBlock)responseEnd;
 
 #pragma mark 上传任务
 /**
@@ -229,7 +199,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  获取缓存数据
  */
-- (void)getCacheDataWithRequestPath:(NSString *)requestPath Success:(CompletionHandlerSuccessBlock)success;
+- (void)getCacheDataWithSuccess:(CompletionHandlerSuccessBlock)success;
 
 #pragma mark 取消任务
 /**

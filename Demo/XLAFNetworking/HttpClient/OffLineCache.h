@@ -51,7 +51,7 @@
  *
  *  @return request对象
  */
-- (HttpRequest *)getRequestCacheWithRequestPath:(NSString *)requestPath;
+- (HttpRequest *)getRequestCacheWithHttpRequest:(HttpRequest *)httpRequest;
 
 /**
  *  获取缓存数据里的响应对象
@@ -60,5 +60,5 @@
  *
  *  @return response对象
  */
-- (HttpResponse *)getResponseCacheWithRequestPath:(NSString *)requestPath;
+- (HttpResponse *)getResponseCacheWithHttpRequest:(HttpRequest *)httpRequest;
 @end

@@ -53,8 +53,8 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
  *
  *  @return request对象
  */
-- (HttpRequest *)getRequestCacheWithRequestPath:(NSString *)requestPath {
-    NSArray<OffLineCache *> *result = J_Select(OffLineCache).Where([NSString stringWithFormat:@"_requestPath = '%@'",requestPath]).list;
+- (HttpRequest *)getRequestCacheWithHttpRequest:(HttpRequest *)httpRequest {
+    NSArray<OffLineCache *> *result = J_Select(OffLineCache).Where([NSString stringWithFormat:@"_requestPath = '%@'",httpRequest.requestPath]).list;
     
     HttpRequest *request = [[HttpRequest alloc]init];
     request.requestType = [result lastObject].requestType;
@@ -73,8 +73,8 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
  *
  *  @return response对象
  */
-- (HttpResponse *)getResponseCacheWithRequestPath:(NSString *)requestPath {
-    NSArray<OffLineCache *> *result = J_Select(OffLineCache).Where([NSString stringWithFormat:@"_requestPath = '%@'",requestPath]).list;
+- (HttpResponse *)getResponseCacheWithHttpRequest:(HttpRequest *)httpRequest{
+    NSArray<OffLineCache *> *result = J_Select(OffLineCache).Where([NSString stringWithFormat:@"_requestPath = '%@'",httpRequest.requestPath]).list;
     
     HttpResponse *response = [[HttpResponse alloc]init];
     response.result = [self returnDictionaryWithLocaData:[result lastObject].responseData key:ALKeyedArchiverWithResultDic];
