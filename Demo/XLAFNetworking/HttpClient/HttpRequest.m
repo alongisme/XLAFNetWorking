@@ -30,55 +30,6 @@
     return self;
 }
 
-#pragma mark 判断网络状态
-/**
- *  校验网络状态
- *  网络状态
- *  1 网络不通
- *  2 WIFI
- *  3 3G 4G
- *  4 未知
- *  @param block 回调
- */
-- (void)checkNetworkingStatus:(NetwokingStatusBlcok)block {
-    
-    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-
-        switch (status) {
-                
-            case AFNetworkReachabilityStatusNotReachable:
-                //网络不通
-                if(block) {
-                    block(1);
-                }
-                
-                break;
-            case AFNetworkReachabilityStatusReachableViaWiFi:
-                //WiFi
-                if(block) {
-                    block(2);
-                }
-                break;
-            case AFNetworkReachabilityStatusReachableViaWWAN:
-                //无线连接
-                if(block) {
-                    block(3);
-                }
-                break;
-            case AFNetworkReachabilityStatusUnknown:
-                //未知
-                if(block) {
-                    block(4);
-                }
-                break;
-            default:
-                break;
-        }
-    }];
-    
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-}
-
 #pragma mark 上传任务
 /**
  *  上传文件任务请求
@@ -354,7 +305,7 @@
     if(response.isSuccess) {
         if(successBlock) {
             //创建离线缓存
-            if([HTTPCLIENTSTART isCache]) {
+            if([HTTPCLIENT isCache]) {
                 [[OffLineCache new] createOffLineDataWithRequest:self Response:response];
             }
             successBlock(self,response);
@@ -502,9 +453,7 @@
 //打印消息
 - (void)Log:(id)str {
 #ifdef DEBUG
-    if([HttpClient sharedInstance].debugMode) {
-        DLOG(@"%@",str);
-    }
+    DLOG(@"%@",str);
 #endif
 }
 

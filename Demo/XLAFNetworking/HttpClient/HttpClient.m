@@ -26,12 +26,7 @@ static HttpClient *httpClient = nil;
     
     dispatch_once(&predicate, ^{
         if(httpClient == nil) {
-            httpClient = [[HttpClient alloc]init];
-            
-#ifdef DEBUG
-            [httpClient setDebugMode:YES];
-#endif
-                        
+            httpClient = [[HttpClient alloc]init];                        
         }
     });
     
@@ -48,8 +43,41 @@ static HttpClient *httpClient = nil;
  *  @param block 回调
  */
 - (void)checkNetworkingStatus:(NetwokingStatusBlcok)block {
-    HttpRequest *requst = [[HttpRequest alloc]init];
-    [requst checkNetworkingStatus:block];
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        switch (status) {
+                
+            case AFNetworkReachabilityStatusNotReachable:
+                //网络不通
+                if(block) {
+                    block(AFNetworkReachabilityStatusNotReachable);
+                }
+                
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                //WiFi
+                if(block) {
+                    block(AFNetworkReachabilityStatusReachableViaWiFi);
+                }
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                //无线连接
+                if(block) {
+                    block(AFNetworkReachabilityStatusReachableViaWWAN);
+                }
+                break;
+            case AFNetworkReachabilityStatusUnknown:
+                //未知
+                if(block) {
+                    block(AFNetworkReachabilityStatusUnknown);
+                }
+                break;
+            default:
+                break;
+        }
+    }];
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 - (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
@@ -58,7 +86,7 @@ static HttpClient *httpClient = nil;
                       RequsetStart:(RequstStartBlock)requestStart
                        ResponseEnd:(ResponseEndBlock)responseEnd {
 
-    [self setIsCache:NO];
+    self.isCache = NO;
     [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:NO Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 
 }
@@ -68,9 +96,7 @@ static HttpClient *httpClient = nil;
                               Failure:(CompletionHandlerFailureBlock)failure
                          RequsetStart:(RequstStartBlock)requestStart
                           ResponseEnd:(ResponseEndBlock)responseEnd {
-  
-    [self setIsCache:YES];
-    
+    self.isCache = YES;
     [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:YES Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 }
 
@@ -224,9 +250,7 @@ static HttpClient *httpClient = nil;
 //打印消息
 - (void)Log:(id)str {
 #ifdef DEBUG
-    if([HttpClient sharedInstance].debugMode) {
-        DLOG(@"%@",str);
-    }
+    DLOG(@"%@",str);
 #endif
 }
 @end

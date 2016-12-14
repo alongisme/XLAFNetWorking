@@ -16,7 +16,9 @@
  *  在Debug模式下，输出内容
  */
 #ifdef DEBUG
-#define DLOG(...)   NSLog(__VA_ARGS__)
+#define DLOG(...) NSLog(__VA_ARGS__)
+#else 
+#define DLOG(...) NSlog(...)
 #endif
 //缺省超时时间
 #define TIMEOUTINTERVAL 30
@@ -122,18 +124,6 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *  配置选项 配置session模式
  */
 @property (nonatomic,strong,readwrite) NSURLSessionConfiguration *configuration;
-
-#pragma mark 判断网络状态
-/**
- *  校验网络状态
- *  网络状态
- *  1 网络不通
- *  2 WIFI
- *  3 3G 4G
- *  4 未知
- *  @param block 回调
- */
-- (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
 
 #pragma mark 上传任务
 /**

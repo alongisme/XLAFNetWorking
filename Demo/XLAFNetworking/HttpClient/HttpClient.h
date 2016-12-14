@@ -12,15 +12,9 @@
 #import "HttpFileLoadProgress.h"
 #import "HttpRequestMode.h"
 
-#define HTTPCLIENTSTART [HttpClient sharedInstance]
+#define HTTPCLIENT [HttpClient sharedInstance]
 
 @interface HttpClient : NSObject
-
-/**
- *  是否debug模式 默认debug打印数据
- */
-@property (nonatomic,assign,readwrite) BOOL debugMode;
-
 /**
  *  是否缓存
  */

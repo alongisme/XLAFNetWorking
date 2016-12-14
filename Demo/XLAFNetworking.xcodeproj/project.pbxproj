@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0460C581F697393968719493 /* libPods-XLAFNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE9F0792E3B11B69C65BB19 /* libPods-XLAFNetworkingTests.a */; };
-		11F1BC82414EE6FAA8136240 /* libPods-XLAFNetworkingUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4E9D9FAA045DCA237906B8C /* libPods-XLAFNetworkingUITests.a */; };
 		8438A0331D825A690011272E /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8438A0321D825A690011272E /* test.jpg */; };
 		8438A08B1D829ADD0011272E /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0801D829ADD0011272E /* FMDatabase.m */; };
 		8438A08C1D829ADD0011272E /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0821D829ADD0011272E /* FMDatabaseAdditions.m */; };
@@ -35,8 +33,6 @@
 		8438A0C71D829AE10011272E /* OBJCProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0B61D829AE10011272E /* OBJCProperty.m */; };
 		844150251D767DE700A208DC /* HttpRequestMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 844150241D767DE700A208DC /* HttpRequestMode.m */; };
 		847B99A01D7EA00900315FA9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 847B999F1D7EA00900315FA9 /* libsqlite3.tbd */; };
-		847B99A31D7EB88800315FA9 /* CacheCleanerPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B99A21D7EB88800315FA9 /* CacheCleanerPlugin.m */; };
-		847B99A61D7EB8A400315FA9 /* RetainCycleLoggerPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B99A51D7EB8A400315FA9 /* RetainCycleLoggerPlugin.m */; };
 		849199991D7FDE5C0098886D /* OffLineCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 849199981D7FDE5C0098886D /* OffLineCache.m */; };
 		84D14C351D473B4900266602 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C341D473B4900266602 /* main.m */; };
 		84D14C381D473B4900266602 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C371D473B4900266602 /* AppDelegate.m */; };
@@ -58,7 +54,6 @@
 		84D14C921D473BFA00266602 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C821D473BFA00266602 /* HttpRequest.m */; };
 		84D14C931D473BFA00266602 /* HttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C841D473BFA00266602 /* HttpResponse.m */; };
 		84D14C941D473BFA00266602 /* UploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C861D473BFA00266602 /* UploadModel.m */; };
-		C87B83C0E3D7B43F5F9693E9 /* libPods-XLAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B788D27AEA7FC0F2F6FCF89 /* libPods-XLAFNetworking.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,11 +74,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		21450EF289A87C5DC824D932 /* Pods-XLAFNetworkingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLAFNetworkingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XLAFNetworkingTests/Pods-XLAFNetworkingTests.debug.xcconfig"; sourceTree = "<group>"; };
-		3AE26C1F95FEA860656F32EB /* Pods-XLAFNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLAFNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-XLAFNetworking/Pods-XLAFNetworking.release.xcconfig"; sourceTree = "<group>"; };
-		3FE9F0792E3B11B69C65BB19 /* libPods-XLAFNetworkingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XLAFNetworkingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		605834F86E182593B56A568D /* Pods-XLAFNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLAFNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XLAFNetworking/Pods-XLAFNetworking.debug.xcconfig"; sourceTree = "<group>"; };
-		81413075ABC79B9736B567BF /* Pods-XLAFNetworkingUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLAFNetworkingUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XLAFNetworkingUITests/Pods-XLAFNetworkingUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8438A0321D825A690011272E /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
 		8438A07F1D829ADD0011272E /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		8438A0801D829ADD0011272E /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -137,10 +127,6 @@
 		844150231D767DE700A208DC /* HttpRequestMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestMode.h; sourceTree = "<group>"; };
 		844150241D767DE700A208DC /* HttpRequestMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestMode.m; sourceTree = "<group>"; };
 		847B999F1D7EA00900315FA9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		847B99A11D7EB88800315FA9 /* CacheCleanerPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheCleanerPlugin.h; sourceTree = "<group>"; };
-		847B99A21D7EB88800315FA9 /* CacheCleanerPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheCleanerPlugin.m; sourceTree = "<group>"; };
-		847B99A41D7EB8A400315FA9 /* RetainCycleLoggerPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetainCycleLoggerPlugin.h; sourceTree = "<group>"; };
-		847B99A51D7EB8A400315FA9 /* RetainCycleLoggerPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetainCycleLoggerPlugin.m; sourceTree = "<group>"; };
 		849199971D7FDE5C0098886D /* OffLineCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffLineCache.h; sourceTree = "<group>"; };
 		849199981D7FDE5C0098886D /* OffLineCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OffLineCache.m; sourceTree = "<group>"; };
 		84D14C301D473B4900266602 /* XLAFNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLAFNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,10 +170,6 @@
 		84D14C841D473BFA00266602 /* HttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpResponse.m; sourceTree = "<group>"; };
 		84D14C851D473BFA00266602 /* UploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadModel.h; sourceTree = "<group>"; };
 		84D14C861D473BFA00266602 /* UploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadModel.m; sourceTree = "<group>"; };
-		8B788D27AEA7FC0F2F6FCF89 /* libPods-XLAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XLAFNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACB5DBDAAF4B90CF60E479A7 /* Pods-XLAFNetworkingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLAFNetworkingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-XLAFNetworkingUITests/Pods-XLAFNetworkingUITests.release.xcconfig"; sourceTree = "<group>"; };
-		D4E9D9FAA045DCA237906B8C /* libPods-XLAFNetworkingUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XLAFNetworkingUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7D88C10F3CE2BA8AF32D7F1 /* Pods-XLAFNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLAFNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-XLAFNetworkingTests/Pods-XLAFNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,7 +178,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				847B99A01D7EA00900315FA9 /* libsqlite3.tbd in Frameworks */,
-				C87B83C0E3D7B43F5F9693E9 /* libPods-XLAFNetworking.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +185,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0460C581F697393968719493 /* libPods-XLAFNetworkingTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,23 +192,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11F1BC82414EE6FAA8136240 /* libPods-XLAFNetworkingUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		090B5B10D858A082BB0DE0D5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8B788D27AEA7FC0F2F6FCF89 /* libPods-XLAFNetworking.a */,
-				3FE9F0792E3B11B69C65BB19 /* libPods-XLAFNetworkingTests.a */,
-				D4E9D9FAA045DCA237906B8C /* libPods-XLAFNetworkingUITests.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		8438A07E1D829ADD0011272E /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,8 +269,6 @@
 				84D14C4C1D473B4B00266602 /* XLAFNetworkingTests */,
 				84D14C571D473B4C00266602 /* XLAFNetworkingUITests */,
 				84D14C311D473B4900266602 /* Products */,
-				E1EEAAD7DC72163F4E8769FC /* Pods */,
-				090B5B10D858A082BB0DE0D5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -323,10 +290,6 @@
 				84D14C371D473B4900266602 /* AppDelegate.m */,
 				84D14C391D473B4A00266602 /* ViewController.h */,
 				84D14C3A1D473B4A00266602 /* ViewController.m */,
-				847B99A11D7EB88800315FA9 /* CacheCleanerPlugin.h */,
-				847B99A21D7EB88800315FA9 /* CacheCleanerPlugin.m */,
-				847B99A41D7EB8A400315FA9 /* RetainCycleLoggerPlugin.h */,
-				847B99A51D7EB8A400315FA9 /* RetainCycleLoggerPlugin.m */,
 				84D14C3C1D473B4A00266602 /* Main.storyboard */,
 				84D14C3F1D473B4A00266602 /* Assets.xcassets */,
 				84D14C411D473B4A00266602 /* LaunchScreen.storyboard */,
@@ -409,19 +372,6 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		E1EEAAD7DC72163F4E8769FC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				605834F86E182593B56A568D /* Pods-XLAFNetworking.debug.xcconfig */,
-				3AE26C1F95FEA860656F32EB /* Pods-XLAFNetworking.release.xcconfig */,
-				21450EF289A87C5DC824D932 /* Pods-XLAFNetworkingTests.debug.xcconfig */,
-				F7D88C10F3CE2BA8AF32D7F1 /* Pods-XLAFNetworkingTests.release.xcconfig */,
-				81413075ABC79B9736B567BF /* Pods-XLAFNetworkingUITests.debug.xcconfig */,
-				ACB5DBDAAF4B90CF60E479A7 /* Pods-XLAFNetworkingUITests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -429,12 +379,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D14C5D1D473B4C00266602 /* Build configuration list for PBXNativeTarget "XLAFNetworking" */;
 			buildPhases = (
-				FD225A4459996F8E5E5940AC /* [CP] Check Pods Manifest.lock */,
 				84D14C2C1D473B4900266602 /* Sources */,
 				84D14C2D1D473B4900266602 /* Frameworks */,
 				84D14C2E1D473B4900266602 /* Resources */,
-				35A6E851090787DB724D455A /* [CP] Embed Pods Frameworks */,
-				FDFD42494E798A2807923615 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -475,6 +422,7 @@
 				84D14C511D473B4B00266602 /* Frameworks */,
 				84D14C521D473B4B00266602 /* Resources */,
 				530C507BCD367938EFCB9CC3 /* [CP] Copy Pods Resources */,
+				FF65F4621561639B473FB027 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -492,7 +440,7 @@
 		84D14C281D473B4900266602 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = 3ti;
 				TargetAttributes = {
 					84D14C2F1D473B4900266602 = {
@@ -572,22 +520,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		35A6E851090787DB724D455A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLAFNetworking/Pods-XLAFNetworking-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		3BF9EDF4F839117D5BCDB6DE /* [CP] Embed Pods Frameworks */ = {
@@ -632,7 +565,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9FA22D16AF6C95591006B227 /* [CP] Copy Pods Resources */ = {
@@ -650,34 +583,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLAFNetworkingTests/Pods-XLAFNetworkingTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FD225A4459996F8E5E5940AC /* [CP] Check Pods Manifest.lock */ = {
+		FF65F4621561639B473FB027 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		FDFD42494E798A2807923615 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLAFNetworking/Pods-XLAFNetworking-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLAFNetworkingUITests/Pods-XLAFNetworkingUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -719,8 +637,6 @@
 				84D14C891D473BFA00266602 /* AFSecurityPolicy.m in Sources */,
 				84D14C8A1D473BFA00266602 /* AFURLRequestSerialization.m in Sources */,
 				84D14C941D473BFA00266602 /* UploadModel.m in Sources */,
-				847B99A31D7EB88800315FA9 /* CacheCleanerPlugin.m in Sources */,
-				847B99A61D7EB8A400315FA9 /* RetainCycleLoggerPlugin.m in Sources */,
 				84D14C8B1D473BFA00266602 /* AFURLResponseSerialization.m in Sources */,
 				8438A0B81D829AE10011272E /* FMDatabase+JRDB.m in Sources */,
 				84D14C921D473BFA00266602 /* HttpRequest.m in Sources */,
@@ -795,8 +711,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -838,8 +756,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -864,7 +784,6 @@
 		};
 		84D14C5E1D473B4C00266602 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 605834F86E182593B56A568D /* Pods-XLAFNetworking.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = XLAFNetworking/Info.plist;
@@ -878,7 +797,6 @@
 		};
 		84D14C5F1D473B4C00266602 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AE26C1F95FEA860656F32EB /* Pods-XLAFNetworking.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = XLAFNetworking/Info.plist;
@@ -892,7 +810,6 @@
 		};
 		84D14C611D473B4C00266602 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21450EF289A87C5DC824D932 /* Pods-XLAFNetworkingTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = XLAFNetworkingTests/Info.plist;
@@ -905,7 +822,6 @@
 		};
 		84D14C621D473B4C00266602 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7D88C10F3CE2BA8AF32D7F1 /* Pods-XLAFNetworkingTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = XLAFNetworkingTests/Info.plist;
@@ -918,7 +834,6 @@
 		};
 		84D14C641D473B4C00266602 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81413075ABC79B9736B567BF /* Pods-XLAFNetworkingUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = XLAFNetworkingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -931,7 +846,6 @@
 		};
 		84D14C651D473B4C00266602 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACB5DBDAAF4B90CF60E479A7 /* Pods-XLAFNetworkingUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = XLAFNetworkingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
