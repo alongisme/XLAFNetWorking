@@ -10,13 +10,6 @@
 
 @class HttpError;
 
-//错误提示
-//#define DATA_FORMAT_ERROR   @"数据格式错误"
-//#define NETWORK_UNABLE      @"网络状况异常"
-//#define REQUEST_FAILE       @"网络请求失败"
-//#define NETCONNECT_FAILE       @"无网络连接！"
-//#define NETCONNECTTIME_FAILE       @"网络连接超时，请稍后再试！"
-
 static NSString  *const DATA_FORMAT_ERROR = @"数据格式错误";
 static NSString  *const NETWORK_UNABLE = @"网络状况异常";
 static NSString  *const REQUEST_FAILE = @"网络请求失败";

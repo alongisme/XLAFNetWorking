@@ -10,6 +10,10 @@
 @class UploadModel;
 @class HttpRequestMode;
 
+#define RequestModel(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters)
+#define RequestModelMethod(name,url,parameters,isGet) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(isGet)
+
+
 //block
 typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 

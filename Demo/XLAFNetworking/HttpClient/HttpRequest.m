@@ -30,6 +30,71 @@
     return self;
 }
 
+#pragma mark 普通请求
+- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET {
+    if (self = [super init]) {
+        [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] RequestName:name RequestPath:urlString Parameters:parameters UrlRequest:nil isGet:isGET];
+    }
+    return self;
+}
+
+#pragma mark 普通请求开始
+- (void)startRequestWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                                           FailedBlock:(CompletionHandlerFailureBlock)failedBlock
+                                          RequsetStart:(RequstStartBlock)requestStart
+                                           ResponseEnd:(ResponseEndBlock)responseEnd {
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    if(requestStart) {
+        requestStart();
+    }
+    
+    startTime = CFAbsoluteTimeGetCurrent();
+    
+    if(_isGet) {
+        
+         _dataTask = [manager GET:_requestPath parameters:_params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+             [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
+             
+             if(responseEnd) {
+                 responseEnd();
+             }
+             
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            if(error) {
+                [self handleRequestErrorWithError:error FailedBlock:failedBlock];
+            }
+            
+            if(responseEnd) {
+                responseEnd();
+            }
+        }];
+        
+    } else {
+        
+        _dataTask = [manager POST:_requestPath parameters:_params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
+            
+            if(responseEnd) {
+                responseEnd();
+            }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            if(error) {
+                [self handleRequestErrorWithError:error FailedBlock:failedBlock];
+            }
+            
+            if(responseEnd) {
+                responseEnd();
+            }
+        }];
+    }
+}
+
 #pragma mark 上传任务
 /**
  *  上传文件任务请求
@@ -60,7 +125,7 @@
     
     //设置请求的显示信息
     
-    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:UploadTask] RequestName:requestName RequestPath:urlString Parameters:parameters UrlRequest:request];
+    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:UploadTask] RequestName:requestName RequestPath:urlString Parameters:parameters UrlRequest:request isGet:_isGet];
     
     [self Log:self];
  
@@ -130,18 +195,11 @@
 }
 
 #pragma mark 下载任务
-/**
- *  下载任务
- *
- *  @param requestName 请求名字
- *  @param URLString   请求路径
- *
- *  @return HttpRequest
- */
+
 - (HttpRequest *)downloadRequestWithrequestName:(NSString *)requestName UrlString:(NSString *)urlString {
     
     //设置请求的显示信息
-    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:DownloadTask] RequestName:requestName RequestPath:urlString Parameters:nil UrlRequest:[[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString]]];
+    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:DownloadTask] RequestName:requestName RequestPath:urlString Parameters:nil UrlRequest:[[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString]] isGet:_isGet];
     
     [self Log:self];
   
@@ -245,7 +303,7 @@
  *  @param parameters 参数
  *  @param urlRequest  url
  */
-- (void)setRequsetDisplayInfoWithRequestType:(NSString *)requestType RequestName:(NSString *)requestName RequestPath:(NSString *)requestPath Parameters:(NSMutableDictionary *)parameters UrlRequest:(NSMutableURLRequest *)urlRequest {
+- (void)setRequsetDisplayInfoWithRequestType:(NSString *)requestType RequestName:(NSString *)requestName RequestPath:(NSString *)requestPath Parameters:(NSMutableDictionary *)parameters UrlRequest:(NSMutableURLRequest *)urlRequest isGet:(BOOL)isGet {
     
     _requestType = requestType;
     
@@ -257,10 +315,13 @@
     
     _urlRequest = urlRequest;
     
+    _isGet = isGet;
+    
     if(_timeoutInterval == 0) {
         _timeoutInterval = TIMEOUTINTERVAL;
     }
     
+    [self Log:self];
 }
 
 #pragma mark response处理
@@ -305,7 +366,7 @@
     if(response.isSuccess) {
         if(successBlock) {
             //创建离线缓存
-            if([HTTPCLIENT isCache]) {
+            if(_isCache) {
                 [[OffLineCache new] createOffLineDataWithRequest:self Response:response];
             }
             successBlock(self,response);
@@ -452,9 +513,7 @@
 #pragma mark description
 //打印消息
 - (void)Log:(id)str {
-#ifdef DEBUG
     DLOG(@"%@",str);
-#endif
 }
 
 - (NSString *)description{
@@ -463,7 +522,7 @@
     [descripString appendFormat:@"Request Type:%@\n",_requestType];
     [descripString appendFormat:@"Request Name:%@\n",_requestName];
     [descripString appendFormat:@"Request Url:%@\n",_requestPath];
-    [descripString appendFormat:@"Request Methods:%@\n",[_urlRequest HTTPMethod]];
+    [descripString appendFormat:@"Request Methods:%@\n",_isGet?@"GET":@"POST"];
     [descripString appendFormat:@"Request params(%lu 个参数):\n%@\n",[_params count],_params?_params:@"无"];
     [descripString appendFormat:@"Request header:\n%@\n",[_urlRequest allHTTPHeaderFields]?[_urlRequest allHTTPHeaderFields]:@"无"];
     [descripString appendString:@"===============================================================\n"];

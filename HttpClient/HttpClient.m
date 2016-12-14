@@ -7,12 +7,12 @@
 //
 
 #import "HttpClient.h"
+#import "OffLineCache.h"
 
 #define HTTPURL @""
 #define HTTPIMAGEURL @""
 
 @interface HttpClient ()
-
 @end
 
 @implementation HttpClient
@@ -25,12 +25,7 @@ static HttpClient *httpClient = nil;
     
     dispatch_once(&predicate, ^{
         if(httpClient == nil) {
-            httpClient = [[HttpClient alloc]init];
-            
-#ifdef DEBUG
-            [httpClient setDebugMode:YES];
-#endif
-                        
+            httpClient = [[HttpClient alloc]init];                        
         }
     });
     
@@ -47,8 +42,41 @@ static HttpClient *httpClient = nil;
  *  @param block 回调
  */
 - (void)checkNetworkingStatus:(NetwokingStatusBlcok)block {
-    HttpRequest *requst = [[HttpRequest alloc]init];
-    [requst checkNetworkingStatus:block];
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        switch (status) {
+                
+            case AFNetworkReachabilityStatusNotReachable:
+                //网络不通
+                if(block) {
+                    block(AFNetworkReachabilityStatusNotReachable);
+                }
+                
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                //WiFi
+                if(block) {
+                    block(AFNetworkReachabilityStatusReachableViaWiFi);
+                }
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                //无线连接
+                if(block) {
+                    block(AFNetworkReachabilityStatusReachableViaWWAN);
+                }
+                break;
+            case AFNetworkReachabilityStatusUnknown:
+                //未知
+                if(block) {
+                    block(AFNetworkReachabilityStatusUnknown);
+                }
+                break;
+            default:
+                break;
+        }
+    }];
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 - (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
@@ -56,10 +84,7 @@ static HttpClient *httpClient = nil;
                            Failure:(CompletionHandlerFailureBlock)failure
                       RequsetStart:(RequstStartBlock)requestStart
                        ResponseEnd:(ResponseEndBlock)responseEnd {
-
-    [self setIsCache:NO];
-    
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGET:requestMode.isGET Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:NO Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 
 }
 
@@ -68,10 +93,7 @@ static HttpClient *httpClient = nil;
                               Failure:(CompletionHandlerFailureBlock)failure
                          RequsetStart:(RequstStartBlock)requestStart
                           ResponseEnd:(ResponseEndBlock)responseEnd {
-  
-    [self setIsCache:YES];
-    
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGET:requestMode.isGET Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:YES Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 }
 
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
@@ -115,45 +137,19 @@ static HttpClient *httpClient = nil;
 }
 
 
-//普通请求基类
+//通一请求累
 - (void)requestBaseWithName:(NSString *)name
                         Url:(NSString *)url
                  Parameters:(NSDictionary *)parameters
-                      IsGET:(BOOL)isGET
+                    IsCache:(BOOL)isCache
                     Success:(CompletionHandlerSuccessBlock)success
-                             Failure:(CompletionHandlerFailureBlock)failure
-                        RequsetStart:(RequstStartBlock)requestStart
-                         ResponseEnd:(ResponseEndBlock)responseEnd {
+                    Failure:(CompletionHandlerFailureBlock)failure
+               RequsetStart:(RequstStartBlock)requestStart
+                ResponseEnd:(ResponseEndBlock)responseEnd {
     
-    HttpRequest *httpRequest = [[HttpRequest alloc]init];
-    
-    //校验网络状态
-    [httpRequest checkNetworkingStatus:^(AFNetworkReachabilityStatus status) {
-        
-        //如果是wifi和wan网就请求数据
-        if(status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN) {
-            
-            [httpRequest requestWithRequestName:name UrlString:url?url:@"" Parameters:parameters IsGET:isGET];
-            [httpRequest startRequsetWithSuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:^{
-                
-                if(responseEnd) {
-                    responseEnd();
-                }
-            }];
-        }else {
-            
-            //其他网络状态就 获取缓存
-            [httpRequest getCacheDataWithRequestPath:url Success:success];
-            
-        }
-        
-        //判断一次就停止
-        [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
-        
-    }];
-    
-
+    HttpRequest *request = [[HttpRequest alloc]initWithRequestWithName:name UrlString:url Parameters:parameters IsGET:NO];
+    request.isCache = isCache;
+    [request startRequestWithSuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
     
 }
-
 @end

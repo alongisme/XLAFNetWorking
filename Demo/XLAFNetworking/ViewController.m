@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "HttpClient.h"
 
-
 @interface ViewController () 
 @property (nonatomic,strong) NSMutableArray *photoArr;
 @property (nonatomic,strong) NSMutableString *paraString;
@@ -51,16 +50,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
 - (void)normalTaskTest {
-    HttpRequestMode *requestMode = [[HttpRequestMode alloc]init];
-    requestMode.SetName(@"普通").SetUrl(@"").SetIsGET(@(0)).SetParameters(@{@"":@"0",@"":@"",@"":@"",@"":@"",@"":@""});
-    
-    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode Success:^(HttpRequest *request, HttpResponse *response) {
-        
-        
+
+    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:RequestModelMethod(@"普通", @"http://localhost:8181/along/userLogin", (@{@"name":@"lixun",@"password":@"123456"}),@1) Success:^(HttpRequest *request, HttpResponse *response) {
+
     } Failure:^(HttpRequest *request, HttpResponse *response) {
         
     } RequsetStart:^{
@@ -69,7 +64,7 @@
         
     }];
     
-
+    
 }
 
 - (void)uploadTaskTest {

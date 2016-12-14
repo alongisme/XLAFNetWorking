@@ -12,20 +12,9 @@
 #import "HttpFileLoadProgress.h"
 #import "HttpRequestMode.h"
 
-#define HTTPCLIENTSTART [HttpClient sharedInstance]
+#define HTTPCLIENT [HttpClient sharedInstance]
 
 @interface HttpClient : NSObject
-
-/**
- *  是否debug模式 默认debug打印数据
- */
-@property (nonatomic,assign,readwrite) BOOL debugMode;
-
-/**
- *  是否缓存
- */
-@property (nonatomic,assign,readwrite) BOOL isCache;
-
 /**
  *  单例
  *
@@ -40,7 +29,7 @@
  *  2 WIFI
  *  3 3G 4G
  *  4 未知
- *  @param block 回调
+ *  @param nil
  */
 - (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
 
@@ -55,7 +44,7 @@
  *  @param requestStart 请求开始回调
  *  @param responseEnd  请求结束回调
  *
- *  @return 返回请求对象
+ *  @return nil
  */
 - (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
                                        Success:(CompletionHandlerSuccessBlock)success
@@ -72,7 +61,7 @@
  *  @param requestStart 请求开始回调
  *  @param responseEnd  请求结束回调
  *
- *  @return 返回请求对象
+ *  @return nil
  */
 - (void)requestApiCacheWithHttpRequestMode:(HttpRequestMode *)requestMode
                                    Success:(CompletionHandlerSuccessBlock)success

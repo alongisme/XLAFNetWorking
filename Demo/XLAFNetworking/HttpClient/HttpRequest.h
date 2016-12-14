@@ -86,6 +86,11 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 
 @interface HttpRequest : NSObject
 #pragma mark 属性
+
+/**
+ * 是否缓存
+ */
+@property (nonatomic,assign,readwrite) BOOL isCache;
 /**
  *  超时时间
  */
@@ -96,6 +101,10 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  */
 @property (nonatomic, strong,readwrite) NSString *requestType;
 
+/**
+ * POST GET
+ */
+@property (nonatomic, assign,readwrite) BOOL isGet;
 /**
  *  请求名字
  */
@@ -124,6 +133,15 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *  配置选项 配置session模式
  */
 @property (nonatomic,strong,readwrite) NSURLSessionConfiguration *configuration;
+
+#pragma mark 普通请求
+- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET;
+
+#pragma mark 普通请求开始
+- (void)startRequestWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                         FailedBlock:(CompletionHandlerFailureBlock)failedBlock
+                        RequsetStart:(RequstStartBlock)requestStart
+                         ResponseEnd:(ResponseEndBlock)responseEnd;
 
 #pragma mark 上传任务
 /**

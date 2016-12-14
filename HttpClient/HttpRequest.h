@@ -15,8 +15,11 @@
 /**
  *  在Debug模式下，输出内容
  */
-#define DLOG(...)   NSLog(__VA_ARGS__)
-
+#ifdef DEBUG
+#define DLOG(...) NSLog(__VA_ARGS__)
+#else 
+#define DLOG(...) NSlog(...)
+#endif
 //缺省超时时间
 #define TIMEOUTINTERVAL 30
 
@@ -83,6 +86,11 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 
 @interface HttpRequest : NSObject
 #pragma mark 属性
+
+/**
+ * 是否缓存
+ */
+@property (nonatomic,assign,readwrite) BOOL isCache;
 /**
  *  超时时间
  */
@@ -93,6 +101,10 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  */
 @property (nonatomic, strong,readwrite) NSString *requestType;
 
+/**
+ * POST GET
+ */
+@property (nonatomic, assign,readwrite) BOOL isGet;
 /**
  *  请求名字
  */
@@ -106,7 +118,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  请求参数
  */
-@property (nonatomic, strong,readwrite) NSMutableDictionary *params;
+@property (nonatomic, strong,readwrite) NSDictionary *params;
 /**
  *  请求
  */
@@ -122,44 +134,11 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  */
 @property (nonatomic,strong,readwrite) NSURLSessionConfiguration *configuration;
 
-#pragma mark 判断网络状态
-/**
- *  校验网络状态
- *  网络状态
- *  1 网络不通
- *  2 WIFI
- *  3 3G 4G
- *  4 未知
- *  @param block 回调
- */
-- (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
+#pragma mark 普通请求
+- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET;
 
-#pragma mark POST-GET请求
-
-/**
- *  创建请求
- *
- *  @param requestName 请求名字
- *  @param URLString   请求路径
- *  @param parameters  请求参数
- *  @param isPOST      是否POST
- *
- *  @return HttpRequest
- */
-- (HttpRequest *)requestWithRequestName:(NSString *)requestName
-                              UrlString:(NSString *)urlString
-                             Parameters:(id)parameters
-                                 IsGET:(BOOL)isGET;
-
-/**
- *  开始请求
- *
- *  @param successBlock 成功回调
- *  @param failedBlock  失败回调
- *  @param requestStart 请求开始回调
- *  @param responseEnd  响应结束回调
- */
-- (void)startRequsetWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+#pragma mark 普通请求开始
+- (void)startRequestWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
                          FailedBlock:(CompletionHandlerFailureBlock)failedBlock
                         RequsetStart:(RequstStartBlock)requestStart
                          ResponseEnd:(ResponseEndBlock)responseEnd;
@@ -228,7 +207,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  获取缓存数据
  */
-- (void)getCacheDataWithRequestPath:(NSString *)requestPath Success:(CompletionHandlerSuccessBlock)success;
+- (void)getCacheDataWithSuccess:(CompletionHandlerSuccessBlock)success;
 
 #pragma mark 取消任务
 /**
