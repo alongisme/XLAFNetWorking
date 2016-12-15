@@ -10,8 +10,8 @@
 @class UploadModel;
 @class HttpRequestMode;
 
-#define RequestModel(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters)
-#define RequestModelMethod(name,url,parameters,isGet) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(isGet)
+#define RequestModelPOST(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@0)
+#define RequestModelGET(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@1)
 
 
 //block

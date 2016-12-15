@@ -21,18 +21,10 @@
 
 @implementation HttpRequest
 
-#pragma mark init 初始化
--(instancetype)init {
-    if(self = [super init]) {
-        //请求格式 //统一只使用二进制
-        _requestSerializer = [AFHTTPRequestSerializer serializer];
-       }
-    return self;
-}
-
 #pragma mark 普通请求
 - (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET {
     if (self = [super init]) {
+        _requestSerializer = [AFHTTPRequestSerializer serializer];
         [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] RequestName:name RequestPath:urlString Parameters:parameters UrlRequest:nil isGet:isGET];
     }
     return self;
@@ -524,7 +516,11 @@
     [descripString appendFormat:@"Request Url:%@\n",_requestPath];
     [descripString appendFormat:@"Request Methods:%@\n",_isGet?@"GET":@"POST"];
     [descripString appendFormat:@"Request params(%lu 个参数):\n%@\n",[_params count],_params?_params:@"无"];
-    [descripString appendFormat:@"Request header:\n%@\n",[_urlRequest allHTTPHeaderFields]?[_urlRequest allHTTPHeaderFields]:@"无"];
+    if (_urlRequest) {
+        [descripString appendFormat:@"Request header:\n%@\n",[_urlRequest allHTTPHeaderFields]?[_urlRequest allHTTPHeaderFields]:@"无"];
+    } else {
+        [descripString appendFormat:@"Request header:\n%@\n",_requestSerializer.HTTPRequestHeaders];
+    }
     [descripString appendString:@"===============================================================\n"];
     return descripString;
 }

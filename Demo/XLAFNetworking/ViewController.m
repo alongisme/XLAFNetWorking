@@ -54,16 +54,11 @@
 
 - (void)normalTaskTest {
 
-    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:RequestModelMethod(@"普通", @"http://localhost:8181/along/userLogin", (@{@"name":@"lixun",@"password":@"123456"}),@1) Success:^(HttpRequest *request, HttpResponse *response) {
+    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:RequestModelPOST(@"普通", @"http://localhost:8181/along/userLogin", (@{@"name":@"lixun",@"password":@"123456"})) Success:^(HttpRequest *request, HttpResponse *response) {
 
     } Failure:^(HttpRequest *request, HttpResponse *response) {
         
-    } RequsetStart:^{
-        
-    } ResponseEnd:^{
-        
-    }];
-    
+    } RequsetStart:nil ResponseEnd:nil];
     
 }
 

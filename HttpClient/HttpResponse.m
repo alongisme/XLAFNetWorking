@@ -34,29 +34,33 @@
         return;
     }
     
-    if ([[[objectData objectForKey:@"code"] stringValue] isEqualToString:@"1"]) {
+    NSString *code = [self checkString:objectData[@"code"]];
+    NSString *message = [self checkString:objectData[@"message"]];
+    id object = objectData[@"object"];
+    
+    if ([code isEqualToString:@"1"]) {
         _isSuccess = YES;
     }else{
-        _errorCode = [[objectData objectForKey:@"code"] stringValue];
+        _errorCode = code;
         _isSuccess = NO;
     }
     
-    if (_isSuccess == NO && [objectData objectForKey:@"message"] == nil ) {
+    if (_isSuccess == NO && message == nil ) {
         _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if (_isSuccess == YES && [objectData objectForKey:@"object"] == nil) {
+    if (_isSuccess == YES && object == nil) {
         _errorMsg = DATA_FORMAT_ERROR;
         return;
     }
     
-    if(_isSuccess == NO && [objectData objectForKey:@"message"]) {
-        _errorMsg = [objectData objectForKey:@"message"];
+    if(_isSuccess == NO && message) {
+        _errorMsg = message;
         return;
     }
     
-    NSDictionary *result = [objectData objectForKey:@"object"];
+    NSDictionary *result = object;
     
     if ([result isKindOfClass:[NSDictionary class]]) {
         _isSuccess = YES;
@@ -74,6 +78,14 @@
     }
     
     _resultNumber = [result count];
+}
+
+- (NSString *)checkString:(id)str {
+    if([str isKindOfClass:[NSString class]]) {
+        return str;
+    } else {
+        return [str stringValue];
+    }
 }
 
 #pragma mark setProperty

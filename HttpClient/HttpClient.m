@@ -84,7 +84,7 @@ static HttpClient *httpClient = nil;
                            Failure:(CompletionHandlerFailureBlock)failure
                       RequsetStart:(RequstStartBlock)requestStart
                        ResponseEnd:(ResponseEndBlock)responseEnd {
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:NO Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGet:requestMode.isGET IsCache:NO Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 
 }
 
@@ -93,7 +93,7 @@ static HttpClient *httpClient = nil;
                               Failure:(CompletionHandlerFailureBlock)failure
                          RequsetStart:(RequstStartBlock)requestStart
                           ResponseEnd:(ResponseEndBlock)responseEnd {
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsCache:YES Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGet:requestMode.isGET IsCache:YES Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
 }
 
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
@@ -141,13 +141,14 @@ static HttpClient *httpClient = nil;
 - (void)requestBaseWithName:(NSString *)name
                         Url:(NSString *)url
                  Parameters:(NSDictionary *)parameters
+                      IsGet:(BOOL)isGet
                     IsCache:(BOOL)isCache
                     Success:(CompletionHandlerSuccessBlock)success
                     Failure:(CompletionHandlerFailureBlock)failure
                RequsetStart:(RequstStartBlock)requestStart
                 ResponseEnd:(ResponseEndBlock)responseEnd {
     
-    HttpRequest *request = [[HttpRequest alloc]initWithRequestWithName:name UrlString:url Parameters:parameters IsGET:NO];
+    HttpRequest *request = [[HttpRequest alloc]initWithRequestWithName:name UrlString:url Parameters:parameters IsGET:isGet];
     request.isCache = isCache;
     [request startRequestWithSuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
     
