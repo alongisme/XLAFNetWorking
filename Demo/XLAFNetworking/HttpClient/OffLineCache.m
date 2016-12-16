@@ -77,7 +77,9 @@ static NSString *const ALKeyedArchiverWithResultDic = @"ALKeyedArchiverWithResul
     NSArray<OffLineCache *> *result = J_Select(OffLineCache).Where([NSString stringWithFormat:@"_requestPath = '%@'",httpRequest.requestPath]).list;
     
     HttpResponse *response = [[HttpResponse alloc]init];
-    response.result = [self returnDictionaryWithLocaData:[result lastObject].responseData key:ALKeyedArchiverWithResultDic];
+    OffLineCache *getCache = result.lastObject;
+    response.responseName = getCache.requestName;
+    response.result = [self returnDictionaryWithLocaData:getCache.responseData key:ALKeyedArchiverWithResultDic];
     
     return response;
 }

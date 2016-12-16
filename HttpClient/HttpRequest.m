@@ -56,8 +56,12 @@
              
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            if(error) {
-                [self handleRequestErrorWithError:error FailedBlock:failedBlock];
+            if(_isCache) {
+                [self getCacheDataWithSuccess:successBlock];
+            } else {
+                if(error) {
+                    [self handleRequestErrorWithError:error FailedBlock:failedBlock];
+                }
             }
             
             if(responseEnd) {
@@ -76,8 +80,12 @@
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
-            if(error) {
-                [self handleRequestErrorWithError:error FailedBlock:failedBlock];
+            if(_isCache) {
+                [self getCacheDataWithSuccess:successBlock];
+            } else {
+                if(error) {
+                    [self handleRequestErrorWithError:error FailedBlock:failedBlock];
+                }
             }
             
             if(responseEnd) {
@@ -457,7 +465,10 @@
 - (void)getCacheDataWithSuccess:(CompletionHandlerSuccessBlock)success {
     if(success) {
         OffLineCache *offLineCache = [[OffLineCache alloc]init];
-        success([offLineCache getRequestCacheWithHttpRequest:self],[offLineCache getResponseCacheWithHttpRequest:self]);
+        HttpResponse *response = [offLineCache getResponseCacheWithHttpRequest:self];
+        success([offLineCache getRequestCacheWithHttpRequest:self],response);
+        [self Log:@"\n======================== 接口请求失败，获取缓存数据 ==========================\n"];
+        [self Log:response];
     }
 }
 
@@ -524,5 +535,9 @@
     [descripString appendString:@"===============================================================\n"];
     return descripString;
 }
+
+//- (void)dealloc {
+//    NSLog(@"%s",__func__);
+//}
 
 @end
