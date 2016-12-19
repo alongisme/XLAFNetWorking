@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "HttpClient.h"
+#import "UploadModel.h"
 
 @interface ViewController () 
 @property (nonatomic,strong) NSMutableArray *photoArr;
@@ -46,7 +47,7 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self normalTaskTest];
+    [self uploadTaskTest];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,7 +56,7 @@
 - (void)normalTaskTest {
 
     [[HttpClient sharedInstance]requestApiCacheWithHttpRequestMode:RequestModelPOST(@"普通", @"http://localhost:8181/along/userLogin", (@{@"name":@"lixun",@"password":@"123456"})) Success:^(HttpRequest *request, HttpResponse *response) {
-
+        
     } Failure:^(HttpRequest *request, HttpResponse *response) {
         
     } RequsetStart:nil ResponseEnd:nil];
@@ -67,47 +68,15 @@
     HttpRequestMode *requestMode1= [[HttpRequestMode alloc]init];
     requestMode1.SetName(@"普通").SetUrl(@"").SetIsGET(@(0)).SetParameters(@{@"":@""});
     
-    [[HttpClient sharedInstance]requestApiWithHttpRequestMode:requestMode1 Success:^(HttpRequest *request, HttpResponse *response) {
-        
-        HttpRequestMode *requestMode2= [[HttpRequestMode alloc]init];
-        requestMode2.SetName(@"上传获取目录").SetUrl(@"").SetIsGET(@(0)).SetParameters(@{@"":@"",@"":@"",@"":@"",@"":@"",@"":@""});
-        
-        [[HttpClient sharedInstance]requestApiCacheWithHttpRequestMode:requestMode2 Success:^(HttpRequest *request, HttpResponse *response) {
-            
-            
-            HttpRequestMode *requestMode3= [[HttpRequestMode alloc]init];
-            requestMode3.SetName(@"上传文件").SetUrl(@"").SetIsGET(@(0)).SetParameters(@{@"":@"",@"":self.paraString,@"":@""});
-            requestMode3.uploadModels = self.photoArr;
-            
-            [[HttpClient sharedInstance] uploadPhotoWithHttpRequestMode:requestMode3 Progress:^(HttpFileLoadProgress *uploadProgress) {
-                
-            } Success:^(HttpRequest *request, HttpResponse *response) {
-                
-            } Failure:^(HttpRequest *request, HttpResponse *response) {
-                
-            } RequsetStart:nil ResponseEnd:^{
-                
-                [self.photoArr removeAllObjects];
-                self.photoArr = nil;
-            }];
-            
-            
+    NSData *data =  [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"jpg"]];
 
-        } Failure:^(HttpRequest *request, HttpResponse *response) {
-            
-        } RequsetStart:nil ResponseEnd:nil];
+    [[HttpClient sharedInstance]uploadPhotoWithHttpRequestMode:RequestModelFilePOST(@"上传", @"http://localhost:8181/along/upload", nil, @[CreateUploadModel(data,@"上传",@"fileName",@"image/jpeg")]) Progress:^(HttpFileLoadProgress *uploadProgress) {
         
-        
-        
-        
+    } Success:^(HttpRequest *request, HttpResponse *response) {
         
     } Failure:^(HttpRequest *request, HttpResponse *response) {
         
-    } RequsetStart:^{
-        
-    } ResponseEnd:^{
-        
-    }];
+    } RequsetStart:nil ResponseEnd:nil];
 
     
 }

@@ -21,44 +21,19 @@ typedef NS_ENUM(NSInteger,UnitSize) {
 @interface HttpFileLoadProgress : NSObject
 
 /**
- *  //加载值 默认单位b
+ *  加载值 默认单位b
  */
-@property (nonatomic,assign,readwrite) float loadProgress;
+@property (nonatomic,assign) float loadProgress;
 
 /**
- *  加载大小 单位kb
+ *  总大小 默认单位b
  */
-@property (nonatomic,assign,readwrite) float loadProgressKb;
-/**
- *  加载大小 单位Mb
- */
-@property (nonatomic,assign,readwrite) float loadProgressMb;
-/**
- *  加载大小 单位Gb
- */
-@property (nonatomic,assign,readwrite) float loadProgressGb;
+@property (nonatomic,assign) int64_t maxSize;
 
 /**
- *  //总大小 默认单位b
+ *  加载百分比
  */
-@property (nonatomic,assign,readwrite) int64_t maxSize;
-
-/**
- *  加载大小 单位kb
- */
-@property (nonatomic,assign,readwrite) double maxSizeKb;
-/**
- *  加载大小 单位Mb
- */
-@property (nonatomic,assign,readwrite) double maxSizeMb;
-/**
- *  加载大小 单位Gb
- */
-@property (nonatomic,assign,readwrite) double maxSizeGb;
-/**
- *  //加载百分比
- */
-@property (nonatomic,assign,readwrite) double loadFractionCompleted;
+@property (nonatomic,assign) double loadFractionCompleted;
 
 /**
  *  初始化

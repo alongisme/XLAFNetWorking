@@ -9,7 +9,35 @@
 #import "HttpFileLoadProgress.h"
 
 @interface HttpFileLoadProgress ()
+/**
+ *  单位大小
+ */
 @property (nonatomic,assign,readwrite) UnitSize unitSize;
+/**
+ *  加载大小 单位kb
+ */
+@property (nonatomic,assign,readonly) float loadProgressKb;
+/**
+ *  加载大小 单位Mb
+ */
+@property (nonatomic,assign,readonly) float loadProgressMb;
+/**
+ *  加载大小 单位Gb
+ */
+@property (nonatomic,assign,readonly) float loadProgressGb;
+
+/**
+ *  加载大小 单位kb
+ */
+@property (nonatomic,assign,readonly) double maxSizeKb;
+/**
+ *  加载大小 单位Mb
+ */
+@property (nonatomic,assign,readonly) double maxSizeMb;
+/**
+ *  加载大小 单位Gb
+ */
+@property (nonatomic,assign,readonly) double maxSizeGb;
 @end
 
 @implementation HttpFileLoadProgress

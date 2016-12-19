@@ -9,7 +9,9 @@
 #import "HttpRequest.h"
 #import "HttpClient.h"
 #import "UploadModel.h"
-#import "OffLineCache.h"
+#import "YYCache.h"
+
+static NSString * const cacheName = @"cacheName";
 
 @interface HttpRequest () {
     CFAbsoluteTime startTime;//记录请求开始的时候
@@ -17,14 +19,24 @@
 @property (nonatomic,strong) NSURLSessionDataTask *dataTask;//数据任务
 @property (nonatomic,strong) NSURLSessionUploadTask *uploadTask;//上传任务
 @property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;//下载任务
+@property (nonatomic,strong,readwrite) AFHTTPRequestSerializer *requestSerializer;
+@property (nonatomic,strong) YYCache *cache;
 @end
 
 @implementation HttpRequest
 
+- (YYCache *)cache {
+    if(_cache == nil) {
+        _cache = [YYCache cacheWithName:cacheName];
+    }
+    return _cache;
+}
+
 #pragma mark 普通请求
-- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET {
+- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET IsCache:(BOOL)isCache {
     if (self = [super init]) {
         _requestSerializer = [AFHTTPRequestSerializer serializer];
+        _isCache = isCache;
         [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] RequestName:name RequestPath:urlString Parameters:parameters UrlRequest:nil isGet:isGET];
     }
     return self;
@@ -158,7 +170,7 @@
     }
     
     //创建管理者
-    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:_configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     //进度条数据
     __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
@@ -233,7 +245,7 @@
     }
             
     //创建管理者
-    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:_configuration?_configuration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     //进度条数据
     __block HttpFileLoadProgress *httpFileLoadProgress = [[HttpFileLoadProgress alloc]initWithUnitSize:unitSize];
@@ -367,7 +379,7 @@
         if(successBlock) {
             //创建离线缓存
             if(_isCache) {
-                [[OffLineCache new] createOffLineDataWithRequest:self Response:response];
+                [self.cache setObject:response forKey:[NSString stringWithFormat:@"%@-response",self.requestPath]];
             }
             successBlock(self,response);
         }
@@ -463,12 +475,16 @@
  *  获取缓存数据
  */
 - (void)getCacheDataWithSuccess:(CompletionHandlerSuccessBlock)success {
+    [self Log:@"\n======================== 接口请求失败，获取缓存数据 ==========================\n"];
     if(success) {
-        OffLineCache *offLineCache = [[OffLineCache alloc]init];
-        HttpResponse *response = [offLineCache getResponseCacheWithHttpRequest:self];
-        success([offLineCache getRequestCacheWithHttpRequest:self],response);
-        [self Log:@"\n======================== 接口请求失败，获取缓存数据 ==========================\n"];
-        [self Log:response];
+        id cacheObj = [self.cache objectForKey:[NSString stringWithFormat:@"%@-response",self.requestPath]];
+        if([cacheObj isKindOfClass:[HttpResponse class]]) {
+            HttpResponse *response = cacheObj;
+            success(self,response);
+            [self Log:response];
+        } else {
+            [self Log:@"\n======================== 获取缓存数据失败！ ==========================\n"];
+        }
     }
 }
 
@@ -522,7 +538,11 @@
 - (NSString *)description{
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Request Info==========================\n"];
-    [descripString appendFormat:@"Request Type:%@\n",_requestType];
+    if(_isCache) {
+        [descripString appendFormat:@"Request Type:%@(缓存)\n",_requestType];
+    } else {
+        [descripString appendFormat:@"Request Type:%@\n",_requestType];
+    }
     [descripString appendFormat:@"Request Name:%@\n",_requestName];
     [descripString appendFormat:@"Request Url:%@\n",_requestPath];
     [descripString appendFormat:@"Request Methods:%@\n",_isGet?@"GET":@"POST"];

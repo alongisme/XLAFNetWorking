@@ -8,8 +8,7 @@
 
 #import "HttpResponse.h"
 
-@interface HttpResponse ()
-@property (nonatomic,assign,readwrite) NSUInteger resultNumber;
+@interface HttpResponse () 
 @end
 
 @implementation HttpResponse
@@ -76,8 +75,6 @@
         _isSuccess = NO;
         _errorMsg = DATA_FORMAT_ERROR;
     }
-    
-    _resultNumber = [result count];
 }
 
 - (NSString *)checkString:(id)str {
@@ -113,12 +110,33 @@
     }
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if(self = [super init]) {
+        self.responseName = [aDecoder decodeObjectForKey:@"name"];
+        self.errorCode = [aDecoder decodeObjectForKey:@"errorCode"];
+        self.errorMsg = [aDecoder decodeObjectForKey:@"errorMsg"];
+        self.objectData = [aDecoder decodeObjectForKey:@"objectData"];
+        self.result = [aDecoder decodeObjectForKey:@"result"];
+        self.httpError = [aDecoder decodeObjectForKey:@"httpError"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.responseName forKey:@"name"];
+    [aCoder encodeObject:self.errorCode forKey:@"errorCode"];
+    [aCoder encodeObject:self.errorMsg forKey:@"errorMsg"];
+    [aCoder encodeObject:self.objectData forKey:@"objectData"];
+    [aCoder encodeObject:self.result forKey:@"result"];
+    [aCoder encodeObject:self.httpError forKey:@"httpError"];
+}
+
 #pragma mark description
 -(NSString *)description{
     NSMutableString *descripString = [NSMutableString stringWithFormat:@""];
     [descripString appendString:@"\n========================Response Info===========================\n"];
     [descripString appendFormat:@"Response Name:%@\n",_responseName];
-    [descripString appendFormat:@"Response Content(%lu 条数据):\n%@\n",_resultNumber,_result];
+    [descripString appendFormat:@"Response Content(%lu 条数据):\n%@\n",_result.count,_result];
     if(_result == nil && _isSuccess == NO) {
         [descripString appendFormat:@"Response Error:\n%@\n",_errorMsg];
     }

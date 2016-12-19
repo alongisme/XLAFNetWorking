@@ -8,32 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8438A0331D825A690011272E /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8438A0321D825A690011272E /* test.jpg */; };
-		8438A08B1D829ADD0011272E /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0801D829ADD0011272E /* FMDatabase.m */; };
-		8438A08C1D829ADD0011272E /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0821D829ADD0011272E /* FMDatabaseAdditions.m */; };
-		8438A08D1D829ADD0011272E /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0841D829ADD0011272E /* FMDatabasePool.m */; };
-		8438A08E1D829ADD0011272E /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0861D829ADD0011272E /* FMDatabaseQueue.m */; };
-		8438A08F1D829ADD0011272E /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0891D829ADD0011272E /* FMResultSet.m */; };
-		8438A0901D829ADD0011272E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8438A08A1D829ADD0011272E /* Info.plist */; };
-		8438A0B71D829AE10011272E /* FMDatabase+Chain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0931D829AE10011272E /* FMDatabase+Chain.m */; };
-		8438A0B81D829AE10011272E /* FMDatabase+JRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0951D829AE10011272E /* FMDatabase+JRDB.m */; };
-		8438A0B91D829AE10011272E /* JRActivatedProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0971D829AE10011272E /* JRActivatedProperty.m */; };
-		8438A0BA1D829AE10011272E /* JRColumnSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0991D829AE10011272E /* JRColumnSchema.m */; };
-		8438A0BB1D829AE10011272E /* JRDBChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A09C1D829AE10011272E /* JRDBChain.m */; };
-		8438A0BC1D829AE10011272E /* JRDBMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A09E1D829AE10011272E /* JRDBMgr.m */; };
-		8438A0BD1D829AE10011272E /* JRDBQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0A01D829AE10011272E /* JRDBQueue.m */; };
-		8438A0BE1D829AE10011272E /* JRDBResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0A21D829AE10011272E /* JRDBResult.m */; };
-		8438A0BF1D829AE10011272E /* JRFMDBResultSetHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0A41D829AE10011272E /* JRFMDBResultSetHandler.m */; };
-		8438A0C01D829AE10011272E /* JRMiddleTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0A61D829AE10011272E /* JRMiddleTable.m */; };
-		8438A0C11D829AE10011272E /* JRQueryCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0A91D829AE10011272E /* JRQueryCondition.m */; };
-		8438A0C21D829AE10011272E /* JRReflectUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0AC1D829AE10011272E /* JRReflectUtil.m */; };
-		8438A0C31D829AE10011272E /* JRSqlGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0AE1D829AE10011272E /* JRSqlGenerator.m */; };
-		8438A0C41D829AE10011272E /* JRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0B01D829AE10011272E /* JRUtils.m */; };
-		8438A0C51D829AE10011272E /* NSObject+JRDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0B21D829AE10011272E /* NSObject+JRDB.m */; };
-		8438A0C61D829AE10011272E /* NSObject+Reflect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0B41D829AE10011272E /* NSObject+Reflect.m */; };
-		8438A0C71D829AE10011272E /* OBJCProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8438A0B61D829AE10011272E /* OBJCProperty.m */; };
 		844150251D767DE700A208DC /* HttpRequestMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 844150241D767DE700A208DC /* HttpRequestMode.m */; };
 		847B99A01D7EA00900315FA9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 847B999F1D7EA00900315FA9 /* libsqlite3.tbd */; };
-		849199991D7FDE5C0098886D /* OffLineCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 849199981D7FDE5C0098886D /* OffLineCache.m */; };
 		84D14C351D473B4900266602 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C341D473B4900266602 /* main.m */; };
 		84D14C381D473B4900266602 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C371D473B4900266602 /* AppDelegate.m */; };
 		84D14C3B1D473B4A00266602 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C3A1D473B4A00266602 /* ViewController.m */; };
@@ -54,6 +30,10 @@
 		84D14C921D473BFA00266602 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C821D473BFA00266602 /* HttpRequest.m */; };
 		84D14C931D473BFA00266602 /* HttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C841D473BFA00266602 /* HttpResponse.m */; };
 		84D14C941D473BFA00266602 /* UploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C861D473BFA00266602 /* UploadModel.m */; };
+		BF778A521E078690003232C5 /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4B1E078690003232C5 /* YYCache.m */; };
+		BF778A531E078690003232C5 /* YYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4D1E078690003232C5 /* YYDiskCache.m */; };
+		BF778A541E078690003232C5 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4F1E078690003232C5 /* YYKVStorage.m */; };
+		BF778A551E078690003232C5 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A511E078690003232C5 /* YYMemoryCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,60 +55,9 @@
 
 /* Begin PBXFileReference section */
 		8438A0321D825A690011272E /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
-		8438A07F1D829ADD0011272E /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		8438A0801D829ADD0011272E /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		8438A0811D829ADD0011272E /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		8438A0821D829ADD0011272E /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		8438A0831D829ADD0011272E /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		8438A0841D829ADD0011272E /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		8438A0851D829ADD0011272E /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		8438A0861D829ADD0011272E /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		8438A0871D829ADD0011272E /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
-		8438A0881D829ADD0011272E /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		8438A0891D829ADD0011272E /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		8438A08A1D829ADD0011272E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8438A0921D829AE10011272E /* FMDatabase+Chain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+Chain.h"; sourceTree = "<group>"; };
-		8438A0931D829AE10011272E /* FMDatabase+Chain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+Chain.m"; sourceTree = "<group>"; };
-		8438A0941D829AE10011272E /* FMDatabase+JRDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+JRDB.h"; sourceTree = "<group>"; };
-		8438A0951D829AE10011272E /* FMDatabase+JRDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+JRDB.m"; sourceTree = "<group>"; };
-		8438A0961D829AE10011272E /* JRActivatedProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRActivatedProperty.h; sourceTree = "<group>"; };
-		8438A0971D829AE10011272E /* JRActivatedProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRActivatedProperty.m; sourceTree = "<group>"; };
-		8438A0981D829AE10011272E /* JRColumnSchema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRColumnSchema.h; sourceTree = "<group>"; };
-		8438A0991D829AE10011272E /* JRColumnSchema.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRColumnSchema.m; sourceTree = "<group>"; };
-		8438A09A1D829AE10011272E /* JRDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRDB.h; sourceTree = "<group>"; };
-		8438A09B1D829AE10011272E /* JRDBChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRDBChain.h; sourceTree = "<group>"; };
-		8438A09C1D829AE10011272E /* JRDBChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRDBChain.m; sourceTree = "<group>"; };
-		8438A09D1D829AE10011272E /* JRDBMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRDBMgr.h; sourceTree = "<group>"; };
-		8438A09E1D829AE10011272E /* JRDBMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRDBMgr.m; sourceTree = "<group>"; };
-		8438A09F1D829AE10011272E /* JRDBQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRDBQueue.h; sourceTree = "<group>"; };
-		8438A0A01D829AE10011272E /* JRDBQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRDBQueue.m; sourceTree = "<group>"; };
-		8438A0A11D829AE10011272E /* JRDBResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRDBResult.h; sourceTree = "<group>"; };
-		8438A0A21D829AE10011272E /* JRDBResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRDBResult.m; sourceTree = "<group>"; };
-		8438A0A31D829AE10011272E /* JRFMDBResultSetHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRFMDBResultSetHandler.h; sourceTree = "<group>"; };
-		8438A0A41D829AE10011272E /* JRFMDBResultSetHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRFMDBResultSetHandler.m; sourceTree = "<group>"; };
-		8438A0A51D829AE10011272E /* JRMiddleTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRMiddleTable.h; sourceTree = "<group>"; };
-		8438A0A61D829AE10011272E /* JRMiddleTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRMiddleTable.m; sourceTree = "<group>"; };
-		8438A0A71D829AE10011272E /* JRPersistent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRPersistent.h; sourceTree = "<group>"; };
-		8438A0A81D829AE10011272E /* JRQueryCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRQueryCondition.h; sourceTree = "<group>"; };
-		8438A0A91D829AE10011272E /* JRQueryCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRQueryCondition.m; sourceTree = "<group>"; };
-		8438A0AA1D829AE10011272E /* JRReflectable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRReflectable.h; sourceTree = "<group>"; };
-		8438A0AB1D829AE10011272E /* JRReflectUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRReflectUtil.h; sourceTree = "<group>"; };
-		8438A0AC1D829AE10011272E /* JRReflectUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRReflectUtil.m; sourceTree = "<group>"; };
-		8438A0AD1D829AE10011272E /* JRSqlGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSqlGenerator.h; sourceTree = "<group>"; };
-		8438A0AE1D829AE10011272E /* JRSqlGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSqlGenerator.m; sourceTree = "<group>"; };
-		8438A0AF1D829AE10011272E /* JRUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRUtils.h; sourceTree = "<group>"; };
-		8438A0B01D829AE10011272E /* JRUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRUtils.m; sourceTree = "<group>"; };
-		8438A0B11D829AE10011272E /* NSObject+JRDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JRDB.h"; sourceTree = "<group>"; };
-		8438A0B21D829AE10011272E /* NSObject+JRDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JRDB.m"; sourceTree = "<group>"; };
-		8438A0B31D829AE10011272E /* NSObject+Reflect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Reflect.h"; sourceTree = "<group>"; };
-		8438A0B41D829AE10011272E /* NSObject+Reflect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Reflect.m"; sourceTree = "<group>"; };
-		8438A0B51D829AE10011272E /* OBJCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBJCProperty.h; sourceTree = "<group>"; };
-		8438A0B61D829AE10011272E /* OBJCProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBJCProperty.m; sourceTree = "<group>"; };
 		844150231D767DE700A208DC /* HttpRequestMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestMode.h; sourceTree = "<group>"; };
 		844150241D767DE700A208DC /* HttpRequestMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestMode.m; sourceTree = "<group>"; };
 		847B999F1D7EA00900315FA9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		849199971D7FDE5C0098886D /* OffLineCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffLineCache.h; sourceTree = "<group>"; };
-		849199981D7FDE5C0098886D /* OffLineCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OffLineCache.m; sourceTree = "<group>"; };
 		84D14C301D473B4900266602 /* XLAFNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLAFNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D14C341D473B4900266602 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84D14C361D473B4900266602 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -170,6 +99,14 @@
 		84D14C841D473BFA00266602 /* HttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpResponse.m; sourceTree = "<group>"; };
 		84D14C851D473BFA00266602 /* UploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadModel.h; sourceTree = "<group>"; };
 		84D14C861D473BFA00266602 /* UploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadModel.m; sourceTree = "<group>"; };
+		BF778A4A1E078690003232C5 /* YYCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCache.h; sourceTree = "<group>"; };
+		BF778A4B1E078690003232C5 /* YYCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYCache.m; sourceTree = "<group>"; };
+		BF778A4C1E078690003232C5 /* YYDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYDiskCache.h; sourceTree = "<group>"; };
+		BF778A4D1E078690003232C5 /* YYDiskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYDiskCache.m; sourceTree = "<group>"; };
+		BF778A4E1E078690003232C5 /* YYKVStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVStorage.h; sourceTree = "<group>"; };
+		BF778A4F1E078690003232C5 /* YYKVStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVStorage.m; sourceTree = "<group>"; };
+		BF778A501E078690003232C5 /* YYMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYMemoryCache.h; sourceTree = "<group>"; };
+		BF778A511E078690003232C5 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,69 +135,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8438A07E1D829ADD0011272E /* fmdb */ = {
-			isa = PBXGroup;
-			children = (
-				8438A07F1D829ADD0011272E /* FMDatabase.h */,
-				8438A0801D829ADD0011272E /* FMDatabase.m */,
-				8438A0811D829ADD0011272E /* FMDatabaseAdditions.h */,
-				8438A0821D829ADD0011272E /* FMDatabaseAdditions.m */,
-				8438A0831D829ADD0011272E /* FMDatabasePool.h */,
-				8438A0841D829ADD0011272E /* FMDatabasePool.m */,
-				8438A0851D829ADD0011272E /* FMDatabaseQueue.h */,
-				8438A0861D829ADD0011272E /* FMDatabaseQueue.m */,
-				8438A0871D829ADD0011272E /* FMDB.h */,
-				8438A0881D829ADD0011272E /* FMResultSet.h */,
-				8438A0891D829ADD0011272E /* FMResultSet.m */,
-				8438A08A1D829ADD0011272E /* Info.plist */,
-			);
-			path = fmdb;
-			sourceTree = "<group>";
-		};
-		8438A0911D829AE10011272E /* JRDB */ = {
-			isa = PBXGroup;
-			children = (
-				8438A0921D829AE10011272E /* FMDatabase+Chain.h */,
-				8438A0931D829AE10011272E /* FMDatabase+Chain.m */,
-				8438A0941D829AE10011272E /* FMDatabase+JRDB.h */,
-				8438A0951D829AE10011272E /* FMDatabase+JRDB.m */,
-				8438A0961D829AE10011272E /* JRActivatedProperty.h */,
-				8438A0971D829AE10011272E /* JRActivatedProperty.m */,
-				8438A0981D829AE10011272E /* JRColumnSchema.h */,
-				8438A0991D829AE10011272E /* JRColumnSchema.m */,
-				8438A09A1D829AE10011272E /* JRDB.h */,
-				8438A09B1D829AE10011272E /* JRDBChain.h */,
-				8438A09C1D829AE10011272E /* JRDBChain.m */,
-				8438A09D1D829AE10011272E /* JRDBMgr.h */,
-				8438A09E1D829AE10011272E /* JRDBMgr.m */,
-				8438A09F1D829AE10011272E /* JRDBQueue.h */,
-				8438A0A01D829AE10011272E /* JRDBQueue.m */,
-				8438A0A11D829AE10011272E /* JRDBResult.h */,
-				8438A0A21D829AE10011272E /* JRDBResult.m */,
-				8438A0A31D829AE10011272E /* JRFMDBResultSetHandler.h */,
-				8438A0A41D829AE10011272E /* JRFMDBResultSetHandler.m */,
-				8438A0A51D829AE10011272E /* JRMiddleTable.h */,
-				8438A0A61D829AE10011272E /* JRMiddleTable.m */,
-				8438A0A71D829AE10011272E /* JRPersistent.h */,
-				8438A0A81D829AE10011272E /* JRQueryCondition.h */,
-				8438A0A91D829AE10011272E /* JRQueryCondition.m */,
-				8438A0AA1D829AE10011272E /* JRReflectable.h */,
-				8438A0AB1D829AE10011272E /* JRReflectUtil.h */,
-				8438A0AC1D829AE10011272E /* JRReflectUtil.m */,
-				8438A0AD1D829AE10011272E /* JRSqlGenerator.h */,
-				8438A0AE1D829AE10011272E /* JRSqlGenerator.m */,
-				8438A0AF1D829AE10011272E /* JRUtils.h */,
-				8438A0B01D829AE10011272E /* JRUtils.m */,
-				8438A0B11D829AE10011272E /* NSObject+JRDB.h */,
-				8438A0B21D829AE10011272E /* NSObject+JRDB.m */,
-				8438A0B31D829AE10011272E /* NSObject+Reflect.h */,
-				8438A0B41D829AE10011272E /* NSObject+Reflect.m */,
-				8438A0B51D829AE10011272E /* OBJCProperty.h */,
-				8438A0B61D829AE10011272E /* OBJCProperty.m */,
-			);
-			path = JRDB;
-			sourceTree = "<group>";
-		};
 		84D14C271D473B4900266602 = {
 			isa = PBXGroup;
 			children = (
@@ -329,8 +203,7 @@
 		84D14C661D473BFA00266602 /* HttpClient */ = {
 			isa = PBXGroup;
 			children = (
-				8438A0911D829AE10011272E /* JRDB */,
-				8438A07E1D829ADD0011272E /* fmdb */,
+				BF778A491E078690003232C5 /* YYCache */,
 				84D14C671D473BFA00266602 /* AFNetworking */,
 				84D14C7B1D473BFA00266602 /* HttpClient.h */,
 				84D14C7C1D473BFA00266602 /* HttpClient.m */,
@@ -346,8 +219,6 @@
 				844150241D767DE700A208DC /* HttpRequestMode.m */,
 				84D14C851D473BFA00266602 /* UploadModel.h */,
 				84D14C861D473BFA00266602 /* UploadModel.m */,
-				849199971D7FDE5C0098886D /* OffLineCache.h */,
-				849199981D7FDE5C0098886D /* OffLineCache.m */,
 			);
 			path = HttpClient;
 			sourceTree = "<group>";
@@ -370,6 +241,21 @@
 				84D14C741D473BFA00266602 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		BF778A491E078690003232C5 /* YYCache */ = {
+			isa = PBXGroup;
+			children = (
+				BF778A4A1E078690003232C5 /* YYCache.h */,
+				BF778A4B1E078690003232C5 /* YYCache.m */,
+				BF778A4C1E078690003232C5 /* YYDiskCache.h */,
+				BF778A4D1E078690003232C5 /* YYDiskCache.m */,
+				BF778A4E1E078690003232C5 /* YYKVStorage.h */,
+				BF778A4F1E078690003232C5 /* YYKVStorage.m */,
+				BF778A501E078690003232C5 /* YYMemoryCache.h */,
+				BF778A511E078690003232C5 /* YYMemoryCache.m */,
+			);
+			path = YYCache;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -486,7 +372,6 @@
 				8438A0331D825A690011272E /* test.jpg in Resources */,
 				84D14C431D473B4A00266602 /* LaunchScreen.storyboard in Resources */,
 				84D14C401D473B4A00266602 /* Assets.xcassets in Resources */,
-				8438A0901D829ADD0011272E /* Info.plist in Resources */,
 				84D14C3E1D473B4A00266602 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,43 +491,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D14C8C1D473BFA00266602 /* AFURLSessionManager.m in Sources */,
-				8438A0B91D829AE10011272E /* JRActivatedProperty.m in Sources */,
 				84D14C3B1D473B4A00266602 /* ViewController.m in Sources */,
 				84D14C901D473BFA00266602 /* HttpError.m in Sources */,
-				8438A0C11D829AE10011272E /* JRQueryCondition.m in Sources */,
-				8438A08B1D829ADD0011272E /* FMDatabase.m in Sources */,
 				84D14C381D473B4900266602 /* AppDelegate.m in Sources */,
-				8438A0C51D829AE10011272E /* NSObject+JRDB.m in Sources */,
-				8438A0BF1D829AE10011272E /* JRFMDBResultSetHandler.m in Sources */,
-				8438A08D1D829ADD0011272E /* FMDatabasePool.m in Sources */,
-				8438A08F1D829ADD0011272E /* FMResultSet.m in Sources */,
-				8438A0BE1D829AE10011272E /* JRDBResult.m in Sources */,
-				8438A0BC1D829AE10011272E /* JRDBMgr.m in Sources */,
-				8438A08C1D829ADD0011272E /* FMDatabaseAdditions.m in Sources */,
-				8438A0B71D829AE10011272E /* FMDatabase+Chain.m in Sources */,
-				8438A0C01D829AE10011272E /* JRMiddleTable.m in Sources */,
-				849199991D7FDE5C0098886D /* OffLineCache.m in Sources */,
-				8438A0C71D829AE10011272E /* OBJCProperty.m in Sources */,
+				BF778A551E078690003232C5 /* YYMemoryCache.m in Sources */,
 				84D14C911D473BFA00266602 /* HttpFileLoadProgress.m in Sources */,
-				8438A0C21D829AE10011272E /* JRReflectUtil.m in Sources */,
 				84D14C881D473BFA00266602 /* AFNetworkReachabilityManager.m in Sources */,
 				844150251D767DE700A208DC /* HttpRequestMode.m in Sources */,
 				84D14C351D473B4900266602 /* main.m in Sources */,
-				8438A0BB1D829AE10011272E /* JRDBChain.m in Sources */,
-				8438A08E1D829ADD0011272E /* FMDatabaseQueue.m in Sources */,
 				84D14C931D473BFA00266602 /* HttpResponse.m in Sources */,
-				8438A0BD1D829AE10011272E /* JRDBQueue.m in Sources */,
 				84D14C8F1D473BFA00266602 /* HttpClient.m in Sources */,
-				8438A0C31D829AE10011272E /* JRSqlGenerator.m in Sources */,
 				84D14C891D473BFA00266602 /* AFSecurityPolicy.m in Sources */,
 				84D14C8A1D473BFA00266602 /* AFURLRequestSerialization.m in Sources */,
 				84D14C941D473BFA00266602 /* UploadModel.m in Sources */,
 				84D14C8B1D473BFA00266602 /* AFURLResponseSerialization.m in Sources */,
-				8438A0B81D829AE10011272E /* FMDatabase+JRDB.m in Sources */,
+				BF778A521E078690003232C5 /* YYCache.m in Sources */,
 				84D14C921D473BFA00266602 /* HttpRequest.m in Sources */,
-				8438A0C41D829AE10011272E /* JRUtils.m in Sources */,
-				8438A0C61D829AE10011272E /* NSObject+Reflect.m in Sources */,
-				8438A0BA1D829AE10011272E /* JRColumnSchema.m in Sources */,
+				BF778A541E078690003232C5 /* YYKVStorage.m in Sources */,
+				BF778A531E078690003232C5 /* YYDiskCache.m in Sources */,
 				84D14C871D473BFA00266602 /* AFHTTPSessionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

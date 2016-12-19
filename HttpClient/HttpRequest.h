@@ -90,52 +90,42 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  * 是否缓存
  */
-@property (nonatomic,assign,readwrite) BOOL isCache;
+@property (nonatomic,assign,readonly) BOOL isCache;
 /**
  *  超时时间
  */
-@property (nonatomic,assign,readwrite) NSUInteger timeoutInterval;
+@property (nonatomic,assign,readonly) NSUInteger timeoutInterval;
 
 /**
  *  请求类型
  */
-@property (nonatomic, strong,readwrite) NSString *requestType;
+@property (nonatomic, strong,readonly) NSString *requestType;
 
 /**
  * POST GET
  */
-@property (nonatomic, assign,readwrite) BOOL isGet;
+@property (nonatomic, assign,readonly) BOOL isGet;
 /**
  *  请求名字
  */
-@property (nonatomic, strong,readwrite) NSString *requestName;
+@property (nonatomic, strong,readonly) NSString *requestName;
 
 /**
  *  请求路径
  */
-@property (nonatomic, strong,readwrite) NSString *requestPath;
+@property (nonatomic, strong,readonly) NSString *requestPath;
 
 /**
  *  请求参数
  */
-@property (nonatomic, strong,readwrite) NSDictionary *params;
+@property (nonatomic, strong,readonly) NSDictionary *params;
 /**
  *  请求
  */
-@property (nonatomic,strong,readwrite) NSMutableURLRequest *urlRequest;
-
-/**
- *  方便设置其他属性例如请求头
- */
-@property (nonatomic,strong,readwrite) AFHTTPRequestSerializer *requestSerializer;
-
-/**
- *  配置选项 配置session模式
- */
-@property (nonatomic,strong,readwrite) NSURLSessionConfiguration *configuration;
+@property (nonatomic,strong,readonly) NSMutableURLRequest *urlRequest;
 
 #pragma mark 普通请求
-- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET;
+- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET IsCache:(BOOL)isCache;
 
 #pragma mark 普通请求开始
 - (void)startRequestWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock

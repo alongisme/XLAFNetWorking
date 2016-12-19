@@ -16,12 +16,12 @@ static NSString  *const REQUEST_FAILE = @"网络请求失败";
 static NSString  *const NETCONNECT_FAILE = @"无网络连接！";
 static NSString  *const NETCONNECTTIME_FAILE = @"网络连接超时，请稍后再试！";
 
-@interface HttpResponse : NSObject
+@interface HttpResponse : NSObject <NSCoding>
 
 /**
  *  是否成功
  */
-@property (nonatomic,assign,readwrite) BOOL isSuccess;
+@property (nonatomic,assign,readonly) BOOL isSuccess;
 
 /**
  *  响应名字

@@ -7,7 +7,6 @@
 //
 
 #import "HttpClient.h"
-#import "OffLineCache.h"
 
 #define HTTPURL @""
 #define HTTPIMAGEURL @""
@@ -148,8 +147,7 @@ static HttpClient *httpClient = nil;
                RequsetStart:(RequstStartBlock)requestStart
                 ResponseEnd:(ResponseEndBlock)responseEnd {
     
-    HttpRequest *request = [[HttpRequest alloc]initWithRequestWithName:name UrlString:url Parameters:parameters IsGET:isGet];
-    request.isCache = isCache;
+    HttpRequest *request = [[HttpRequest alloc]initWithRequestWithName:name UrlString:url Parameters:parameters IsGET:isGet IsCache:isCache];
     [request startRequestWithSuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
     
 }

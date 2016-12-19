@@ -22,13 +22,9 @@
  */
 - (instancetype)initWithUploadModelFileData:(id)fileData Name:(NSString *)name FileName:(NSString *)fileName MimeType:(NSString *)mimeType {
     if(self = [super init]) {
-        
         self.fileData = [self checkData:fileData];
-        
         self.name = name;
-        
         self.fileName = fileName;
-
         self.mimeType = mimeType;
     }
     return self;
@@ -68,5 +64,33 @@
         }
     }
     return [[NSData alloc]init];
+}
+
+- (CreateUploadModel)SetFileData {
+    return ^id(id data) {
+        self.fileData = data;
+        return self;
+    };
+}
+
+- (CreateUploadModel)SetName {
+    return ^id(NSString *name) {
+        self.name = name;
+        return self;
+    };
+}
+
+- (CreateUploadModel)SetFileName {
+    return ^id(NSString *fileName) {
+        self.fileName = fileName;
+        return self;
+    };
+}
+
+- (CreateUploadModel)SetMimeType {
+    return ^id(NSString *mimeType) {
+        self.mimeType = mimeType;
+        return self;
+    };
 }
 @end

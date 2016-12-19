@@ -12,7 +12,8 @@
 
 #define RequestModelPOST(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@0)
 #define RequestModelGET(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@1)
-
+#define RequestModelFilePOST(name,url,parameters,fileData) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@0).SetUploadModels(fileData)
+#define RequestModelFileGET(name,url,parameters,fileData) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@1).SetUploadModels(fileData)
 
 //block
 typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
@@ -40,37 +41,11 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 @property (nonatomic,strong,readwrite) NSArray<UploadModel *> *uploadModels;
 
 /**
- *  设置命名
- *
- *  @return block
+ * 设置参数
  */
 - (CreateHttpRequestMode)SetName;
-
-/**
- *  设置接口
- *
- *  @return block
- */
 - (CreateHttpRequestMode)SetUrl;
-
-/**
- *  设置参数
- *
- *  @return block
- */
 - (CreateHttpRequestMode)SetParameters;
-
-/**
- *  设置类型
- *
- *  @return block
- */
 - (CreateHttpRequestMode)SetIsGET;
-
-/**
- *  这只上传文件数组
- *
- *  @return block
- */
 - (CreateHttpRequestMode)SetUploadModels;
 @end

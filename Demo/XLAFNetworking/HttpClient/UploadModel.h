@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@class UploadModel;
+
+#define CreateUploadModel(fileData,name,fileName,mimeType) [UploadModel new].SetFileData(fileData).SetName(name).SetFileName(fileName).SetMimeType(mimeType)
+
+typedef UploadModel *(^CreateUploadModel)(id UploadModelParameters);
+
 @interface UploadModel : NSObject
 /**
  *  文件数据
@@ -49,4 +55,13 @@
  *  @return obj
  */
 + (instancetype)UploadModelWithFileData:(id)fileData Name:(NSString *)name FileName:(NSString *)fileName MimeType:(NSString *)mimeType;
+
+/**
+ * 设置参数
+ */
+- (CreateUploadModel)SetFileData;
+- (CreateUploadModel)SetName;
+- (CreateUploadModel)SetFileName;
+- (CreateUploadModel)SetMimeType;
+
 @end
