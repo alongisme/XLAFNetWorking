@@ -34,36 +34,7 @@
 - (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
 
 #pragma mark ----------------------Create Request----------------------
-
-/**
- *  创建普通接口请求
- *
- *  @param requestMode  请求模型
- *  @param success      成功回调
- *  @param failure      失败回调
- *  @param requestStart 请求开始回调
- *  @param responseEnd  请求结束回调
- *
- *  @return nil
- */
-- (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
-                                       Success:(CompletionHandlerSuccessBlock)success
-                                       Failure:(CompletionHandlerFailureBlock)failure
-                                  RequsetStart:(RequstStartBlock)requestStart
-                                   ResponseEnd:(ResponseEndBlock)responseEnd;
-
-/**
- *  创建普通接口请求（带缓存）
- *
- *  @param requestMode  请求模型
- *  @param success      成功回调
- *  @param failure      失败回调
- *  @param requestStart 请求开始回调
- *  @param responseEnd  请求结束回调
- *
- *  @return nil
- */
-- (void)requestApiCacheWithHttpRequestMode:(HttpRequestMode *)requestMode
+- (void)requestWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
                                    Success:(CompletionHandlerSuccessBlock)success
                                    Failure:(CompletionHandlerFailureBlock)failure
                               RequsetStart:(RequstStartBlock)requestStart
@@ -81,7 +52,7 @@
  *
  *  @return 返回请求对象
  */
-- (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
+- (HttpRequest *)uploadPhotoWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
                                        Progress:(UploadProgressBlock)progress
                                         Success:(CompletionHandlerSuccessBlock)success
                                         Failure:(CompletionHandlerFailureBlock)failure
@@ -101,7 +72,7 @@
  *
  *  @return 返回请求对象
  */
-- (HttpRequest *)downloadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
+- (HttpRequest *)downloadPhotoWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
                                          Progress:(UploadProgressBlock)progress
                                       Destination:(downloadDestinationBlock)destination
                                           Success:(CompletionHandlerSuccessBlock)success

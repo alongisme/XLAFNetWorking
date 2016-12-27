@@ -78,24 +78,27 @@ static HttpClient *httpClient = nil;
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
-- (void)requestApiWithHttpRequestMode:(HttpRequestMode *)requestMode
-                           Success:(CompletionHandlerSuccessBlock)success
-                           Failure:(CompletionHandlerFailureBlock)failure
-                      RequsetStart:(RequstStartBlock)requestStart
-                       ResponseEnd:(ResponseEndBlock)responseEnd {
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGet:requestMode.isGET IsCache:NO Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
-
+- (void)requestWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
+                                   Success:(CompletionHandlerSuccessBlock)success
+                                   Failure:(CompletionHandlerFailureBlock)failure
+                              RequsetStart:(RequstStartBlock)requestStart
+                               ResponseEnd:(ResponseEndBlock)responseEnd {
+    
+    HttpRequestMode *requestM = [HttpRequestMode new];
+    
+    __weak typeof(self) weakSelf = self;
+    __weak typeof(requestM) weakRquestM = requestM;
+    
+    requestM.Complete = ^ {
+        [weakSelf requestBaseWithRequestMode:weakRquestM Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    };
+    
+    if(requestMode) {
+        requestMode(requestM);
+    }
 }
 
-- (void)requestApiCacheWithHttpRequestMode:(HttpRequestMode *)requestMode
-                              Success:(CompletionHandlerSuccessBlock)success
-                              Failure:(CompletionHandlerFailureBlock)failure
-                         RequsetStart:(RequstStartBlock)requestStart
-                          ResponseEnd:(ResponseEndBlock)responseEnd {
-    [self requestBaseWithName:requestMode.name Url:requestMode.url Parameters:requestMode.parameters IsGet:requestMode.isGET IsCache:YES Success:success Failure:failure RequsetStart:requestStart ResponseEnd:responseEnd];
-}
-
-- (HttpRequest *)uploadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
+- (HttpRequest *)uploadPhotoWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
                                  Progress:(UploadProgressBlock)progress
                          Success:(CompletionHandlerSuccessBlock)success
                                   Failure:(CompletionHandlerFailureBlock)failure
@@ -104,17 +107,23 @@ static HttpClient *httpClient = nil;
   
     HttpRequest *httpRequest = [[HttpRequest alloc]init];
 
-    [httpRequest uploadRequestWithRequestName:requestMode.name UrlString:requestMode.url Parameters:requestMode.parameters PhotoFile:requestMode.uploadModels IsGET:requestMode.isGET];
+    HttpRequestMode *requestM = [HttpRequestMode new];
     
-    [httpRequest uploadStartRequsetWithUnitSize:UntiSizeIsKByte Progress:progress SuccessBlock:^(HttpRequest *request, HttpResponse *response) {
-        //可以在这里转模型数据传出去 付给response.sourceModel
-        success(request,response);
-    } FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    __weak typeof(requestM) weakRquestM = requestM;
     
+    requestM.Complete = ^ {
+        [httpRequest uploadRequestWithRequestMode:weakRquestM];
+        [httpRequest uploadStartRequsetWithUnitSize:UntiSizeIsKByte Progress:progress SuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    };
+    
+    if(requestMode) {
+        requestMode(requestM);
+    }
+
     return httpRequest;
 }
 
-- (HttpRequest *)downloadPhotoWithHttpRequestMode:(HttpRequestMode *)requestMode
+- (HttpRequest *)downloadPhotoWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
                                          Progress:(UploadProgressBlock)progress
                                Destination:(downloadDestinationBlock)destination
                                    Success:(CompletionHandlerSuccessBlock)success
@@ -124,30 +133,30 @@ static HttpClient *httpClient = nil;
     
     HttpRequest *httpRequest = [[HttpRequest alloc]init];
     
-    [httpRequest downloadRequestWithrequestName:requestMode.name UrlString:requestMode.url];
+    HttpRequestMode *requestM = [HttpRequestMode new];
     
-    [httpRequest downloadStartRequsetWithUnitSize:UntiSizeIsByte Progress:progress Destination:destination SuccessBlock:^(HttpRequest *request, HttpResponse *response) {
-        //可以在这里转模型数据传出去 付给response.sourceModel
-        success(request,response);
-    } FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    __weak typeof(requestM) weakRquestM = requestM;
+    
+    requestM.Complete = ^ {
+        [httpRequest downloadRequestWithRequestMode:weakRquestM];
+        [httpRequest downloadStartRequsetWithUnitSize:UntiSizeIsByte Progress:progress Destination:destination SuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+    };
+    
+    if(requestMode) {
+        requestMode(requestM);
+    }
     
     return httpRequest;
-
 }
 
-
-//通一请求累
-- (void)requestBaseWithName:(NSString *)name
-                        Url:(NSString *)url
-                 Parameters:(NSDictionary *)parameters
-                      IsGet:(BOOL)isGet
-                    IsCache:(BOOL)isCache
+//通一请求类
+- (void)requestBaseWithRequestMode:(HttpRequestMode *)requestMode
                     Success:(CompletionHandlerSuccessBlock)success
                     Failure:(CompletionHandlerFailureBlock)failure
                RequsetStart:(RequstStartBlock)requestStart
                 ResponseEnd:(ResponseEndBlock)responseEnd {
     
-    HttpRequest *request = [[HttpRequest alloc]initWithRequestWithName:name UrlString:url Parameters:parameters IsGET:isGet IsCache:isCache];
+    HttpRequest *request = [[HttpRequest alloc]initWithRequestWithRequestMode:requestMode];
     [request startRequestWithSuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
     
 }

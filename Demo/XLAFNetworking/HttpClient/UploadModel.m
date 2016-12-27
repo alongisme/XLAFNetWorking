@@ -8,6 +8,25 @@
 
 #import "UploadModel.h"
 
+@interface UploadModel ()
+/**
+ *  文件数据
+ */
+@property (nonatomic,strong,readwrite) id fileData;
+/**
+ *  参数名称
+ */
+@property (nonatomic,strong,readwrite) NSString *name;
+/**
+ *  文件名字
+ */
+@property (nonatomic,strong,readwrite) NSString *fileName;
+/**
+ *  文件类型
+ */
+@property (nonatomic,strong,readwrite) NSString *mimeType;
+@end
+
 @implementation UploadModel
 
 /**

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
+#import "HttpRequestMode.h"
 #import "HttpResponse.h"
 #import "HttpError.h"
 #import "HttpFileLoadProgress.h"
@@ -125,7 +126,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 @property (nonatomic,strong,readonly) NSMutableURLRequest *urlRequest;
 
 #pragma mark 普通请求
-- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET IsCache:(BOOL)isCache;
+- (instancetype)initWithRequestWithRequestMode:(HttpRequestMode *)requestMode;
 
 #pragma mark 普通请求开始
 - (void)startRequestWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
@@ -134,18 +135,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
                          ResponseEnd:(ResponseEndBlock)responseEnd;
 
 #pragma mark 上传任务
-/**
- *  上传文件任务请求
- *
- *  @param requestName 请求名字
- *  @param URLString   请求路径
- *  @param parameters  请求参数
- *  @param PhotoFile   文件数据
- *  @param isPOST      是否POST
- *
- *  @return HttpRequest
- */
-- (HttpRequest *)uploadRequestWithRequestName:(NSString *)requestName UrlString:(NSString *)urlString Parameters:(id)parameters PhotoFile:(NSArray *)photoFile IsGET:(BOOL)isGET;
+- (HttpRequest *)uploadRequestWithRequestMode:(HttpRequestMode *)requestMode;
 
 /**
  *  上传任务开始请求
@@ -174,7 +164,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *
  *  @return HttpRequest
  */
-- (HttpRequest *)downloadRequestWithrequestName:(NSString *)requestName UrlString:(NSString *)urlString;
+- (HttpRequest *)downloadRequestWithRequestMode:(HttpRequestMode *)requestMode;
 
 /**
  *  下载任务

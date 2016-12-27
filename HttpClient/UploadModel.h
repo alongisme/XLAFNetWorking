@@ -18,19 +18,19 @@ typedef UploadModel *(^CreateUploadModel)(id UploadModelParameters);
 /**
  *  文件数据
  */
-@property (nonatomic,strong,readwrite) id fileData;
+@property (nonatomic,strong,readonly) id fileData;
 /**
  *  参数名称
  */
-@property (nonatomic,strong,readwrite) NSString *name;
+@property (nonatomic,strong,readonly) NSString *name;
 /**
  *  文件名字
  */
-@property (nonatomic,strong,readwrite) NSString *fileName;
+@property (nonatomic,strong,readonly) NSString *fileName;
 /**
  *  文件类型
  */
-@property (nonatomic,strong,readwrite) NSString *mimeType;
+@property (nonatomic,strong,readonly) NSString *mimeType;
 
 /**
  *  初始化一个上传文件模型并复制(对象方法)

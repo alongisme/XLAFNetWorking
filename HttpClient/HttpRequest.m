@@ -21,6 +21,7 @@ static NSString * const cacheName = @"cacheName";
 @property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;//下载任务
 @property (nonatomic,strong,readwrite) AFHTTPRequestSerializer *requestSerializer;
 @property (nonatomic,strong) YYCache *cache;
+@property (nonatomic,strong) HttpRequestMode *requestMode;
 @end
 
 @implementation HttpRequest
@@ -33,11 +34,16 @@ static NSString * const cacheName = @"cacheName";
 }
 
 #pragma mark 普通请求
-- (instancetype)initWithRequestWithName:(NSString *)name UrlString:(NSString *)urlString Parameters:(id)parameters IsGET:(BOOL)isGET IsCache:(BOOL)isCache {
-    if (self = [super init]) {
+- (instancetype)initWithRequestWithRequestMode:(HttpRequestMode *)requestMode {
+    if(self = [super init]) {
+        self.requestMode = requestMode;
+        
         _requestSerializer = [AFHTTPRequestSerializer serializer];
-        _isCache = isCache;
-        [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] RequestName:name RequestPath:urlString Parameters:parameters UrlRequest:nil isGet:isGET];
+        
+        NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:_requestMode.isGET?@"GET":@"POST" URLString:_requestMode.url parameters:_requestMode.parameters error:nil];
+        
+        [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] urlRequest:urlRequest];
+        
     }
     return self;
 }
@@ -56,42 +62,15 @@ static NSString * const cacheName = @"cacheName";
     
     startTime = CFAbsoluteTimeGetCurrent();
     
-    if(_isGet) {
-        
-         _dataTask = [manager GET:_requestPath parameters:_params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
-             [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
-             
-             if(responseEnd) {
-                 responseEnd();
-             }
-             
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
-            if(_isCache) {
-                [self getCacheDataWithSuccess:successBlock];
-            } else {
-                if(error) {
-                    [self handleRequestErrorWithError:error FailedBlock:failedBlock];
-                }
-            }
-            
-            if(responseEnd) {
-                responseEnd();
-            }
-        }];
-        
-    } else {
-        
-        _dataTask = [manager POST:_requestPath parameters:_params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
+    _dataTask = [manager dataTaskWithRequest:_urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (!error) {
             [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
             
             if(responseEnd) {
                 responseEnd();
             }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
+
+        } else {
             if(_isCache) {
                 [self getCacheDataWithSuccess:successBlock];
             } else {
@@ -103,27 +82,27 @@ static NSString * const cacheName = @"cacheName";
             if(responseEnd) {
                 responseEnd();
             }
-        }];
-    }
+
+        }
+    }];
+    
+    [_dataTask resume];
 }
 
 #pragma mark 上传任务
-/**
- *  上传文件任务请求
- *
- *  @param requestName 请求名字
- *  @param URLString   请求路径
- *  @param parameters  请求参数
- *  @param PhotoFile   文件数据
- *  @param isPOST      是否POST
- *
- *  @return HttpRequest
- */
-- (HttpRequest *)uploadRequestWithRequestName:(NSString *)requestName UrlString:(NSString *)urlString Parameters:(id)parameters PhotoFile:(NSArray *)photoFile IsGET:(BOOL)isGET {
+- (HttpRequest *)uploadRequestWithRequestMode:(HttpRequestMode *)requestMode {
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:isGET?@"GET":@"POST" URLString:urlString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    self.requestMode = requestMode;
+    
+    NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:requestMode.isGET?@"GET":@"POST" URLString:requestMode.url parameters:requestMode.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        for (id imageModel in photoFile) {
+        if(_requestMode.headDictionary && _requestMode.headDictionary.count > 0) {
+            for (NSString *key in _requestMode.headDictionary) {
+                [urlRequest addValue:_requestMode.headDictionary[key] forHTTPHeaderField:key];
+            }
+        }
+        
+        for (id imageModel in requestMode.uploadModels) {
             if([imageModel isKindOfClass:[UploadModel class]]) {
                 
                 UploadModel *uploadModel = imageModel;
@@ -134,13 +113,10 @@ static NSString * const cacheName = @"cacheName";
         }
         
     } error:nil];
+
+
+    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:UploadTask] urlRequest:urlRequest];
     
-    //设置请求的显示信息
-    
-    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:UploadTask] RequestName:requestName RequestPath:urlString Parameters:parameters UrlRequest:request isGet:_isGet];
-    
-    [self Log:self];
- 
     return self;
 }
 
@@ -208,13 +184,14 @@ static NSString * const cacheName = @"cacheName";
 
 #pragma mark 下载任务
 
-- (HttpRequest *)downloadRequestWithrequestName:(NSString *)requestName UrlString:(NSString *)urlString {
+- (HttpRequest *)downloadRequestWithRequestMode:(HttpRequestMode *)requestMode {
     
+    self.requestMode = requestMode;
     //设置请求的显示信息
-    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:DownloadTask] RequestName:requestName RequestPath:urlString Parameters:nil UrlRequest:[[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString]] isGet:_isGet];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:requestMode.url]];
     
-    [self Log:self];
-  
+    [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:DownloadTask] urlRequest:urlRequest];
+      
     return self;
 }
 
@@ -315,19 +292,25 @@ static NSString * const cacheName = @"cacheName";
  *  @param parameters 参数
  *  @param urlRequest  url
  */
-- (void)setRequsetDisplayInfoWithRequestType:(NSString *)requestType RequestName:(NSString *)requestName RequestPath:(NSString *)requestPath Parameters:(NSMutableDictionary *)parameters UrlRequest:(NSMutableURLRequest *)urlRequest isGet:(BOOL)isGet {
+- (void)setRequsetDisplayInfoWithRequestType:(NSString *)requestType urlRequest:(NSMutableURLRequest *)urlRequest {
+    
+    if(_requestMode.headDictionary && _requestMode.headDictionary.count > 0) {
+        for (NSString *key in _requestMode.headDictionary) {
+            [urlRequest addValue:_requestMode.headDictionary[key] forHTTPHeaderField:key];
+        }
+    }
     
     _requestType = requestType;
     
-    _requestName = requestName;
+    _requestName = _requestMode.name;
     
-    _requestPath = requestPath;
+    _requestPath = _requestMode.url;
     
-    _params = parameters;
+    _params = _requestMode.parameters;
     
     _urlRequest = urlRequest;
     
-    _isGet = isGet;
+    _isGet = _requestMode.isGET;
     
     if(_timeoutInterval == 0) {
         _timeoutInterval = TIMEOUTINTERVAL;
@@ -475,7 +458,7 @@ static NSString * const cacheName = @"cacheName";
  *  获取缓存数据
  */
 - (void)getCacheDataWithSuccess:(CompletionHandlerSuccessBlock)success {
-    [self Log:@"\n======================== 接口请求失败，获取缓存数据 ==========================\n"];
+    [self Log:[NSString stringWithFormat:@"\n======================== (%@)接口请求失败，获取缓存数据 ==========================\n",self.requestPath]];
     if(success) {
         id cacheObj = [self.cache objectForKey:[NSString stringWithFormat:@"%@-response",self.requestPath]];
         if([cacheObj isKindOfClass:[HttpResponse class]]) {

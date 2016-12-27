@@ -8,6 +8,38 @@
 
 #import "HttpRequestMode.h"
 
+@interface HttpRequestMode ()
+/**
+ *  命名
+ */
+@property (nonatomic,strong,readwrite) NSString *name;
+/**
+ *  接口
+ */
+@property (nonatomic,strong,readwrite) NSString *url;
+/**
+ *  参数
+ */
+@property (nonatomic,strong,readwrite) NSDictionary *parameters;
+/**
+ *  缓存
+ */
+@property (nonatomic,assign,readwrite) BOOL isCache;
+/**
+ *  类型
+ */
+@property (nonatomic,assign,readwrite) BOOL isGET;
+/**
+ *  header
+ */
+@property (nonatomic,strong,readwrite) NSDictionary *headDictionary;
+/**
+ *  上传文件数组
+ */
+@property (nonatomic,strong,readwrite) NSArray<UploadModel *> *uploadModels;
+
+@end
+
 @implementation HttpRequestMode
 - (CreateHttpRequestMode)SetName {
     return ^id(NSString *name) {
@@ -36,10 +68,28 @@
     };
 }
 
+- (CreateHttpRequestMode)SetIsCache {
+    return ^id(NSNumber *isCache) {
+        if([isCache isKindOfClass:[NSNumber class]]) {
+            _isCache = [isCache boolValue];
+        }
+        return self;
+    };
+}
+
 - (CreateHttpRequestMode)SetIsGET {
     return ^id(NSNumber *isGET) {
         if([isGET isKindOfClass:[NSNumber class]]) {
             _isGET = [isGET boolValue];
+        }
+        return self;
+    };
+}
+
+- (CreateHttpRequestMode)SetHeaderValue {
+    return ^id(NSDictionary *headDic) {
+        if([headDic isKindOfClass:[NSDictionary class]]) {
+            _headDictionary = headDic;
         }
         return self;
     };
@@ -54,4 +104,9 @@
     };
 }
 
+- (void)complete {
+    if(self.Complete) {
+        self.Complete();
+    }
+}
 @end

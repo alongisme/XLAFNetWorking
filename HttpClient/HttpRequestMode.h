@@ -10,11 +10,6 @@
 @class UploadModel;
 @class HttpRequestMode;
 
-#define RequestModelPOST(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@0)
-#define RequestModelGET(name,url,parameters) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@1)
-#define RequestModelFilePOST(name,url,parameters,fileData) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@0).SetUploadModels(fileData)
-#define RequestModelFileGET(name,url,parameters,fileData) [HttpRequestMode new].SetName(name).SetUrl(url).SetParameters(parameters).SetIsGET(@1).SetUploadModels(fileData)
-
 //block
 typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 
@@ -22,23 +17,35 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 /**
  *  命名
  */
-@property (nonatomic,strong,readwrite) NSString *name;
+@property (nonatomic,strong,readonly) NSString *name;
 /**
  *  接口
  */
-@property (nonatomic,strong,readwrite) NSString *url;
+@property (nonatomic,strong,readonly) NSString *url;
 /**
  *  参数
  */
-@property (nonatomic,strong,readwrite) NSDictionary *parameters;
+@property (nonatomic,strong,readonly) NSDictionary *parameters;
+/**
+ *  缓存
+ */
+@property (nonatomic,assign,readonly) BOOL isCache;
 /**
  *  类型
  */
-@property (nonatomic,assign,readwrite) BOOL isGET;
+@property (nonatomic,assign,readonly) BOOL isGET;
+/**
+ *  header
+ */
+@property (nonatomic,strong,readonly) NSDictionary *headDictionary;
 /**
  *  上传文件数组
  */
-@property (nonatomic,strong,readwrite) NSArray<UploadModel *> *uploadModels;
+@property (nonatomic,strong,readonly) NSArray<UploadModel *> *uploadModels;
+/**
+ *  完成回调通知
+ */
+@property (nonatomic,strong) void (^Complete)();
 
 /**
  * 设置参数
@@ -46,6 +53,12 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 - (CreateHttpRequestMode)SetName;
 - (CreateHttpRequestMode)SetUrl;
 - (CreateHttpRequestMode)SetParameters;
+- (CreateHttpRequestMode)SetIsCache;
 - (CreateHttpRequestMode)SetIsGET;
+- (CreateHttpRequestMode)SetHeaderValue;
 - (CreateHttpRequestMode)SetUploadModels;
+/**
+ * 完成回调
+ */
+- (void)complete;
 @end
