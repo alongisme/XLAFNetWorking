@@ -10,6 +10,7 @@
 #import "HttpClient.h"
 #import "UploadModel.h"
 #import "YYCache.h"
+#import "UIView+HUD.h"
 
 static NSString * const cacheName = @"cacheName";
 
@@ -50,11 +51,15 @@ static NSString * const cacheName = @"cacheName";
 
 #pragma mark 普通请求开始
 - (void)startRequestWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                                           FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                                          RequsetStart:(RequstStartBlock)requestStart
-                                           ResponseEnd:(ResponseEndBlock)responseEnd {
+                         FailedBlock:(CompletionHandlerFailureBlock)failedBlock
+                        RequsetStart:(RequstStartBlock)requestStart
+                         ResponseEnd:(ResponseEndBlock)responseEnd {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    if(self.requestMode.msgVIew) {
+        [self.requestMode.msgVIew showHud];
+    }
     
     if(requestStart) {
         requestStart();
@@ -65,11 +70,6 @@ static NSString * const cacheName = @"cacheName";
     _dataTask = [manager dataTaskWithRequest:_urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (!error) {
             [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
-            
-            if(responseEnd) {
-                responseEnd();
-            }
-
         } else {
             if(_isCache) {
                 [self getCacheDataWithSuccess:successBlock];
@@ -78,11 +78,14 @@ static NSString * const cacheName = @"cacheName";
                     [self handleRequestErrorWithError:error FailedBlock:failedBlock];
                 }
             }
-            
-            if(responseEnd) {
-                responseEnd();
-            }
-
+        }
+        
+        if(responseEnd) {
+            responseEnd();
+        }
+        
+        if(self.requestMode.msgVIew) {
+            [self.requestMode.msgVIew hideHud];
         }
     }];
     
@@ -113,8 +116,8 @@ static NSString * const cacheName = @"cacheName";
         }
         
     } error:nil];
-
-
+    
+    
     [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:UploadTask] urlRequest:urlRequest];
     
     return self;
@@ -139,6 +142,10 @@ static NSString * const cacheName = @"cacheName";
     
     //记录请求开始时间
     startTime = CFAbsoluteTimeGetCurrent();
+    
+    if(self.requestMode.msgVIew) {
+        [self.requestMode.msgVIew showHud];
+    }
     
     //请求开始
     if(requestStart) {
@@ -165,7 +172,7 @@ static NSString * const cacheName = @"cacheName";
             
             [self Log:httpFileLoadProgress];
         }
-    
+        
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if(error) {
             [self handleRequestErrorWithError:error FailedBlock:failedBlock];
@@ -176,6 +183,10 @@ static NSString * const cacheName = @"cacheName";
         //响应结束
         if(responseEnd) {
             responseEnd();
+        }
+        
+        if(self.requestMode.msgVIew) {
+            [self.requestMode.msgVIew hideHud];
         }
     }];
     
@@ -191,7 +202,7 @@ static NSString * const cacheName = @"cacheName";
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:requestMode.url]];
     
     [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:DownloadTask] urlRequest:urlRequest];
-      
+    
     return self;
 }
 
@@ -199,28 +210,32 @@ static NSString * const cacheName = @"cacheName";
  *  下载任务
  *
  *  @param unitSize     单位大小
- *  @param Progress     进度条
+ *  @param progress     进度条
  *  @param successBlock 成功回调
  *  @param failedBlock  失败回调
  *  @param requestStart 请求开始回调
  *  @param responseEnd  响应结束回调
  */
 - (void)downloadStartRequsetWithUnitSize:(UnitSize)unitSize
-                                         Progress:(UploadProgressBlock)progress
-                                      Destination:(downloadDestinationBlock)destination
-                                     SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                                      FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                                     RequsetStart:(RequstStartBlock)requestStart
-                                      ResponseEnd:(ResponseEndBlock)responseEnd {
+                                Progress:(UploadProgressBlock)progress
+                             Destination:(downloadDestinationBlock)destination
+                            SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                             FailedBlock:(CompletionHandlerFailureBlock)failedBlock
+                            RequsetStart:(RequstStartBlock)requestStart
+                             ResponseEnd:(ResponseEndBlock)responseEnd {
     
     //记录请求开始时间
     startTime = CFAbsoluteTimeGetCurrent();
+    
+    if(self.requestMode.msgVIew) {
+        [self.requestMode.msgVIew showHud];
+    }
     
     //请求开始
     if(requestStart) {
         requestStart();
     }
-            
+    
     //创建管理者
     AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
@@ -241,16 +256,16 @@ static NSString * const cacheName = @"cacheName";
             [self Log:httpFileLoadProgress];
             
         }
-    
+        
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
         //- block的返回值, 要求返回一个URL, 返回的这个URL就是文件的位置的路径
         
-    
+        
         if(destination) {
             return destination(targetPath,response);
         }else {
-    
+            
             NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
             
             NSURL *UrlPath = [NSURL fileURLWithPath:[cachesPath stringByAppendingPathComponent:response.suggestedFilename]];
@@ -258,7 +273,7 @@ static NSString * const cacheName = @"cacheName";
             return UrlPath;
         }
         
-                
+        
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         
         //设置下载完成操作
@@ -271,13 +286,17 @@ static NSString * const cacheName = @"cacheName";
             [self handleDownloadSuccessBlockDataWithDownloadResponse:response FilePath:filePath SuccessBlock:successBlock FailedBlock:failedBlock];
         }
         
+        if(self.requestMode.msgVIew) {
+            [self.requestMode.msgVIew hideHud];
+        }
+        
         //响应结束
         if(responseEnd) {
             responseEnd();
         }
         
     }];
-
+    
     [_downloadTask resume];
     
 }
@@ -287,9 +306,6 @@ static NSString * const cacheName = @"cacheName";
  *  设置请求的显示信息
  *
  *  @param requestType 类型
- *  @param requestName 名称
- *  @param requestPath 路径
- *  @param parameters 参数
  *  @param urlRequest  url
  */
 - (void)setRequsetDisplayInfoWithRequestType:(NSString *)requestType urlRequest:(NSMutableURLRequest *)urlRequest {
@@ -328,8 +344,8 @@ static NSString * const cacheName = @"cacheName";
  *  @param failedBlock    失败回调
  */
 - (void)handleSuccessBlockDataWithresponseObject:(id _Nullable)responseObject
-                              SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                               FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
+                                    SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                                     FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
     
     NSMutableDictionary *responseData = [NSMutableDictionary dictionary];
     
@@ -382,9 +398,9 @@ static NSString * const cacheName = @"cacheName";
  *  @param failedBlock      失败回调
  */
 - (void)handleDownloadSuccessBlockDataWithDownloadResponse:(NSURLResponse *)downloadResponse
-                                          FilePath:(NSURL *)filePath
-                                    SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                                     FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
+                                                  FilePath:(NSURL *)filePath
+                                              SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                                               FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
     
     //响应数据处理
     HttpResponse *response = [[HttpResponse alloc]init];
@@ -403,7 +419,6 @@ static NSString * const cacheName = @"cacheName";
  *  处理请求错误
  *
  *  @param error        错误
- *  @param successBlock 成功回调
  *  @param failedBlock  失败回调
  */
 - (void)handleRequestErrorWithError:(NSError  * _Nullable )error
@@ -412,7 +427,7 @@ static NSString * const cacheName = @"cacheName";
     HttpError *httpError = [[HttpError alloc]init];
     httpError.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
     [httpError handleHttpError:error];
-
+    
     HttpResponse *response = [[HttpResponse alloc]init];
     response.objectData = [error userInfo];
     response.errorMsg = httpError.localizedDescription;
@@ -477,7 +492,7 @@ static NSString * const cacheName = @"cacheName";
  *  取消请求
  */
 - (void)cannel {
-
+    
     if(_dataTask) {
         [_dataTask cancel];
         _dataTask = nil;

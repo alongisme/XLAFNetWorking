@@ -37,21 +37,6 @@
         
     } RequsetStart:nil ResponseEnd:nil];
     
-    [[HttpClient sharedInstance] requestWithHttpRequestMode:^(HttpRequestMode *request) {
-        //...
-        request
-        .SetName(@"普通")
-        .SetUrl(@"");
-        
-        [request complete];
-    } Success:^(HttpRequest *request, HttpResponse *response) {
-        
-    } Failure:^(HttpRequest *request, HttpResponse *response) {
-        
-    } RequsetStart:nil ResponseEnd:nil];
-    
-
-    
 }
 
 - (void)uploadTaskTest {

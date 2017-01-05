@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 @class UploadModel;
 @class HttpRequestMode;
 
@@ -42,6 +44,10 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
  *  上传文件数组
  */
 @property (nonatomic,strong,readonly) NSArray<UploadModel *> *uploadModels;
+/**
+ *  msgView
+ */
+@property (nonatomic,strong,readonly) UIView *msgVIew;
 /**
  *  完成回调通知
  */

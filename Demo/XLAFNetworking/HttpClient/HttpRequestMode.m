@@ -37,7 +37,10 @@
  *  上传文件数组
  */
 @property (nonatomic,strong,readwrite) NSArray<UploadModel *> *uploadModels;
-
+/**
+ *  msgView
+ */
+@property (nonatomic,strong,readwrite) UIView *msgVIew;
 @end
 
 @implementation HttpRequestMode
@@ -99,6 +102,15 @@
     return ^id(NSArray<UploadModel *> *uploadModels) {
         if([uploadModels isKindOfClass:[NSArray class]]) {
             _uploadModels = uploadModels;
+        }
+        return self;
+    };
+}
+
+- (CreateHttpRequestMode)SetMsgView {
+    return ^id(UIView *view) {
+        if([view isKindOfClass:[UIView class]]) {
+            _msgVIew = view;
         }
         return self;
     };

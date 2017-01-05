@@ -34,6 +34,9 @@
 		BF778A531E078690003232C5 /* YYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4D1E078690003232C5 /* YYDiskCache.m */; };
 		BF778A541E078690003232C5 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4F1E078690003232C5 /* YYKVStorage.m */; };
 		BF778A551E078690003232C5 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A511E078690003232C5 /* YYMemoryCache.m */; };
+		BFAF9A931E1E3B74005A73D1 /* UIView+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAF9A921E1E3B74005A73D1 /* UIView+HUD.m */; };
+		BFAF9A961E1E3B9F005A73D1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAF9A951E1E3B9F005A73D1 /* MBProgressHUD.m */; };
+		BFAF9A981E1E3BC4005A73D1 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BFAF9A971E1E3BC4005A73D1 /* MBProgressHUD.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +110,11 @@
 		BF778A4F1E078690003232C5 /* YYKVStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVStorage.m; sourceTree = "<group>"; };
 		BF778A501E078690003232C5 /* YYMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYMemoryCache.h; sourceTree = "<group>"; };
 		BF778A511E078690003232C5 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
+		BFAF9A911E1E3B74005A73D1 /* UIView+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HUD.h"; sourceTree = "<group>"; };
+		BFAF9A921E1E3B74005A73D1 /* UIView+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HUD.m"; sourceTree = "<group>"; };
+		BFAF9A941E1E3B9F005A73D1 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		BFAF9A951E1E3B9F005A73D1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		BFAF9A971E1E3BC4005A73D1 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +184,7 @@
 		84D14C331D473B4900266602 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BFAF9A971E1E3BC4005A73D1 /* MBProgressHUD.bundle */,
 				8438A0321D825A690011272E /* test.jpg */,
 				84D14C341D473B4900266602 /* main.m */,
 			);
@@ -203,6 +212,10 @@
 		84D14C661D473BFA00266602 /* HttpClient */ = {
 			isa = PBXGroup;
 			children = (
+				BFAF9A941E1E3B9F005A73D1 /* MBProgressHUD.h */,
+				BFAF9A951E1E3B9F005A73D1 /* MBProgressHUD.m */,
+				BFAF9A911E1E3B74005A73D1 /* UIView+HUD.h */,
+				BFAF9A921E1E3B74005A73D1 /* UIView+HUD.m */,
 				BF778A491E078690003232C5 /* YYCache */,
 				84D14C671D473BFA00266602 /* AFNetworking */,
 				84D14C7B1D473BFA00266602 /* HttpClient.h */,
@@ -371,6 +384,7 @@
 			files = (
 				8438A0331D825A690011272E /* test.jpg in Resources */,
 				84D14C431D473B4A00266602 /* LaunchScreen.storyboard in Resources */,
+				BFAF9A981E1E3BC4005A73D1 /* MBProgressHUD.bundle in Resources */,
 				84D14C401D473B4A00266602 /* Assets.xcassets in Resources */,
 				84D14C3E1D473B4A00266602 /* Main.storyboard in Resources */,
 			);
@@ -490,6 +504,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFAF9A931E1E3B74005A73D1 /* UIView+HUD.m in Sources */,
 				84D14C8C1D473BFA00266602 /* AFURLSessionManager.m in Sources */,
 				84D14C3B1D473B4A00266602 /* ViewController.m in Sources */,
 				84D14C901D473BFA00266602 /* HttpError.m in Sources */,
@@ -504,6 +519,7 @@
 				84D14C891D473BFA00266602 /* AFSecurityPolicy.m in Sources */,
 				84D14C8A1D473BFA00266602 /* AFURLRequestSerialization.m in Sources */,
 				84D14C941D473BFA00266602 /* UploadModel.m in Sources */,
+				BFAF9A961E1E3B9F005A73D1 /* MBProgressHUD.m in Sources */,
 				84D14C8B1D473BFA00266602 /* AFURLResponseSerialization.m in Sources */,
 				BF778A521E078690003232C5 /* YYCache.m in Sources */,
 				84D14C921D473BFA00266602 /* HttpRequest.m in Sources */,
