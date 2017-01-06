@@ -29,6 +29,10 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
  */
 @property (nonatomic,strong,readonly) NSDictionary *parameters;
 /**
+ *  超时时间
+ */
+@property (nonatomic,assign,readonly) NSUInteger timeoutInterval;
+/**
  *  缓存
  */
 @property (nonatomic,assign,readonly) BOOL isCache;
@@ -59,10 +63,12 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 - (CreateHttpRequestMode)SetName;
 - (CreateHttpRequestMode)SetUrl;
 - (CreateHttpRequestMode)SetParameters;
+- (CreateHttpRequestMode)SetTimeoutInterval;
 - (CreateHttpRequestMode)SetIsCache;
 - (CreateHttpRequestMode)SetIsGET;
 - (CreateHttpRequestMode)SetHeaderValue;
 - (CreateHttpRequestMode)SetUploadModels;
+- (CreateHttpRequestMode)SetMsgView;
 /**
  * 完成回调
  */

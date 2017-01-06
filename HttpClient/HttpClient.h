@@ -12,9 +12,17 @@
 #import "HttpFileLoadProgress.h"
 #import "HttpRequestMode.h"
 
-#define HTTPCLIENT [HttpClient sharedInstance]
-
 @interface HttpClient : NSObject
+
+//URL前缀
+@property (nonatomic,copy) NSString *baseUrl;
+//所有headfiled
+@property (nonatomic,strong) NSDictionary *requestHeadDictionary;
+//过滤设置headfiled
+@property (nonatomic,strong) NSArray *requestHeadIgnoreUrlArray;
+//超时时间
+@property (nonatomic,assign) NSUInteger timeoutInterval;
+
 /**
  *  单例
  *
@@ -29,16 +37,15 @@
  *  2 WIFI
  *  3 3G 4G
  *  4 未知
- *  @param nil
  */
 - (void)checkNetworkingStatus:(NetwokingStatusBlcok)block;
 
 #pragma mark ----------------------Create Request----------------------
 - (void)requestWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
-                                   Success:(CompletionHandlerSuccessBlock)success
-                                   Failure:(CompletionHandlerFailureBlock)failure
-                              RequsetStart:(RequstStartBlock)requestStart
-                               ResponseEnd:(ResponseEndBlock)responseEnd;
+                           Success:(CompletionHandlerSuccessBlock)success
+                           Failure:(CompletionHandlerFailureBlock)failure
+                      RequsetStart:(RequstStartBlock)requestStart
+                       ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  上传文件接口请求

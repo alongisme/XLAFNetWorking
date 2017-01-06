@@ -71,6 +71,15 @@
     };
 }
 
+- (CreateHttpRequestMode)SetTimeoutInterval {
+    return ^id(NSNumber *timeoutInterval) {
+        if([timeoutInterval isKindOfClass:[NSNumber class]]) {
+            _timeoutInterval = [timeoutInterval integerValue];
+        }
+        return self;
+    };
+}
+
 - (CreateHttpRequestMode)SetIsCache {
     return ^id(NSNumber *isCache) {
         if([isCache isKindOfClass:[NSNumber class]]) {

@@ -10,23 +10,12 @@
 #import "AFNetworking.h"
 #import "HttpRequestMode.h"
 #import "HttpResponse.h"
-#import "HttpError.h"
 #import "HttpFileLoadProgress.h"
 
-/**
- *  在Debug模式下，输出内容
- */
-#ifdef DEBUG
-#define DLOG(...) NSLog(__VA_ARGS__)
-#else 
-#define DLOG(...) NSlog(...)
-#endif
 //缺省超时时间
 #define TIMEOUTINTERVAL 30
 
 @class HttpRequest;
-@class HttpResponse;
-@class HttpFileLoadProgress;
 
 typedef NS_ENUM(NSInteger,RequstType) {
     NormalTask = 0,//普通任务
@@ -40,7 +29,6 @@ typedef NS_ENUM(NSInteger,RequstType) {
  *  2 WIFI
  *  3 3G 4G
  *  4 未知
- *  @param int 状态值
  */
 typedef void(^NetwokingStatusBlcok)(AFNetworkReachabilityStatus status);
 
@@ -92,10 +80,6 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  * 是否缓存
  */
 @property (nonatomic,assign,readonly) BOOL isCache;
-/**
- *  超时时间
- */
-@property (nonatomic,assign,readonly) NSUInteger timeoutInterval;
 
 /**
  *  请求类型
@@ -140,7 +124,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  上传任务开始请求
  *
- *  @param Progress     进度条回调
+ *  @param progress     进度条回调
  *  @param unitSize     单位大小
  *  @param successBlock 成功回调
  *  @param failedBlock  失败回调
@@ -159,8 +143,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
 /**
  *  下载任务
  *
- *  @param requestName 请求名字
- *  @param URLString   请求路径
+ *  @param requestMode 请求model
  *
  *  @return HttpRequest
  */
@@ -170,7 +153,7 @@ typedef NSURL *(^downloadDestinationBlock)(NSURL *targetPath, NSURLResponse *res
  *  下载任务
  *
  *  @param unitSize     单位大小
- *  @param Progress     进度条
+ *  @param progress     进度条
  *  @param successBlock 成功回调
  *  @param failedBlock  失败回调
  *  @param requestStart 请求开始回调

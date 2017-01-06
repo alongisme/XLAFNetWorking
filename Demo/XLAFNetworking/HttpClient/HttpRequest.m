@@ -8,6 +8,7 @@
 
 #import "HttpRequest.h"
 #import "HttpClient.h"
+#import "HttpError.h"
 #import "UploadModel.h"
 #import "YYCache.h"
 #import "UIView+HUD.h"
@@ -21,6 +22,7 @@ static NSString * const cacheName = @"cacheName";
 @property (nonatomic,strong) NSURLSessionUploadTask *uploadTask;//上传任务
 @property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;//下载任务
 @property (nonatomic,strong,readwrite) AFHTTPRequestSerializer *requestSerializer;
+@property (nonatomic,assign) NSUInteger timeoutInterval;
 @property (nonatomic,strong) YYCache *cache;
 @property (nonatomic,strong) HttpRequestMode *requestMode;
 @end
@@ -41,7 +43,13 @@ static NSString * const cacheName = @"cacheName";
         
         _requestSerializer = [AFHTTPRequestSerializer serializer];
         
-        NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:_requestMode.isGET?@"GET":@"POST" URLString:_requestMode.url parameters:_requestMode.parameters error:nil];
+        BOOL isHaveBaseUrl;
+        
+        if([HttpClient sharedInstance].baseUrl && [HttpClient sharedInstance].baseUrl.length > 0 && ![[HttpClient sharedInstance].baseUrl isEqualToString:@""]) {
+            isHaveBaseUrl = YES;
+        }
+        
+        NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:_requestMode.isGET?@"GET":@"POST" URLString:isHaveBaseUrl?[[HttpClient sharedInstance].baseUrl stringByAppendingPathComponent:_requestMode.url]:_requestMode.url parameters:_requestMode.parameters error:nil];
         
         [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] urlRequest:urlRequest];
         
@@ -98,12 +106,6 @@ static NSString * const cacheName = @"cacheName";
     self.requestMode = requestMode;
     
     NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:requestMode.isGET?@"GET":@"POST" URLString:requestMode.url parameters:requestMode.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        
-        if(_requestMode.headDictionary && _requestMode.headDictionary.count > 0) {
-            for (NSString *key in _requestMode.headDictionary) {
-                [urlRequest addValue:_requestMode.headDictionary[key] forHTTPHeaderField:key];
-            }
-        }
         
         for (id imageModel in requestMode.uploadModels) {
             if([imageModel isKindOfClass:[UploadModel class]]) {
@@ -310,9 +312,41 @@ static NSString * const cacheName = @"cacheName";
  */
 - (void)setRequsetDisplayInfoWithRequestType:(NSString *)requestType urlRequest:(NSMutableURLRequest *)urlRequest {
     
+    NSDictionary *requestHeadDic = [HttpClient sharedInstance].requestHeadDictionary;
+    
+    NSArray *ignoreArr = [HttpClient sharedInstance].requestHeadIgnoreUrlArray;
+    
+    if(requestHeadDic && requestHeadDic.count > 0) {
+        for (NSString *key in requestHeadDic) {
+            
+            BOOL isInArr = NO;
+            
+            for (NSString *ignoreUrl in ignoreArr) {
+                if([urlRequest.URL.absoluteString isEqualToString:ignoreUrl]) {
+                    isInArr = YES;
+                    break;
+                }
+            }
+            
+            if(!isInArr) {
+                [urlRequest setValue:requestHeadDic[key] forHTTPHeaderField:key];
+            }
+        }
+    }
+    
     if(_requestMode.headDictionary && _requestMode.headDictionary.count > 0) {
         for (NSString *key in _requestMode.headDictionary) {
-            [urlRequest addValue:_requestMode.headDictionary[key] forHTTPHeaderField:key];
+            [urlRequest setValue:_requestMode.headDictionary[key] forHTTPHeaderField:key];
+        }
+    }
+    
+    if([HttpClient sharedInstance].timeoutInterval == 0 && _requestMode.timeoutInterval == 0) {
+        _timeoutInterval = TIMEOUTINTERVAL;
+    } else {
+        if(_requestMode.timeoutInterval == 0) {
+            _timeoutInterval = [HttpClient sharedInstance].timeoutInterval;
+        }else {
+            _timeoutInterval = _requestMode.timeoutInterval;
         }
     }
     
@@ -320,7 +354,7 @@ static NSString * const cacheName = @"cacheName";
     
     _requestName = _requestMode.name;
     
-    _requestPath = _requestMode.url;
+    _requestPath = urlRequest.URL.absoluteString;
     
     _params = _requestMode.parameters;
     
@@ -328,9 +362,7 @@ static NSString * const cacheName = @"cacheName";
     
     _isGet = _requestMode.isGET;
     
-    if(_timeoutInterval == 0) {
-        _timeoutInterval = TIMEOUTINTERVAL;
-    }
+    urlRequest.timeoutInterval = _timeoutInterval;
     
     [self Log:self];
 }
@@ -530,7 +562,7 @@ static NSString * const cacheName = @"cacheName";
 #pragma mark description
 //打印消息
 - (void)Log:(id)str {
-    DLOG(@"%@",str);
+    NSLog(@"%@",str);
 }
 
 - (NSString *)description{
