@@ -23,6 +23,8 @@
 //超时时间
 @property (nonatomic,assign) NSUInteger timeoutInterval;
 
+@property (nonatomic,strong) NSArray *commandParasArray;
+@property (nonatomic,strong) NSArray *commadnIgnoreUrlArray;
 /**
  *  单例
  *
@@ -42,10 +44,10 @@
 
 #pragma mark ----------------------Create Request----------------------
 - (void)requestWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
-                           Success:(CompletionHandlerSuccessBlock)success
-                           Failure:(CompletionHandlerFailureBlock)failure
-                      RequsetStart:(RequstStartBlock)requestStart
-                       ResponseEnd:(ResponseEndBlock)responseEnd;
+                                   Success:(CompletionHandlerSuccessBlock)success
+                                   Failure:(CompletionHandlerFailureBlock)failure
+                              RequsetStart:(RequstStartBlock)requestStart
+                               ResponseEnd:(ResponseEndBlock)responseEnd;
 
 /**
  *  上传文件接口请求
@@ -87,4 +89,6 @@
                                      RequsetStart:(RequstStartBlock)requestStart
                                       ResponseEnd:(ResponseEndBlock)responseEnd;
 
+//获取制定url的cookies
+- (NSDictionary *)getCookiesPropertiesWithPath:(NSString *)path;
 @end

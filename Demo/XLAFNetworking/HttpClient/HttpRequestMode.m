@@ -17,10 +17,10 @@
  *  接口
  */
 @property (nonatomic,strong,readwrite) NSString *url;
-/**
- *  参数
- */
-@property (nonatomic,strong,readwrite) NSDictionary *parameters;
+///**
+// *  参数
+// */
+//@property (nonatomic,strong,readwrite) NSDictionary *parameters;
 /**
  *  缓存
  */
@@ -130,4 +130,8 @@
         self.Complete();
     }
 }
+
+//- (void)dealloc {
+//    NSLog(@"%s",__func__);
+//}
 @end

@@ -21,7 +21,13 @@
  *  @param ObjectData 解析数据
  */
 - (void)loadResopnseWithObjectData:(NSDictionary *)objectData {
-        
+    
+    if([objectData isKindOfClass:[NSArray class]]) {
+        _result = [NSDictionary dictionaryWithObject:objectData forKey:@"object"];
+        _isSuccess = YES;
+        return;
+    }
+    
     _objectData = objectData;
     
     //数据解析
@@ -33,8 +39,8 @@
         return;
     }
     
-    NSString *code = [self checkString:objectData[@"code"]];
-    NSString *message = [self checkString:objectData[@"message"]];
+    NSString *code = objectData[@"code"];
+    NSString *message = objectData[@"message"];
     id object = objectData[@"object"];
     
     if ([code isEqualToString:@"1"]) {
@@ -74,14 +80,6 @@
     else{
         _isSuccess = NO;
         _errorMsg = DATA_FORMAT_ERROR;
-    }
-}
-
-- (NSString *)checkString:(id)str {
-    if([str isKindOfClass:[NSString class]]) {
-        return str;
-    } else {
-        return [str stringValue];
     }
 }
 

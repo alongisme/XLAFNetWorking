@@ -18,7 +18,7 @@ static HttpClient *httpClient = nil;
     
     dispatch_once(&predicate, ^{
         if(httpClient == nil) {
-            httpClient = [[HttpClient alloc]init];
+            httpClient = [[HttpClient alloc]init];                        
         }
     });
     
@@ -73,10 +73,10 @@ static HttpClient *httpClient = nil;
 }
 
 - (void)requestWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
-                           Success:(CompletionHandlerSuccessBlock)success
-                           Failure:(CompletionHandlerFailureBlock)failure
-                      RequsetStart:(RequstStartBlock)requestStart
-                       ResponseEnd:(ResponseEndBlock)responseEnd {
+                                   Success:(CompletionHandlerSuccessBlock)success
+                                   Failure:(CompletionHandlerFailureBlock)failure
+                              RequsetStart:(RequstStartBlock)requestStart
+                               ResponseEnd:(ResponseEndBlock)responseEnd {
     
     HttpRequestMode *requestM = [HttpRequestMode new];
     
@@ -93,47 +93,49 @@ static HttpClient *httpClient = nil;
 }
 
 - (HttpRequest *)uploadPhotoWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
-                                       Progress:(UploadProgressBlock)progress
-                                        Success:(CompletionHandlerSuccessBlock)success
-                                        Failure:(CompletionHandlerFailureBlock)failure
-                                   RequsetStart:(RequstStartBlock)requestStart
-                                    ResponseEnd:(ResponseEndBlock)responseEnd {
-    
+                                 Progress:(UploadProgressBlock)progress
+                         Success:(CompletionHandlerSuccessBlock)success
+                                  Failure:(CompletionHandlerFailureBlock)failure
+                             RequsetStart:(RequstStartBlock)requestStart
+                              ResponseEnd:(ResponseEndBlock)responseEnd {
+  
     HttpRequest *httpRequest = [[HttpRequest alloc]init];
-    
+
     HttpRequestMode *requestM = [HttpRequestMode new];
     
-    __weak typeof(requestM) weakRquestM = requestM;
+    __weak typeof(requestM) weakRequestM = requestM;
+    __weak typeof(httpRequest) weakRequest = httpRequest;
     
     requestM.Complete = ^ {
-        [httpRequest uploadRequestWithRequestMode:weakRquestM];
-        [httpRequest uploadStartRequsetWithUnitSize:UntiSizeIsKByte Progress:progress SuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+        [weakRequest uploadRequestWithRequestMode:weakRequestM];
+        [weakRequest uploadStartRequsetWithUnitSize:UntiSizeIsKByte Progress:progress SuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
     };
     
     if(requestMode) {
         requestMode(requestM);
     }
-    
+
     return httpRequest;
 }
 
 - (HttpRequest *)downloadPhotoWithHttpRequestMode:(void (^)(HttpRequestMode *request))requestMode
                                          Progress:(UploadProgressBlock)progress
-                                      Destination:(downloadDestinationBlock)destination
-                                          Success:(CompletionHandlerSuccessBlock)success
-                                          Failure:(CompletionHandlerFailureBlock)failure
-                                     RequsetStart:(RequstStartBlock)requestStart
-                                      ResponseEnd:(ResponseEndBlock)responseEnd {
+                               Destination:(downloadDestinationBlock)destination
+                                   Success:(CompletionHandlerSuccessBlock)success
+                                   Failure:(CompletionHandlerFailureBlock)failure
+                              RequsetStart:(RequstStartBlock)requestStart
+                               ResponseEnd:(ResponseEndBlock)responseEnd {
     
     HttpRequest *httpRequest = [[HttpRequest alloc]init];
     
     HttpRequestMode *requestM = [HttpRequestMode new];
     
-    __weak typeof(requestM) weakRquestM = requestM;
-    
+    __weak typeof(requestM) weakRequestM = requestM;
+    __weak typeof(httpRequest) weakRequest = httpRequest;
+
     requestM.Complete = ^ {
-        [httpRequest downloadRequestWithRequestMode:weakRquestM];
-        [httpRequest downloadStartRequsetWithUnitSize:UntiSizeIsByte Progress:progress Destination:destination SuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
+        [weakRequest downloadRequestWithRequestMode:weakRequestM];
+        [weakRequest downloadStartRequsetWithUnitSize:UntiSizeIsByte Progress:progress Destination:destination SuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];
     };
     
     if(requestMode) {
@@ -143,12 +145,23 @@ static HttpClient *httpClient = nil;
     return httpRequest;
 }
 
+//获取制定url的cookies
+- (NSDictionary *)getCookiesPropertiesWithPath:(NSString *)path {
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+    for (NSHTTPCookie *cookie in cookies) {
+        if([cookie.properties[@"Path"] isEqualToString:@"/sh-jy-web/m/userExtend"]) {
+            return cookie.properties;
+        }
+    }
+    return nil;
+}
+
 //通一请求类
 - (void)requestBaseWithRequestMode:(HttpRequestMode *)requestMode
-                           Success:(CompletionHandlerSuccessBlock)success
-                           Failure:(CompletionHandlerFailureBlock)failure
-                      RequsetStart:(RequstStartBlock)requestStart
-                       ResponseEnd:(ResponseEndBlock)responseEnd {
+                    Success:(CompletionHandlerSuccessBlock)success
+                    Failure:(CompletionHandlerFailureBlock)failure
+               RequsetStart:(RequstStartBlock)requestStart
+                ResponseEnd:(ResponseEndBlock)responseEnd {
     
     HttpRequest *request = [[HttpRequest alloc]initWithRequestWithRequestMode:requestMode];
     [request startRequestWithSuccessBlock:success FailedBlock:failure RequsetStart:requestStart ResponseEnd:responseEnd];

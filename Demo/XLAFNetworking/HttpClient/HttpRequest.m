@@ -18,10 +18,9 @@ static NSString * const cacheName = @"cacheName";
 @interface HttpRequest () {
     CFAbsoluteTime startTime;//记录请求开始的时候
 }
-@property (nonatomic,strong) NSURLSessionDataTask *dataTask;//数据任务
-@property (nonatomic,strong) NSURLSessionUploadTask *uploadTask;//上传任务
-@property (nonatomic,strong) NSURLSessionDownloadTask *downloadTask;//下载任务
-@property (nonatomic,strong,readwrite) AFHTTPRequestSerializer *requestSerializer;
+@property (nonatomic,weak) NSURLSessionDataTask *dataTask;//数据任务
+@property (nonatomic,weak) NSURLSessionUploadTask *uploadTask;//上传任务
+@property (nonatomic,weak) NSURLSessionDownloadTask *downloadTask;//下载任务
 @property (nonatomic,assign) NSUInteger timeoutInterval;
 @property (nonatomic,strong) YYCache *cache;
 @property (nonatomic,strong) HttpRequestMode *requestMode;
@@ -40,14 +39,14 @@ static NSString * const cacheName = @"cacheName";
 - (instancetype)initWithRequestWithRequestMode:(HttpRequestMode *)requestMode {
     if(self = [super init]) {
         self.requestMode = requestMode;
-        
-        _requestSerializer = [AFHTTPRequestSerializer serializer];
-        
+                
         BOOL isHaveBaseUrl;
         
         if([HttpClient sharedInstance].baseUrl && [HttpClient sharedInstance].baseUrl.length > 0 && ![[HttpClient sharedInstance].baseUrl isEqualToString:@""]) {
             isHaveBaseUrl = YES;
         }
+        
+        [self handleIgnoreParams];
         
         NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:_requestMode.isGET?@"GET":@"POST" URLString:isHaveBaseUrl?[[HttpClient sharedInstance].baseUrl stringByAppendingPathComponent:_requestMode.url]:_requestMode.url parameters:_requestMode.parameters error:nil];
         
@@ -59,11 +58,9 @@ static NSString * const cacheName = @"cacheName";
 
 #pragma mark 普通请求开始
 - (void)startRequestWithSuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                         FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                        RequsetStart:(RequstStartBlock)requestStart
-                         ResponseEnd:(ResponseEndBlock)responseEnd {
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                                           FailedBlock:(CompletionHandlerFailureBlock)failedBlock
+                                          RequsetStart:(RequstStartBlock)requestStart
+                                           ResponseEnd:(ResponseEndBlock)responseEnd {
     
     if(self.requestMode.msgVIew) {
         [self.requestMode.msgVIew showHud];
@@ -75,7 +72,7 @@ static NSString * const cacheName = @"cacheName";
     
     startTime = CFAbsoluteTimeGetCurrent();
     
-    _dataTask = [manager dataTaskWithRequest:_urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    _dataTask = [[AFHTTPSessionManager manager] dataTaskWithRequest:_urlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (!error) {
             [self handleSuccessBlockDataWithresponseObject:responseObject SuccessBlock:successBlock FailedBlock:failedBlock];
         } else {
@@ -87,7 +84,7 @@ static NSString * const cacheName = @"cacheName";
                 }
             }
         }
-        
+    
         if(responseEnd) {
             responseEnd();
         }
@@ -105,7 +102,15 @@ static NSString * const cacheName = @"cacheName";
     
     self.requestMode = requestMode;
     
-    NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:requestMode.isGET?@"GET":@"POST" URLString:requestMode.url parameters:requestMode.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [self handleIgnoreParams];
+    
+    BOOL isHaveBaseUrl;
+    
+    if([HttpClient sharedInstance].baseUrl && [HttpClient sharedInstance].baseUrl.length > 0 && ![[HttpClient sharedInstance].baseUrl isEqualToString:@""]) {
+        isHaveBaseUrl = YES;
+    }
+    
+    NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:requestMode.isGET?@"GET":@"POST" URLString:isHaveBaseUrl?[[HttpClient sharedInstance].baseUrl stringByAppendingPathComponent:_requestMode.url]:_requestMode.url parameters:requestMode.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (id imageModel in requestMode.uploadModels) {
             if([imageModel isKindOfClass:[UploadModel class]]) {
@@ -118,8 +123,8 @@ static NSString * const cacheName = @"cacheName";
         }
         
     } error:nil];
-    
-    
+
+
     [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:UploadTask] urlRequest:urlRequest];
     
     return self;
@@ -174,7 +179,7 @@ static NSString * const cacheName = @"cacheName";
             
             [self Log:httpFileLoadProgress];
         }
-        
+    
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if(error) {
             [self handleRequestErrorWithError:error FailedBlock:failedBlock];
@@ -200,11 +205,20 @@ static NSString * const cacheName = @"cacheName";
 - (HttpRequest *)downloadRequestWithRequestMode:(HttpRequestMode *)requestMode {
     
     self.requestMode = requestMode;
+    
+    [self handleIgnoreParams];
+    
+    BOOL isHaveBaseUrl;
+    
+    if([HttpClient sharedInstance].baseUrl && [HttpClient sharedInstance].baseUrl.length > 0 && ![[HttpClient sharedInstance].baseUrl isEqualToString:@""]) {
+        isHaveBaseUrl = YES;
+    }
+    
     //设置请求的显示信息
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:requestMode.url]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:isHaveBaseUrl?[[HttpClient sharedInstance].baseUrl stringByAppendingString:requestMode.url]:requestMode.url]];
     
     [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:DownloadTask] urlRequest:urlRequest];
-    
+      
     return self;
 }
 
@@ -219,12 +233,12 @@ static NSString * const cacheName = @"cacheName";
  *  @param responseEnd  响应结束回调
  */
 - (void)downloadStartRequsetWithUnitSize:(UnitSize)unitSize
-                                Progress:(UploadProgressBlock)progress
-                             Destination:(downloadDestinationBlock)destination
-                            SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                             FailedBlock:(CompletionHandlerFailureBlock)failedBlock
-                            RequsetStart:(RequstStartBlock)requestStart
-                             ResponseEnd:(ResponseEndBlock)responseEnd {
+                                         Progress:(UploadProgressBlock)progress
+                                      Destination:(downloadDestinationBlock)destination
+                                     SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                                      FailedBlock:(CompletionHandlerFailureBlock)failedBlock
+                                     RequsetStart:(RequstStartBlock)requestStart
+                                      ResponseEnd:(ResponseEndBlock)responseEnd {
     
     //记录请求开始时间
     startTime = CFAbsoluteTimeGetCurrent();
@@ -237,7 +251,7 @@ static NSString * const cacheName = @"cacheName";
     if(requestStart) {
         requestStart();
     }
-    
+            
     //创建管理者
     AFURLSessionManager *mamager = [[AFURLSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
@@ -258,24 +272,31 @@ static NSString * const cacheName = @"cacheName";
             [self Log:httpFileLoadProgress];
             
         }
-        
+    
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
         //- block的返回值, 要求返回一个URL, 返回的这个URL就是文件的位置的路径
         
-        
+    
         if(destination) {
             return destination(targetPath,response);
         }else {
-            
+    
             NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
             
             NSURL *UrlPath = [NSURL fileURLWithPath:[cachesPath stringByAppendingPathComponent:response.suggestedFilename]];
             
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            
+            BOOL isDirExist = [fileManager fileExistsAtPath:[cachesPath stringByAppendingPathComponent:response.suggestedFilename]];
+            if(isDirExist) {
+                [fileManager removeItemAtPath:[cachesPath stringByAppendingPathComponent:response.suggestedFilename] error:nil];
+            }
+            
             return UrlPath;
         }
         
-        
+                
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         
         //设置下载完成操作
@@ -298,7 +319,7 @@ static NSString * const cacheName = @"cacheName";
         }
         
     }];
-    
+
     [_downloadTask resume];
     
 }
@@ -314,9 +335,9 @@ static NSString * const cacheName = @"cacheName";
     
     NSDictionary *requestHeadDic = [HttpClient sharedInstance].requestHeadDictionary;
     
-    NSArray *ignoreArr = [HttpClient sharedInstance].requestHeadIgnoreUrlArray;
-    
     if(requestHeadDic && requestHeadDic.count > 0) {
+        NSArray *ignoreArr = [HttpClient sharedInstance].requestHeadIgnoreUrlArray;
+        
         for (NSString *key in requestHeadDic) {
             
             BOOL isInArr = NO;
@@ -367,6 +388,31 @@ static NSString * const cacheName = @"cacheName";
     [self Log:self];
 }
 
+//处理过滤参数
+- (void)handleIgnoreParams {
+    NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:_requestMode.parameters];
+    
+    NSArray *commandParasArray = [HttpClient sharedInstance].commandParasArray;
+    
+    if(commandParasArray && commandParasArray.count > 0) {
+        NSArray *commandIgnreUrlArray = [HttpClient sharedInstance].commadnIgnoreUrlArray;
+        for (NSDictionary *dic in commandParasArray) {
+            BOOL isInArr = NO;
+            for (NSString *ignoreUrl in commandIgnreUrlArray) {
+                if([_requestMode.url rangeOfString:ignoreUrl].location != NSNotFound) {
+                    isInArr = YES;
+                    break;
+                }
+            }
+            
+            if(!isInArr) {
+                [requestParams addEntriesFromDictionary:dic];
+            }
+        }
+    }
+    _requestMode.parameters = requestParams;
+}
+
 #pragma mark response处理
 /**
  *  处理请求成功获得的数据
@@ -376,8 +422,8 @@ static NSString * const cacheName = @"cacheName";
  *  @param failedBlock    失败回调
  */
 - (void)handleSuccessBlockDataWithresponseObject:(id _Nullable)responseObject
-                                    SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                                     FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
+                              SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                               FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
     
     NSMutableDictionary *responseData = [NSMutableDictionary dictionary];
     
@@ -405,7 +451,7 @@ static NSString * const cacheName = @"cacheName";
     [self Log:response];
     [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
     
-    //判断服务器是否返回成功
+    //判断是否返回成功
     if(response.isSuccess) {
         if(successBlock) {
             //创建离线缓存
@@ -430,14 +476,14 @@ static NSString * const cacheName = @"cacheName";
  *  @param failedBlock      失败回调
  */
 - (void)handleDownloadSuccessBlockDataWithDownloadResponse:(NSURLResponse *)downloadResponse
-                                                  FilePath:(NSURL *)filePath
-                                              SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
-                                               FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
+                                          FilePath:(NSURL *)filePath
+                                    SuccessBlock:(CompletionHandlerSuccessBlock)successBlock
+                                     FailedBlock:(CompletionHandlerFailureBlock)failedBlock{
     
     //响应数据处理
     HttpResponse *response = [[HttpResponse alloc]init];
     response.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
-    response.result = @{@"file path is":filePath?filePath:@"nil"};
+    response.result = @{@"filePath":filePath?filePath:@"nil"};
     
     [self Log:response];
     [self Log:[NSString stringWithFormat:@"\n========================Use Time: %lf ==========================\n", CFAbsoluteTimeGetCurrent() - startTime]];
@@ -459,10 +505,10 @@ static NSString * const cacheName = @"cacheName";
     HttpError *httpError = [[HttpError alloc]init];
     httpError.responseName = [NSString stringWithFormat:@"%@响应",_requestName];
     [httpError handleHttpError:error];
-    
+
     HttpResponse *response = [[HttpResponse alloc]init];
     response.objectData = [error userInfo];
-    response.errorMsg = httpError.localizedDescription;
+    response.errorMsg = httpError.errorMsg;
     response.httpError = httpError;
     
     [self Log:httpError];
@@ -524,7 +570,7 @@ static NSString * const cacheName = @"cacheName";
  *  取消请求
  */
 - (void)cannel {
-    
+
     if(_dataTask) {
         [_dataTask cancel];
         _dataTask = nil;
@@ -580,7 +626,7 @@ static NSString * const cacheName = @"cacheName";
     if (_urlRequest) {
         [descripString appendFormat:@"Request header:\n%@\n",[_urlRequest allHTTPHeaderFields]?[_urlRequest allHTTPHeaderFields]:@"无"];
     } else {
-        [descripString appendFormat:@"Request header:\n%@\n",_requestSerializer.HTTPRequestHeaders];
+        [descripString appendFormat:@"Request header:\n%@\n",[AFHTTPRequestSerializer serializer].HTTPRequestHeaders];
     }
     [descripString appendString:@"===============================================================\n"];
     return descripString;

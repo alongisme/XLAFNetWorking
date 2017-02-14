@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
 @class UploadModel;
 @class HttpRequestMode;
 
@@ -27,7 +26,7 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 /**
  *  参数
  */
-@property (nonatomic,strong,readonly) NSDictionary *parameters;
+@property (nonatomic,strong) NSDictionary *parameters;
 /**
  *  超时时间
  */
@@ -55,7 +54,7 @@ typedef HttpRequestMode *(^CreateHttpRequestMode)(id requestParameters);
 /**
  *  完成回调通知
  */
-@property (nonatomic,strong) void (^Complete)();
+@property (nonatomic,copy) void (^Complete)();
 
 /**
  * 设置参数

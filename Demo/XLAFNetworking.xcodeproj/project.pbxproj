@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8438A0331D825A690011272E /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8438A0321D825A690011272E /* test.jpg */; };
-		844150251D767DE700A208DC /* HttpRequestMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 844150241D767DE700A208DC /* HttpRequestMode.m */; };
 		847B99A01D7EA00900315FA9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 847B999F1D7EA00900315FA9 /* libsqlite3.tbd */; };
 		84D14C351D473B4900266602 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C341D473B4900266602 /* main.m */; };
 		84D14C381D473B4900266602 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C371D473B4900266602 /* AppDelegate.m */; };
@@ -24,12 +23,13 @@
 		84D14C8A1D473BFA00266602 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C701D473BFA00266602 /* AFURLRequestSerialization.m */; };
 		84D14C8B1D473BFA00266602 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C721D473BFA00266602 /* AFURLResponseSerialization.m */; };
 		84D14C8C1D473BFA00266602 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C741D473BFA00266602 /* AFURLSessionManager.m */; };
-		84D14C8F1D473BFA00266602 /* HttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C7C1D473BFA00266602 /* HttpClient.m */; };
-		84D14C901D473BFA00266602 /* HttpError.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C7E1D473BFA00266602 /* HttpError.m */; };
-		84D14C911D473BFA00266602 /* HttpFileLoadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C801D473BFA00266602 /* HttpFileLoadProgress.m */; };
-		84D14C921D473BFA00266602 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C821D473BFA00266602 /* HttpRequest.m */; };
-		84D14C931D473BFA00266602 /* HttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C841D473BFA00266602 /* HttpResponse.m */; };
-		84D14C941D473BFA00266602 /* UploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D14C861D473BFA00266602 /* UploadModel.m */; };
+		BF2A40851E52F96C009DBF19 /* HttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2A40781E52F96C009DBF19 /* HttpClient.m */; };
+		BF2A40861E52F96C009DBF19 /* HttpError.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2A407A1E52F96C009DBF19 /* HttpError.m */; };
+		BF2A40871E52F96C009DBF19 /* HttpFileLoadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2A407C1E52F96C009DBF19 /* HttpFileLoadProgress.m */; };
+		BF2A40881E52F96C009DBF19 /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2A407E1E52F96C009DBF19 /* HttpRequest.m */; };
+		BF2A40891E52F96C009DBF19 /* HttpRequestMode.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2A40801E52F96C009DBF19 /* HttpRequestMode.m */; };
+		BF2A408A1E52F96C009DBF19 /* HttpResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2A40821E52F96C009DBF19 /* HttpResponse.m */; };
+		BF2A408B1E52F96C009DBF19 /* UploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2A40841E52F96C009DBF19 /* UploadModel.m */; };
 		BF778A521E078690003232C5 /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4B1E078690003232C5 /* YYCache.m */; };
 		BF778A531E078690003232C5 /* YYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4D1E078690003232C5 /* YYDiskCache.m */; };
 		BF778A541E078690003232C5 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF778A4F1E078690003232C5 /* YYKVStorage.m */; };
@@ -58,8 +58,6 @@
 
 /* Begin PBXFileReference section */
 		8438A0321D825A690011272E /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
-		844150231D767DE700A208DC /* HttpRequestMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestMode.h; sourceTree = "<group>"; };
-		844150241D767DE700A208DC /* HttpRequestMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestMode.m; sourceTree = "<group>"; };
 		847B999F1D7EA00900315FA9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		84D14C301D473B4900266602 /* XLAFNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLAFNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D14C341D473B4900266602 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -90,18 +88,20 @@
 		84D14C721D473BFA00266602 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		84D14C731D473BFA00266602 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		84D14C741D473BFA00266602 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		84D14C7B1D473BFA00266602 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
-		84D14C7C1D473BFA00266602 /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
-		84D14C7D1D473BFA00266602 /* HttpError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpError.h; sourceTree = "<group>"; };
-		84D14C7E1D473BFA00266602 /* HttpError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpError.m; sourceTree = "<group>"; };
-		84D14C7F1D473BFA00266602 /* HttpFileLoadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpFileLoadProgress.h; sourceTree = "<group>"; };
-		84D14C801D473BFA00266602 /* HttpFileLoadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpFileLoadProgress.m; sourceTree = "<group>"; };
-		84D14C811D473BFA00266602 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
-		84D14C821D473BFA00266602 /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
-		84D14C831D473BFA00266602 /* HttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpResponse.h; sourceTree = "<group>"; };
-		84D14C841D473BFA00266602 /* HttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpResponse.m; sourceTree = "<group>"; };
-		84D14C851D473BFA00266602 /* UploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadModel.h; sourceTree = "<group>"; };
-		84D14C861D473BFA00266602 /* UploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadModel.m; sourceTree = "<group>"; };
+		BF2A40771E52F96C009DBF19 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
+		BF2A40781E52F96C009DBF19 /* HttpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpClient.m; sourceTree = "<group>"; };
+		BF2A40791E52F96C009DBF19 /* HttpError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpError.h; sourceTree = "<group>"; };
+		BF2A407A1E52F96C009DBF19 /* HttpError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpError.m; sourceTree = "<group>"; };
+		BF2A407B1E52F96C009DBF19 /* HttpFileLoadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpFileLoadProgress.h; sourceTree = "<group>"; };
+		BF2A407C1E52F96C009DBF19 /* HttpFileLoadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpFileLoadProgress.m; sourceTree = "<group>"; };
+		BF2A407D1E52F96C009DBF19 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
+		BF2A407E1E52F96C009DBF19 /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
+		BF2A407F1E52F96C009DBF19 /* HttpRequestMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestMode.h; sourceTree = "<group>"; };
+		BF2A40801E52F96C009DBF19 /* HttpRequestMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestMode.m; sourceTree = "<group>"; };
+		BF2A40811E52F96C009DBF19 /* HttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpResponse.h; sourceTree = "<group>"; };
+		BF2A40821E52F96C009DBF19 /* HttpResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpResponse.m; sourceTree = "<group>"; };
+		BF2A40831E52F96C009DBF19 /* UploadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadModel.h; sourceTree = "<group>"; };
+		BF2A40841E52F96C009DBF19 /* UploadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadModel.m; sourceTree = "<group>"; };
 		BF778A4A1E078690003232C5 /* YYCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCache.h; sourceTree = "<group>"; };
 		BF778A4B1E078690003232C5 /* YYCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYCache.m; sourceTree = "<group>"; };
 		BF778A4C1E078690003232C5 /* YYDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYDiskCache.h; sourceTree = "<group>"; };
@@ -216,22 +216,22 @@
 				BFAF9A951E1E3B9F005A73D1 /* MBProgressHUD.m */,
 				BFAF9A911E1E3B74005A73D1 /* UIView+HUD.h */,
 				BFAF9A921E1E3B74005A73D1 /* UIView+HUD.m */,
+				BF2A40771E52F96C009DBF19 /* HttpClient.h */,
+				BF2A40781E52F96C009DBF19 /* HttpClient.m */,
+				BF2A40791E52F96C009DBF19 /* HttpError.h */,
+				BF2A407A1E52F96C009DBF19 /* HttpError.m */,
+				BF2A407B1E52F96C009DBF19 /* HttpFileLoadProgress.h */,
+				BF2A407C1E52F96C009DBF19 /* HttpFileLoadProgress.m */,
+				BF2A407D1E52F96C009DBF19 /* HttpRequest.h */,
+				BF2A407E1E52F96C009DBF19 /* HttpRequest.m */,
+				BF2A407F1E52F96C009DBF19 /* HttpRequestMode.h */,
+				BF2A40801E52F96C009DBF19 /* HttpRequestMode.m */,
+				BF2A40811E52F96C009DBF19 /* HttpResponse.h */,
+				BF2A40821E52F96C009DBF19 /* HttpResponse.m */,
+				BF2A40831E52F96C009DBF19 /* UploadModel.h */,
+				BF2A40841E52F96C009DBF19 /* UploadModel.m */,
 				BF778A491E078690003232C5 /* YYCache */,
 				84D14C671D473BFA00266602 /* AFNetworking */,
-				84D14C7B1D473BFA00266602 /* HttpClient.h */,
-				84D14C7C1D473BFA00266602 /* HttpClient.m */,
-				84D14C7D1D473BFA00266602 /* HttpError.h */,
-				84D14C7E1D473BFA00266602 /* HttpError.m */,
-				84D14C7F1D473BFA00266602 /* HttpFileLoadProgress.h */,
-				84D14C801D473BFA00266602 /* HttpFileLoadProgress.m */,
-				84D14C811D473BFA00266602 /* HttpRequest.h */,
-				84D14C821D473BFA00266602 /* HttpRequest.m */,
-				84D14C831D473BFA00266602 /* HttpResponse.h */,
-				84D14C841D473BFA00266602 /* HttpResponse.m */,
-				844150231D767DE700A208DC /* HttpRequestMode.h */,
-				844150241D767DE700A208DC /* HttpRequestMode.m */,
-				84D14C851D473BFA00266602 /* UploadModel.h */,
-				84D14C861D473BFA00266602 /* UploadModel.m */,
 			);
 			path = HttpClient;
 			sourceTree = "<group>";
@@ -504,27 +504,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF2A40861E52F96C009DBF19 /* HttpError.m in Sources */,
 				BFAF9A931E1E3B74005A73D1 /* UIView+HUD.m in Sources */,
 				84D14C8C1D473BFA00266602 /* AFURLSessionManager.m in Sources */,
 				84D14C3B1D473B4A00266602 /* ViewController.m in Sources */,
-				84D14C901D473BFA00266602 /* HttpError.m in Sources */,
 				84D14C381D473B4900266602 /* AppDelegate.m in Sources */,
 				BF778A551E078690003232C5 /* YYMemoryCache.m in Sources */,
-				84D14C911D473BFA00266602 /* HttpFileLoadProgress.m in Sources */,
 				84D14C881D473BFA00266602 /* AFNetworkReachabilityManager.m in Sources */,
-				844150251D767DE700A208DC /* HttpRequestMode.m in Sources */,
+				BF2A40851E52F96C009DBF19 /* HttpClient.m in Sources */,
 				84D14C351D473B4900266602 /* main.m in Sources */,
-				84D14C931D473BFA00266602 /* HttpResponse.m in Sources */,
-				84D14C8F1D473BFA00266602 /* HttpClient.m in Sources */,
 				84D14C891D473BFA00266602 /* AFSecurityPolicy.m in Sources */,
 				84D14C8A1D473BFA00266602 /* AFURLRequestSerialization.m in Sources */,
-				84D14C941D473BFA00266602 /* UploadModel.m in Sources */,
+				BF2A408A1E52F96C009DBF19 /* HttpResponse.m in Sources */,
 				BFAF9A961E1E3B9F005A73D1 /* MBProgressHUD.m in Sources */,
 				84D14C8B1D473BFA00266602 /* AFURLResponseSerialization.m in Sources */,
+				BF2A408B1E52F96C009DBF19 /* UploadModel.m in Sources */,
+				BF2A40881E52F96C009DBF19 /* HttpRequest.m in Sources */,
 				BF778A521E078690003232C5 /* YYCache.m in Sources */,
-				84D14C921D473BFA00266602 /* HttpRequest.m in Sources */,
 				BF778A541E078690003232C5 /* YYKVStorage.m in Sources */,
 				BF778A531E078690003232C5 /* YYDiskCache.m in Sources */,
+				BF2A40871E52F96C009DBF19 /* HttpFileLoadProgress.m in Sources */,
+				BF2A40891E52F96C009DBF19 /* HttpRequestMode.m in Sources */,
 				84D14C871D473BFA00266602 /* AFHTTPSessionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

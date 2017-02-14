@@ -56,7 +56,6 @@ static NSString  *const NETCONNECTTIME_FAILE = @"网络连接超时，请稍后�
 /**
  *  响应返回数据处理
  *
- *  @param ObjectData 解析数据
  */
 - (void)loadResopnseWithObjectData:(NSDictionary *)objectData;
 

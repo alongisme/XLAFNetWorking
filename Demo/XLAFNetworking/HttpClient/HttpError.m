@@ -75,7 +75,7 @@
         // 请求成功
     } else if (err.code == 404) {
         errorMsg = @"请求错误";
-    } else if (err.code >= 500) {
+    } else if (err.code == 500) {
         errorMsg = @"服务器异常";
     }else if (err.code == -1001) {
         errorMsg = @"网络连接超时，请重试";
