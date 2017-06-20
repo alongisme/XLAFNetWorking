@@ -39,16 +39,10 @@ static NSString * const cacheName = @"cacheName";
 - (instancetype)initWithRequestWithRequestMode:(HttpRequestMode *)requestMode {
     if(self = [super init]) {
         self.requestMode = requestMode;
-                
-        BOOL isHaveBaseUrl;
-        
-        if([HttpClient sharedInstance].baseUrl && [HttpClient sharedInstance].baseUrl.length > 0 && ![[HttpClient sharedInstance].baseUrl isEqualToString:@""]) {
-            isHaveBaseUrl = YES;
-        }
         
         [self handleIgnoreParams];
         
-        NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:_requestMode.isGET?@"GET":@"POST" URLString:isHaveBaseUrl?[[HttpClient sharedInstance].baseUrl stringByAppendingPathComponent:_requestMode.url]:_requestMode.url parameters:_requestMode.parameters error:nil];
+        NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer] requestWithMethod:_requestMode.isGET?@"GET":@"POST" URLString:_requestMode.url parameters:_requestMode.parameters error:nil];
         
         [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:NormalTask] urlRequest:urlRequest];
         
@@ -104,13 +98,7 @@ static NSString * const cacheName = @"cacheName";
     
     [self handleIgnoreParams];
     
-    BOOL isHaveBaseUrl;
-    
-    if([HttpClient sharedInstance].baseUrl && [HttpClient sharedInstance].baseUrl.length > 0 && ![[HttpClient sharedInstance].baseUrl isEqualToString:@""]) {
-        isHaveBaseUrl = YES;
-    }
-    
-    NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:requestMode.isGET?@"GET":@"POST" URLString:isHaveBaseUrl?[[HttpClient sharedInstance].baseUrl stringByAppendingPathComponent:_requestMode.url]:_requestMode.url parameters:requestMode.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSMutableURLRequest *urlRequest = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:requestMode.isGET?@"GET":@"POST" URLString:_requestMode.url parameters:requestMode.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
         for (id imageModel in requestMode.uploadModels) {
             if([imageModel isKindOfClass:[UploadModel class]]) {
@@ -208,14 +196,8 @@ static NSString * const cacheName = @"cacheName";
     
     [self handleIgnoreParams];
     
-    BOOL isHaveBaseUrl;
-    
-    if([HttpClient sharedInstance].baseUrl && [HttpClient sharedInstance].baseUrl.length > 0 && ![[HttpClient sharedInstance].baseUrl isEqualToString:@""]) {
-        isHaveBaseUrl = YES;
-    }
-    
     //设置请求的显示信息
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:isHaveBaseUrl?[[HttpClient sharedInstance].baseUrl stringByAppendingString:requestMode.url]:requestMode.url]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:requestMode.url]];
     
     [self setRequsetDisplayInfoWithRequestType:[self getRequestTypeWithRequestType:DownloadTask] urlRequest:urlRequest];
       

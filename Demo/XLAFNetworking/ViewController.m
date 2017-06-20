@@ -16,10 +16,24 @@
 @implementation ViewController
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self normalTaskTest];
+    [self uploadTaskTest];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[HttpClient sharedInstance]downloadPhotoWithHttpRequestMode:^(HttpRequestMode *request) {
+        request
+        .SetName(@"下载")
+        .SetUrl(@"http://xs.ydcfo.com/page/print/printHtml.jsp?reportName=SalesPrintN&salesId=189&printType=pdf&access_token=3b38307b-8220-40c1-99ff-ffb198aef2f7");
+        
+        [request complete];
+    } Progress:^(HttpFileLoadProgress *uploadProgress) {
+        
+    } Destination:nil Success:^(HttpRequest *request, HttpResponse *response) {
+        
+    } Failure:^(HttpRequest *request, HttpResponse *response) {
+        
+    } RequsetStart:nil ResponseEnd:nil];
 }
 
 - (void)normalTaskTest {
@@ -50,13 +64,12 @@
     [[HttpClient sharedInstance] uploadPhotoWithHttpRequestMode:^(HttpRequestMode *request) {
         request
         .SetName(@"上传")
-        .SetUrl(@"")
-        .SetHeaderValue(@{@"asd":@"sss"})
+        .SetUrl(@"http://localhost:8181/along/upload")
         .SetUploadModels(@[CreateUploadModel(data,@"upload",@"fileName",@"image/jpeg")]);
         
         [request complete];
     } Progress:^(HttpFileLoadProgress *uploadProgress) {
-        
+        NSLog(@"---上传进度--- %@",uploadProgress);
     } Success:^(HttpRequest *request, HttpResponse *response) {
         
     } Failure:^(HttpRequest *request, HttpResponse *response) {
